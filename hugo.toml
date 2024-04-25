@@ -1,0 +1,43 @@
+baseURL = 'https://github.com/wasmi-blog/'
+languageCode = 'en-us'
+title = 'Wasmi Blog'
+theme = 'soho'
+
+summarylength = 15
+enableEmoji = true
+
+[params]
+
+author = "Robin Freyler"
+description = "News about the Wasmi WebAssembly interpreter."
+profilePicture = "images/wasmi-logo.png"
+copyright = "Robin Freyler"
+license = "CC BY-SA 4.0"
+licenseURL = "https://creativecommons.org/licenses/by-sa/4.0"
+themeColor = "#f0ca40"
+
+  [[params.socialIcons]]
+  icon = "fa-github"
+  title = "GitHub"
+  url = "https://github.com/wasmi-labs/"
+
+[menu]
+
+  [[menu.main]]
+  name = "Posts"
+  weight = 100
+  identifier = "posts"
+  url = "posts/"
+
+[markup]
+
+  [markup.highlight]
+  codeFences = true
+  guessSyntax = false
+  # hl_Lines = ""
+  lineNoStart = 1
+  lineNos = false
+  lineNumbersInTable = true
+  noClasses = true # if false, you need to provide you own custom CSS
+  style = "monokai"
+  tabWidth = 4
