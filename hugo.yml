@@ -1,0 +1,28 @@
+baseURL: 'https://wasmi-labs.github.io/blog/'
+languageCode: 'en-us'
+title: Wasmi News
+theme: PaperMod
+
+params:
+  author: 'Robin Freyler'
+  homeInfoParams:
+    Title: 'Wasmi - WebAssembly Interpreter'
+    Content: 'News and information about the Wasmi WebAssembly interpreter'
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/wasmi-labs/"
+  ShowShareButtons: true
+  ShowReadingTime: true
+  ShowToc: true
+  TocOpen: true
+  ShowBreadCrumbs: true
+  # ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
+  outputs:
+    home:
+      - HTML
+      - RSS
+      - JSON # necessary for search
+  cover:
+    # Improves site compilation performance.
+    responsiveImages: false
