@@ -5,3 +5,9 @@ draft = true
 +++
 
 Today we are proud to release Wasmi version 0.32 to the public.
+
+```rust
+fn hello_world() {
+    println!("Hello, World!");
+}
+```
