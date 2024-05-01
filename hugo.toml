@@ -1,7 +1,7 @@
 baseURL = 'https://github.com/wasmi-blog/'
 languageCode = 'en-us'
 title = 'Wasmi Blog'
-theme = 'soho'
+theme = 'papermod'
 
 summarylength = 15
 enableEmoji = true
