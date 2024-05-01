@@ -13,8 +13,8 @@ params:
       url: "https://github.com/wasmi-labs/"
   ShowShareButtons: true
   ShowReadingTime: true
-  ShowToc: true
-  TocOpen: true
+  # ShowToc: true
+  # TocOpen: true
   ShowBreadCrumbs: true
   # ShowPostNavLinks: true
   ShowCodeCopyButtons: true
