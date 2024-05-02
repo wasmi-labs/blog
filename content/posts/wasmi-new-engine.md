@@ -1,7 +1,7 @@
 ---
 date: "2024-04-25T21:26:10+02:00"
 draft: true
-title: Wasmi 0.32 Release
+title: Wasmi's new Execution Engine Arrived'
 ---
 
 Today we are proud to release Wasmi version 0.32 to the public.
