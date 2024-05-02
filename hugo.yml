@@ -1,6 +1,6 @@
 baseURL: 'https://wasmi-labs.github.io/blog/'
 languageCode: 'en-us'
-title: Wasmi News
+title: Wasmi Labs
 theme: PaperMod
 
 params:
