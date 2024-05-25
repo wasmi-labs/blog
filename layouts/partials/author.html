@@ -1,0 +1,20 @@
+{{- if or .Params.author site.Params.author }}
+  {{- $author := (.Params.author | default site.Params.author) }}
+  {{- $authorURL := (.Params.authorURL | default site.Params.authorURL) }}
+  {{- $author_type := (printf "%T" $author) }}
+  {{- if (or (eq $author_type "[]string") (eq $author_type "[]interface {}")) }}
+    {{- if $authorURL }}
+      {{- range $index, $element := $author }}
+        <a href="{{ $authorURL }}" target="_blank" rel="noopener">{{ $element }}</a>{{ if ne (add $index 1) (len $author) }}, {{ end }}
+      {{- end }}
+    {{- else }}
+      {{- delimit $author ", " }}
+    {{- end }}
+  {{- else }}
+    {{- if $authorURL }}
+      <a href="{{ $authorURL }}" target="_blank" rel="noopener">{{ $author }}</a>
+    {{- else }}
+      {{- $author }}
+    {{- end }}
+  {{- end }}
+{{- end }}
