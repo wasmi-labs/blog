@@ -1,0 +1,98 @@
+<svg width="1280" height="605" viewBox="0 0 1280 605" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1280" height="605" opacity="1" fill="#FFFFFF" stroke="none"/>
+<text x="640" y="10" dy="0.76em" text-anchor="middle" font-family="monospace" font-size="36.29032258064516" opacity="1" fill="#000000">
+execute/argon2 - Apple M2 Pro (MacOS)
+</text>
+<line opacity="0.1" stroke="#000000" stroke-width="1" x1="498" y1="524" x2="498" y2="76"/>
+<line opacity="0.1" stroke="#000000" stroke-width="1" x1="810" y1="524" x2="810" y2="76"/>
+<text x="5" y="300" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="28.225806451612904" opacity="1" fill="#000000" transform="rotate(270, 5, 300)">
+
+</text>
+<text x="740" y="600" dy="-0.5ex" text-anchor="middle" font-family="sans-serif" font-size="28.225806451612904" opacity="1" fill="#000000">
+Relative Time (lower is better, logarithmic scale)
+</text>
+<line opacity="0.15" stroke="#000000" stroke-width="1" x1="498" y1="524" x2="498" y2="76"/>
+<line opacity="0.15" stroke="#000000" stroke-width="1" x1="810" y1="524" x2="810" y2="76"/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="404,76 404,524 "/>
+<text x="395" y="499" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmer (Singlepass)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,499 404,499 "/>
+<text x="395" y="450" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmer (Cranelift)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,450 404,450 "/>
+<text x="395" y="400" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmtime (Cranelift)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,400 404,400 "/>
+<text x="395" y="350" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasm3 (lazy)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,350 404,350 "/>
+<text x="395" y="300" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasm3 (eager)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,300 404,300 "/>
+<text x="395" y="251" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Tinywasm
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,251 404,251 "/>
+<text x="395" y="201" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmi v0.32 (lazy)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,201 404,201 "/>
+<text x="395" y="151" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmi v0.32 (eager)
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,151 404,151 "/>
+<text x="395" y="101" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
+Wasmi v0.31
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,101 404,101 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="405,525 1074,525 "/>
+<text x="498" y="535" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="16.129032258064516" opacity="1" fill="#000000">
+1.0
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="498,525 498,530 "/>
+<text x="810" y="535" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="16.129032258064516" opacity="1" fill="#000000">
+10.0
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="810,525 810,530 "/>
+<rect x="405" y="141" width="526" height="20" opacity="1" fill="#C8C846" stroke="none"/>
+<rect x="405" y="241" width="662" height="20" opacity="1" fill="#6C8C6C" stroke="none"/>
+<rect x="405" y="340" width="448" height="20" opacity="1" fill="#5A5A5A" stroke="none"/>
+<rect x="405" y="490" width="207" height="19" opacity="1" fill="#5F8CAF" stroke="none"/>
+<rect x="405" y="191" width="525" height="20" opacity="1" fill="#C8C846" stroke="none"/>
+<rect x="405" y="291" width="448" height="19" opacity="1" fill="#5A5A5A" stroke="none"/>
+<rect x="405" y="91" width="649" height="20" opacity="1" fill="#8C8232" stroke="none"/>
+<rect x="405" y="390" width="93" height="20" opacity="1" fill="#8C78A0" stroke="none"/>
+<rect x="405" y="440" width="113" height="20" opacity="1" fill="#5F8CAF" stroke="none"/>
+<text x="618" y="499" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x2.31
+</text>
+<text x="524" y="450" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x1.15
+</text>
+<text x="505" y="400" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x1.00
+</text>
+<text x="860" y="350" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x13.72
+</text>
+<text x="860" y="300" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x13.75
+</text>
+<text x="1074" y="251" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x66.46
+</text>
+<text x="936" y="201" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x24.13
+</text>
+<text x="938" y="151" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x24.43
+</text>
+<text x="1060" y="101" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x60.23
+</text>
+</svg>

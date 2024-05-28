@@ -1,0 +1,13 @@
+Scores Summary (JSON):
+{
+  "stitch": 4891.96923828125,
+  "tinywasm": 772.471923828125,
+  "wasm3.eager": 3827.751220703125,
+  "wasm3.lazy": 3831.662353515625,
+  "wasmer.cranelift": 32840.72265625,
+  "wasmer.singlepass": 15538.80859375,
+  "wasmi-new.eager.checked": 2940.095458984375,
+  "wasmi-new.lazy.checked": 2979.072021484375,
+  "wasmi-old": 1758.6025390625,
+  "wasmtime.cranelift": 33131.78125
+}
