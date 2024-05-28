@@ -5,7 +5,7 @@ theme: PaperMod
 
 params:
   author: 'Robin Freyler'
-  # authorURL: 'https://github.com/robbepop' # we prefer to set this in the post
+  # authorURL: 'https://github.com/robbepop' # We prefer to set this in the post
   homeInfoParams:
     Title: 'Wasmi - WebAssembly Interpreter'
     Content: 'News and information about the Wasmi WebAssembly interpreter'
