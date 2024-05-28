@@ -1,0 +1,12 @@
+{
+    "stitch": 2186.5888671875,
+    "tinywasm": 338.77252197265625,
+    "wasm3.eager": 1992.5611572265625,
+    "wasm3.lazy": 1999.33349609375,
+    "wasmer.cranelift": 20455.474609375,
+    "wasmer.singlepass": 10416.1240234375,
+    "wasmi-new.eager.checked": 1779.0428466796875,
+    "wasmi-new.lazy.checked": 1778.0938720703125,
+    "wasmi-old": 943.5580444335938,
+    "wasmtime.cranelift": 22088.05859375
+}
