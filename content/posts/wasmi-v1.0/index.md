@@ -8,6 +8,8 @@ draft: false
 
 ## What has happened since last blog post
 
+- Wasmi no longer belongs to Parity but is a stand-alone project.
+- Wasmi development financially sponsored by the SDF since October 2024.
 - New Wasm proposals support:
     - [x] Wasm `multi-memory`.
     - [x] Wasm `memory64`.
@@ -30,6 +32,7 @@ draft: false
 - Foundational clean-up of the Wasmi translator: simpler and future proofed.
     - Fuel metering no longer an afterthought - nearly free.
     - Inspired by Stitch's translation model.
+- Wasmi specific Wast testsuite allowing to catch more Wasmi specific bugs all while being disentangled with implementation details.
 
 ## Future plans and projects
 
