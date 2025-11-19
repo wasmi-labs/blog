@@ -6,26 +6,60 @@ authorURL: 'https://github.com/robbepop'
 draft: false
 ---
 
+It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/) in March 2024.
+Since that time a lot of has happened on the Wasmi project, both technically and non-technically, which culminated in Wasmi 1.0.
+
+Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org/) interpreter with a focus on embedded environments. It is an excellent choice for plugin systems, cloud hosts and as smart contract execution engine.
+
+Before going into all the details, a huge thank you to the [Stellar Development Foundation](https://stellar.org/foundation) which sponsors development of the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn't be where it is today.
+
+## What does 1.0 mean to you?
+
+Over the course of the last major versions a ton of deprecations and fine tuning of Wasmi's API has been implemented, all in preparation of the 1.0 release. With this release, all those deprecated APIs are going to be removed. The 1.0 release marks an important promise of API stability for Wasmi users.
+
+That's it!
+
+## New Wasm Proposals
+
+Since March 2024 a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
+
+- ✅ The [Wasm `multi-memory` proposal](https://github.com/WebAssembly/multi-memory) allows users to define multiple linear memories within a single Wasm module.
+  With this, users can isolate and protect different memories with different purposes from each other.
+- ✅ The [Wasm `memory64` proposal](https://github.com/WebAssembly/memory64) allows users to define 64-bit Wasm modules, thus being able to execute Wasm binaries
+  that require more than just 4GB of memory.
+- ✅ The [Wasm `custom-page-sizes` proposal](https://github.com/WebAssembly/custom-page-sizes) allows to define linear memories with page sizes of 1 byte. By default, linear memories has page sizes of 64KB, thus this allows to execute Wasm on tiny embedded devices with less than 64KB of memory.
+- ✅ The [Wasm `simd` proposal](https://github.com/webassembly/simd) defines over 200 new 128-bit SIMD operators. This allows users to optimize certain compute intense workloads. Honestly, a questionable use-case for an interpreter to say the least which is why Wasmi's `simd` support comes [opt-in](https://github.com/wasmi-labs/wasmi/blob/v0.51.2/crates/wasmi/Cargo.toml#L54) so users don't have to take the bloat. To add insult to injury, it was made sure that using `simd` operators in Wasmi actually compiles down to SIMD machine instructions.
+- ✅ The [Wasm `relaxed-simd` proposal](https://github.com/WebAssembly/relaxed-simd) defines some non-deterministic extension operators on top of the Wasm `simd` proposal which can be more efficient in some cases.
+- ✅ The [Wasm `wide-arithmetic` proposal](https://github.com/WebAssembly/wide-arithmetic) defines 128-bit arithmetic operators for `add`, `sub` and `mul`. These operators allow to optimize certain use-cases such as big-integer arithmetic.
+
+With this, Wasmi supports all of [Wasm 2.0](https://webassembly.org/news/2025-03-20-wasm-2.0/) and quite a few features from [Wasm 3.0](https://webassembly.org/news/2025-09-17-wasm-3.0/).
+
+## Engine Optimizations
+
+Countless engine improvements, new optimizations, clean-ups and refactorings have significantly improved Wasmi's translation and execution performance all while lowering its memory footprint.
+
+TODO: graphics, diagrams
+
 ## What has happened since last blog post
 
-- Wasmi no longer belongs to Parity but is a stand-alone project.
-- Wasmi development financially sponsored by the SDF since October 2024.
-- New Wasm proposals support:
+- [x] ~Wasmi no longer belongs to Parity but is a stand-alone project.~
+- [x] Wasmi development financially sponsored by the SDF since October 2024.
+- [x] New Wasm proposals support:
     - [x] Wasm `multi-memory`.
     - [x] Wasm `memory64`.
     - [x] Wasm `custom-page-sizes`.
     - [x] Wasm `wide-arithmetic`.
     - [x] Wasm `simd` enabled by `simd` crate feature.
     - [x] Wasm `relaxed-simd` enabled by `simd` crate feature.
+- [x] Optimized Wasmi engine internals.
+    - Implemented lots of new Wasmi bytecode optimizations and lowering to improve execution performance.
 - Improved Wasmtime API mirror.
-- Optimized Wasmi engine internals.
 - Received another security audit conducted by Runtime Verification Inc. sponsored by Stellar Development Foundation.
 - Wasmi now allows to inspect Wasm custom sections.
 - Fixed a dead-lock allowing users to compile Wasm modules in host functions.
 - Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
 - Minified Wasmi's dependency graph from 7 external dependencies down to just 2. (`spin` and `wasmparser`)
 - Wasmi was added to Google's OSSFuzz.
-- Implemented lots of new Wasmi bytecode optimizations and lowering to improve execution performance.
 - Wasmi now provided as backend in Wasmer.
 - Batteries included: WAT support in `Module::new` and `Module::new_unchecked`.
 - Added support for Wasm function call resumption after running out of fuel.
