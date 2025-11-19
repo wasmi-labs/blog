@@ -15,7 +15,7 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 
 ## What does 1.0 mean to you?
 
-Over the course of the last major versions a ton of deprecations and fine tuning of Wasmi's API has been implemented, all in preparation of the 1.0 release. With this release, all those deprecated APIs are going to be removed. The 1.0 release marks an important promise of API stability for Wasmi users.
+Over the course of the last major versions a ton of deprecations and fine tuning of [Wasmi's API](https://docs.rs/wasmi/latest/wasmi/) has been implemented, all in preparation of the 1.0 release. With this release, all those deprecated APIs are going to be removed. The 1.0 release marks an important promise of API stability for Wasmi users.
 
 That's it!
 
