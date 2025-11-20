@@ -137,7 +137,7 @@ You can now inspect custom sections of Wasm modules directly, offering more intr
 
 ## Looking Ahead
 
-Wasmi 1.0 represents a year of careful evolution: new WebAssembly features, cleaner internals, better performance, and stronger security. This release positions Wasmi as a robust choice for anyone needing a lightweight, highly compatible, and efficient Wasm interpreter.
+Wasmi 1.0 represents years of careful evolution: new WebAssembly features, cleaner internals, better performance, and stronger security. This release positions Wasmi as a robust choice for anyone needing a lightweight, highly compatible, and efficient Wasm interpreter.
 
 We’re excited for developers to try these improvements and contribute to shaping the next phase of Wasmi’s growth. Stay tuned for further updates and community contributions.
 
