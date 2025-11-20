@@ -77,7 +77,7 @@ TODO: graphics, diagrams
     - Wasm module preprocessing for even faster Wasm module instantiations.
     - Instance related bytecode to speed-up code with interacts heavily with instance data.
     - Accumulator based interpreter architecture for maximum execution performance.
-- Full Wasm 3.0 support: Wasm `function-references`, `expection-handling` and `gc` proposal implementation.
+- Full Wasm 3.0 support: Wasm `function-references`, `exception-handling` and `gc` proposal implementation.
 
 ---
 
