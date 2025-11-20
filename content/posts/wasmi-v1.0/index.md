@@ -72,7 +72,7 @@ This [WebAssembly Script (Wast)](https://github.com/WebAssembly/spec/tree/wg-3.0
 
 ### Minified Dependency Graph
 
-A minified graph of external dependencies usually implies a smaller attack surface. In March 2024, Wasmi still had [7 external dependencies](https://crates.io/crates/wasmi/0.32.3/dependencies). And today, with Wasmi 1.0 we are down to just 2:
+A minified graph of external dependencies usually implies a smaller attack surface. In March 2024, Wasmi still had [7 external dependencies](https://crates.io/crates/wasmi/0.32.3/dependencies). Wasmi 1.0 reduced this to just 2:
 
 - [`spin`](https://crates.io/crates/spin): Low-level primitives for locks and mutexes for [`no_std` environments](https://docs.rust-embedded.org/book/intro/no-std.html) which Wasmi supports. Note that this is a trivial dependency when compiling Wasmi with `std` feature enabled.
 - [`wasmparser`](https://crates.io/crates/wasmparser): A [Bytecode Alliance](https://bytecodealliance.org/) maintained highly efficient Wasm parser and validator.
