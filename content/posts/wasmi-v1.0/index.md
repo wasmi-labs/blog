@@ -131,8 +131,6 @@ The removal of external dependencies has also had significant positive impact on
     - Inspired by Stitch's translation model.
 - [x] Wasmi specific Wast testsuite allowing to catch more Wasmi specific bugs all while being disentangled with implementation details.
 
----
-
 [^1]: I verified this using `cargo show-asm` on a Macbook M2 Pro ARM machine at least for many of the `simd` operators.
 
 [^2]: The full list of Wasmi support Wasm proposals can be found [here](https://github.com/wasmi-labs/wasmi?tab=readme-ov-file#webassembly-features).
