@@ -13,7 +13,7 @@ Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation](https://stellar.org/foundation) which sponsors development of the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn't be where it is today.
 
-## What does 1.0 mean to you?
+## What does 1.0?
 
 Over the course of the last major versions a ton of deprecations and fine tuning of [Wasmi's API](https://docs.rs/wasmi/latest/wasmi/) has been implemented, all in preparation of the 1.0 release. With this release, all those deprecated APIs are going to be removed. The 1.0 release marks an important promise of API stability for Wasmi users.
 
