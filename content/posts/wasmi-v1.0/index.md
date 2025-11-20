@@ -81,6 +81,28 @@ There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-l
 
 The removal of external dependencies has also had significant positive impact on Wasmi's compile times. [^5]
 
+## New Features
+
+- Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
+- Added support for Wasm function call resumption after running out of fuel.
+- Batteries included: WAT support is now available in Module::new and Module::new_unchecked.
+- Wasmi now provided as backend in Wasmer.
+
+## Looking Ahead
+
+- Wasmi 2.0 and its new executor.
+    - Make use of Rust's `become` once stable, prepare instruction dispatch for it.
+    - Direct threaded code, inspired by Stitch for even faster execution performance.
+    - Encodings all immediates in bytecode inline - removing the need for function local constants bloating up the stack.
+    - Wasm module preprocessing for even faster Wasm module instantiations.
+    - Instance related bytecode to speed-up code with interacts heavily with instance data.
+    - Accumulator based interpreter architecture for maximum execution performance.
+- Full Wasm 3.0 support: Wasm `function-references`, `exception-handling` and `gc` proposal implementation.
+
+## Try It Out!
+
+- Wasmi can now be used as a backend in Wasmer, broadening its applicability in the Wasm ecosystem.
+
 ## What has happened since last blog post
 
 - [x] ~Wasmi no longer belongs to Parity but is a stand-alone project.~
