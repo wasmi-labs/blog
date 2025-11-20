@@ -42,7 +42,7 @@ TODO: graphics, diagrams
 
 ## Safety & Security Improvements
 
-Given Wasmi's origins as execution engine for smart contracts on the blockchain and its focus on constraint devices and embedded systems, determinism, safety and security has always been of central importance.
+Given Wasmi's origins as execution engine for smart contracts on the blockchain and its focus on constraint devices and embedded systems, deterministic execution, safety and security has always been of central importance.
 
 ### Security Audit
 
