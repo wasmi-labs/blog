@@ -40,6 +40,47 @@ Countless engine improvements, new optimizations, clean-ups and refactorings hav
 
 TODO: graphics, diagrams
 
+## Safety & Security Improvements
+
+Given Wasmi's origins in the blockchain space and its focus on embedded systems, safety and security has always been of central importance.
+
+### Security Audit
+
+The [Stellar Development Foundation](https://stellar.org/foundation) sponsored an [extensive security audit for Wasmi](https://github.com/wasmi-labs/wasmi/blob/main/resources/audit-2024-11-27.pdf) conducted by [Runtime Verification Inc.](https://runtimeverification.com/).
+
+Over the course of several months a whole team of security professionals inspected the Wasmi codebase, analysed its architecture and wrote down their assessment in the document linked above. During that process they were able to find some issues and concerns which were quickly fixed.
+
+### Fuzzing Infrastructure
+
+Wasmi has received its own fuzzing infrastructure consisting of 3 different fuzzing targets:
+
+- 🔧 `translate`: Continuously translates Wasm blobs and tries to find bugs in Wasmi's translation engine.
+- 🏃 `execute`: Executes Wasm blobs with various inputs and tries to find bugs in Wasmi's execution engine.
+- ⚖️ `differential`: Compares the execution of Wasmi with other Wasm runtimes and tries to find examples of mismatching semantics. [^3]
+
+Especially the `differential` fuzzing target finds quite a lot of issues before they land in new releases.
+And conversely, on Wasmtime's own fuzzing infrastructure [Wasmi acts as an oracle](https://github.com/bytecodealliance/wasmtime/blob/v38.0.4/crates/fuzzing/src/oracles/diff_wasmi.rs) for its differential fuzzing.
+
+### OSS-Fuzz
+
+On top of that [Wasmi has been added to Google's OSS-Fuzz](https://github.com/google/oss-fuzz/pull/12665) and is now continuously fuzzed. This has already found some intricate bugs and issues and is a valuable addition that helps to keep Wasmi safe and secure.
+
+### Wast Testsuite
+
+Wasmi now has its own external [Wasmi testsuite](https://github.com/wasmi-labs/wasmi-tests) alongside the official Wasm spec testsuite.
+This [WebAssembly Script (Wast)](https://github.com/WebAssembly/spec/tree/wg-3.0/interpreter#scripts) based testsuite features Wasmi specific testcases and is continuously extended to assert semantic behavior in even more cases. [^4]
+
+### Minified Dependency Graph
+
+A minified graph of external dependencies usually implies a smaller attack surface. In March 2024, Wasmi still had 7 external dependencies. And today, with Wasmi 1.0 we are down to just 2:
+
+- [`spin`](https://crates.io/crates/spin): Low-level primitives for locks and mutexes for `no_std` environments which Wasmi supports. Note that this is a trivial dependency when compiling Wasmi with `std` feature enabled.
+- [`wasmparser`](https://crates.io/crates/wasmparser): A Bytecode Alliance maintained highly efficient Wasm parser and validator.
+
+There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-labs/wasmi/issues/1514) that would replace the external `wasmparser` crate, eventually dropping to just 1 lightweight external dependency.
+
+The removal of external dependencies has also had significant positive impact on Wasmi's compile times. [^5]
+
 ## What has happened since last blog post
 
 - [x] ~Wasmi no longer belongs to Parity but is a stand-alone project.~
@@ -54,19 +95,19 @@ TODO: graphics, diagrams
 - [x] Optimized Wasmi engine internals.
     - Implemented lots of new Wasmi bytecode optimizations and lowering to improve execution performance.
 - Improved Wasmtime API mirror.
-- Received another security audit conducted by Runtime Verification Inc. sponsored by Stellar Development Foundation.
+- [x] Received another security audit conducted by Runtime Verification Inc. sponsored by Stellar Development Foundation.
 - Wasmi now allows to inspect Wasm custom sections.
 - Fixed a dead-lock allowing users to compile Wasm modules in host functions.
 - Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
-- Minified Wasmi's dependency graph from 7 external dependencies down to just 2. (`spin` and `wasmparser`)
-- Wasmi was added to Google's OSSFuzz.
+- [x] Minified Wasmi's dependency graph from 7 external dependencies down to just 2. (`spin` and `wasmparser`)
+- [x] Wasmi was added to Google's OSSFuzz.
 - Wasmi now provided as backend in Wasmer.
 - Batteries included: WAT support in `Module::new` and `Module::new_unchecked`.
 - Added support for Wasm function call resumption after running out of fuel.
 - Foundational clean-up of the Wasmi translator: simpler and future proofed.
     - Fuel metering no longer an afterthought - nearly free.
     - Inspired by Stitch's translation model.
-- Wasmi specific Wast testsuite allowing to catch more Wasmi specific bugs all while being disentangled with implementation details.
+- [x] Wasmi specific Wast testsuite allowing to catch more Wasmi specific bugs all while being disentangled with implementation details.
 
 ## Future plans and projects
 
@@ -147,3 +188,8 @@ We’re excited for developers to try these improvements and contribute to shapi
 
 [^2]: The full list of Wasmi support Wasm proposals can be found [here](https://github.com/wasmi-labs/wasmi?tab=readme-ov-file#webassembly-features).
 
+[^3]: Currently we differentially fuzz against an older, much simpler version of Wasmi itself as well as the mature and battletested [Wasmtime](https://github.com/bytecodealliance/wasmtime) Wasm runtime.
+
+[^4]: Before that, Wasmi's tests were tightly integrated with its translation engine. This necessitated updates to them whenever Wasmi's translation engine was changed. While those tightly integrated tests helped with early development, it is needless to say, that this process wasn't sustainable.
+
+[^5]: Where Wasmi v0.32 required ~10 seconds to compile, we are now down to just ~4.5s. Tested on Macbook M2 Pro.
