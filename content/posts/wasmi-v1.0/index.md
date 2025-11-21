@@ -83,10 +83,31 @@ The removal of external dependencies has also had significant positive impact on
 
 ## New Features
 
-- Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
-- Added support for Wasm function call resumption after running out of fuel.
-- Batteries included: WAT support is now available in Module::new and Module::new_unchecked.
-- Wasmi now provided as backend in Wasmer.
+Wasmi and its feature set is constantly evolving. In this section the most notable new features since the last post in March 2024 are listed.
+
+### C-API Bindings
+
+Support for the "official" [WebAssembly C-API](https://github.com/WebAssembly/wasm-c-api) has been added to Wasmi via [`wasmi_c_api_impl` crate](https://crates.io/crates/wasmi_c_api_impl). With this, any library or language that can interface with C code can now also use Wasmi. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md) to learn more about using Wasmi from C.
+
+### Refueled Resumable Calls
+
+As many other Wasm runtimes, Wasmi has [fuel metering built-in](https://docs.rs/wasmi/0.51.2/wasmi/struct.Config.html#method.consume_fuel). This is a solution to solve the problem of making sure that executions halt eventually. Executions are provided a quantity of fuel and yield back to the host when they run out of it before returning.
+
+> 💡 Wouldn't it be great if the host could then decide to resume the execution later?
+
+This is exactly what is possible with Wasmi today and it comes in very handy when using Wasmi as execution engine to schedule concurrent Wasm jobs similar to how operating systems do.
+
+### Usability Improvements
+
+Wasmi has received more usability improvments than could fit on a single list.
+Some of the most relevant are:
+
+- 🔋: WAT is now supported in `Module::new` and `Module::new_unchecked`.
+- 🪞: Wasmtime API mirror has been further improved. The ultimate goal is for Wasmi to be a drop-in replacement for most users.
+- ⚡: The `Instance::new` API has been added which is more low-level and efficient than the `Linker` API in some cases.
+- 📚: An extensive [Usage Guide](https://github.com/wasmi-labs/wasmi/blob/main/docs/usage.md) has been written to provide Wasmi users with the most important knowledge to get the most out of their Wasmi installment.
+- 🌳: Via `hash-collections` and `prefer-btree-collections` users can decide if Wasmi uses hash-tables or btree-tables. Why is this important? In some `no_std` environments it is not generally safe to use hash-tables since they require random initialization which environment such as `wasm32` cannot provide. [^6]
+- 🔓: Users can compile Wasm modules within called host functions which previously caused a dead-lock.
 
 ## Looking Ahead
 
@@ -119,13 +140,13 @@ The removal of external dependencies has also had significant positive impact on
 - Improved Wasmtime API mirror.
 - [x] Received another security audit conducted by Runtime Verification Inc. sponsored by Stellar Development Foundation.
 - Wasmi now allows to inspect Wasm custom sections.
-- Fixed a dead-lock allowing users to compile Wasm modules in host functions.
-- Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
+- [x] Fixed a dead-lock allowing users to compile Wasm modules in host functions.
+- [x] Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
 - [x] Minified Wasmi's dependency graph from 7 external dependencies down to just 2. (`spin` and `wasmparser`)
 - [x] Wasmi was added to Google's OSSFuzz.
-- Wasmi now provided as backend in Wasmer.
-- Batteries included: WAT support in `Module::new` and `Module::new_unchecked`.
-- Added support for Wasm function call resumption after running out of fuel.
+- [x] Wasmi now provided as backend in Wasmer.
+- [x] Batteries included: WAT support in `Module::new` and `Module::new_unchecked`.
+- [x] Added support for Wasm function call resumption after running out of fuel.
 - Foundational clean-up of the Wasmi translator: simpler and future proofed.
     - Fuel metering no longer an afterthought - nearly free.
     - Inspired by Stitch's translation model.
@@ -140,3 +161,5 @@ The removal of external dependencies has also had significant positive impact on
 [^4]: Before that, Wasmi's tests were tightly integrated with its translation engine. This necessitated updates to them whenever Wasmi's translation engine was changed. While those tightly integrated tests helped with early development, it is needless to say, that this process wasn't sustainable.
 
 [^5]: Where Wasmi v0.32 required ~10 seconds to compile, we are now down to just ~4.5s. Tested on Macbook M2 Pro.
+
+[^6]: That's why Rust's standard library does not provide `HashMap` in its `alloc` crate. Note that the `hashbrown` crate has `no_std` support but kinda cheats as its random initialization is not applicable to some systems and thus a potential attack vector for safety critical `no_std` systems.
