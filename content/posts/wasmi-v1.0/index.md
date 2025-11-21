@@ -113,18 +113,38 @@ Some of the most relevant are:
 
 ## Looking Ahead
 
-- Wasmi 2.0 and its new executor.
-    - Make use of Rust's `become` once stable, prepare instruction dispatch for it.
-    - Direct threaded code, inspired by Stitch for even faster execution performance.
-    - Encodings all immediates in bytecode inline - removing the need for function local constants bloating up the stack.
-    - Wasm module preprocessing for even faster Wasm module instantiations.
-    - Instance related bytecode to speed-up code with interacts heavily with instance data.
-    - Accumulator based interpreter architecture for maximum execution performance.
+The look ahead is even more exciting than the look back!
+
+### The Next-Gen Engine
+
+Wasmi 2.0 and its new executor.
+
+- Make use of Rust's [`become` keyword]() once stable.
+- Make use of Rust's [`#[loop_match]` attribute]() once stable.
+- 4 modes of execution:
+    - direct-threaded code: fastest option
+    - indirect-threaded code: fast option with lower memory consumption
+    - loop-call dispatch: portable, direct-dispatch
+    - loop-match dispatch: portable, indirect-dispatch
+- Direct threaded code, inspired by Stitch for even faster execution performance.
+- Encodings all immediates in bytecode inline - removing the need for function local constants bloating up the stack.
+- Wasm module preprocessing for even faster Wasm module instantiations.
+- Instance related bytecode to speed-up code with interacts heavily with instance data.
+- Accumulator based interpreter architecture for maximum execution performance.
+
+### Full Wasm 3.0 Support
+
 - Full Wasm 3.0 support: Wasm `function-references`, `exception-handling` and `gc` proposal implementation.
 
 ## Try It Out!
 
 - Wasmi can now be used as a backend in Wasmer, broadening its applicability in the Wasm ecosystem.
+- Wasmi already has many different [big users](https://github.com/wasmi-labs/wasmi#used-by).
+
+## Special Thanks
+
+- Stellar Development Foundation for their generous sponsoring of Wasmi development.
+- E.J.Bruel whom I met on [RustWeek25 in Utrecht](https://2025.rustweek.org/) and with whom I had an amazing nerd conversation about Wasm interpreters. Check out his inspiring [`makepad-stitch` Wasm interpreter](https://github.com/makepad/stitch).
 
 ## What has happened since last blog post
 
