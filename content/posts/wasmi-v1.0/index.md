@@ -89,6 +89,8 @@ Wasmi and its feature set is constantly evolving. In this section the most notab
 
 Support for the "official" [WebAssembly C-API](https://github.com/WebAssembly/wasm-c-api) has been added to Wasmi via [`wasmi_c_api_impl` crate](https://crates.io/crates/wasmi_c_api_impl). With this, any library or language that can interface with C code can now also use Wasmi. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md) to learn more about using Wasmi from C.
 
+There are also plans for Python bindings for Wasmi via the popular [PyO3](https://github.com/PyO3/pyo3) library. If that's something you would love to see please [join the discussion](https://github.com/wasmi-labs/wasmi/issues/1436).
+
 ### Refueled Resumable Calls
 
 As many other Wasm runtimes, Wasmi has [fuel metering built-in](https://docs.rs/wasmi/0.51.2/wasmi/struct.Config.html#method.consume_fuel). This is a solution to solve the problem of making sure that executions halt eventually. Executions are provided a quantity of fuel and yield back to the host when they run out of it before returning.
