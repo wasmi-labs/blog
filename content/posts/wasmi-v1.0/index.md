@@ -119,8 +119,8 @@ The look ahead is even more exciting than the look back!
 
 Wasmi 2.0 and its new executor.
 
-- Make use of Rust's [`become` keyword]() once stable.
-- Make use of Rust's [`#[loop_match]` attribute]() once stable.
+- Make use of Rust's [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407) once stable.
+- Make use of Rust's [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once stable.
 - 4 modes of execution:
     - direct-threaded code: fastest option
     - indirect-threaded code: fast option with lower memory consumption
