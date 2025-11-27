@@ -176,31 +176,10 @@ It is possible to try out and use Wasmi today via various different ways:
 
 ## What has happened since last blog post
 
-- [x] ~Wasmi no longer belongs to Parity but is a stand-alone project.~
-- [x] Wasmi development financially sponsored by the SDF since October 2024.
-- [x] New Wasm proposals support:
-    - [x] Wasm `multi-memory`.
-    - [x] Wasm `memory64`.
-    - [x] Wasm `custom-page-sizes`.
-    - [x] Wasm `wide-arithmetic`.
-    - [x] Wasm `simd` enabled by `simd` crate feature.
-    - [x] Wasm `relaxed-simd` enabled by `simd` crate feature.
-- [x] Optimized Wasmi engine internals.
-    - Implemented lots of new Wasmi bytecode optimizations and lowering to improve execution performance.
 - Improved Wasmtime API mirror.
-- [x] Received another security audit conducted by Runtime Verification Inc. sponsored by Stellar Development Foundation.
-- Wasmi now allows to inspect Wasm custom sections.
-- [x] Fixed a dead-lock allowing users to compile Wasm modules in host functions.
-- [x] Added support for Wasm C-API bindings via `wasmi_c_api_impl` crate. Visit [C-API README](https://github.com/wasmi-labs/wasmi/blob/main/crates/c_api/README.md).
-- [x] Minified Wasmi's dependency graph from 7 external dependencies down to just 2. (`spin` and `wasmparser`)
-- [x] Wasmi was added to Google's OSSFuzz.
-- [x] Wasmi now provided as backend in Wasmer.
-- [x] Batteries included: WAT support in `Module::new` and `Module::new_unchecked`.
-- [x] Added support for Wasm function call resumption after running out of fuel.
 - Foundational clean-up of the Wasmi translator: simpler and future proofed.
     - Fuel metering no longer an afterthought - nearly free.
     - Inspired by Stitch's translation model.
-- [x] Wasmi specific Wast testsuite allowing to catch more Wasmi specific bugs all while being disentangled with implementation details.
 
 [^1]: I verified this using `cargo show-asm` on a Macbook M2 Pro ARM machine at least for many of the `simd` operators.
 
