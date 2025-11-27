@@ -176,7 +176,6 @@ It is possible to try out and use Wasmi today via various different ways:
 
 ## What has happened since last blog post
 
-- Improved Wasmtime API mirror.
 - Foundational clean-up of the Wasmi translator: simpler and future proofed.
     - Fuel metering no longer an afterthought - nearly free.
     - Inspired by Stitch's translation model.
