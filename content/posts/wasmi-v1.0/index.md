@@ -176,12 +176,6 @@ It is possible to try out and use Wasmi today via various different ways:
 - Stellar Development Foundation for their generous sponsoring of Wasmi development.
 - E.J.Bruel whom I met on [RustWeek25 in Utrecht](https://2025.rustweek.org/) and with whom I had an amazing nerd conversation about Wasm interpreters. Check out his inspiring [`makepad-stitch` Wasm interpreter](https://github.com/makepad/stitch).
 
-## What has happened since last blog post
-
-- Foundational clean-up of the Wasmi translator: simpler and future proofed.
-    - Fuel metering no longer an afterthought - nearly free.
-    - Inspired by Stitch's translation model.
-
 [^1]: I verified this using `cargo show-asm` on a Macbook M2 Pro ARM machine at least for many of the `simd` operators.
 
 [^2]: The full list of Wasmi support Wasm proposals can be found [here](https://github.com/wasmi-labs/wasmi?tab=readme-ov-file#webassembly-features).
