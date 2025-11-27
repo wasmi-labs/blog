@@ -36,9 +36,32 @@ With these additions, Wasmi supports all of [Wasm 2.0](https://webassembly.org/n
 
 ## Engine Optimizations
 
-Countless engine improvements, new optimizations, clean-ups and refactorings have significantly improved Wasmi's translation and execution performance all while lowering its memory footprint.
+Countless execution engine improvements, new optimizations, refinements on Wasmi's internal bytecode, code clean-ups and refactorings have significantly improved Wasmi's translation and especially execution performance all while lowering its memory footprint and supporting new features.
 
-TODO: graphics, diagrams
+Note though that performance was not the primary focus since the last blog post and Wasmi is still using the same interpreter architecture that has been introduced in March 2024.
+
+### Benchmarks
+
+All the benchmarks shown below were conducted on an Apple M2 Pro using nightly `rustc 1.93.0-nightly (1be6b13be 2025-11-26)`
+via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at [this revision](https://github.com/wasmi-labs/wasmi-benchmarks/tree/b9385cae9bfb8cf84dbb13996d0b948ca5826b53).
+
+| | |
+|--|--|
+| [![][execute-fib-iterative]][execute-fib-iterative] | [![][execute-fib-recursive]][execute-fib-recursive] |
+| [![][execute-fib-tailrec]][execute-fib-tailrec] | [![][execute-argon2]][execute-argon2] |
+| [![][execute-primes]][execute-primes] | [![][execute-matmul]][execute-matmul] |
+
+The Coremark benchmark also shows a clear positive progression.
+
+[![][bench-coremark]][bench-coremark]
+
+[execute-fib-iterative]: ./benches/execute/fib.iterative.svg
+[execute-fib-recursive]: ./benches/execute/fib.recursive.svg
+[execute-fib-tailrec]: ./benches/execute/fib.tailrec.svg
+[execute-argon2]: ./benches/execute/argon2.svg
+[execute-primes]: ./benches/execute/primes.svg
+[execute-matmul]: ./benches/execute/matmul.svg
+[bench-coremark]: ./benches/coremark.svg
 
 ## Safety & Security Improvements
 
