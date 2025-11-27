@@ -11,7 +11,7 @@ draft: false
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/) in March 2024.
 Since that time a lot of has happened on the Wasmi project, both technically and non-technically, which culminated in Wasmi 1.0, [almost 8 years after its initial version](https://crates.io/crates/wasmi/0.0.0).
 
-Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org/) interpreter with a focus on embedded environments. It is an excellent choice for IoT devices, plugin systems, cloud hosts and as smart contract execution engine.
+Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org/) interpreter with a focus on embedded environments. It is an excellent choice for IoT devices, plugin systems, cloud hosts, as smart contract execution engine and even as a lightweight [game console engine](https://fireflyzero.com/).
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation](https://stellar.org/foundation) which sponsors development of the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn't be where it is today.
 
