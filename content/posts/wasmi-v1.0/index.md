@@ -159,7 +159,21 @@ Wasmi 2.0 and its new executor.
 
 ### Full Wasm 3.0 Support
 
-- Full Wasm 3.0 support: Wasm `function-references`, `exception-handling` and `gc` proposal implementation.
+Wasmi already implements many of the Wasm 3.0 proposals, and [even](https://github.com/WebAssembly/custom-page-sizes) [more](https://github.com/WebAssembly/wide-arithmetic):
+
+- ✅ [`memory64`](https://github.com/WebAssembly/memory64)
+- ✅ [`multi-memory`](https://github.com/WebAssembly/multi-memory)
+- ✅ [`tail-call`](https://github.com/WebAssembly/tail-call)
+- ✅ [`relaxed-simd`](https://github.com/WebAssembly/relaxed-simd)
+- ✅ [`extended-const`](https://github.com/WebAssembly/extended-const)
+
+However, the following Wasm 3.0 proposals are still missing:
+
+- 🚧 [`function-references`](https://github.com/WebAssembly/function-references)
+- 🚧 [`exception-handling`](https://github.com/WebAssembly/exception-handling)
+- 🚧 [`gc` (Garbage Collection)](https://github.com/WebAssembly/gc)
+
+Supporting those 3 missing Wasm proposals and thus making Wasmi WebAssembly 3.0 compatible will be a high priority once the next-gen execution engine, described above, has been implemented.
 
 ## Try It Out!
 
