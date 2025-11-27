@@ -51,7 +51,7 @@ via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at [t
 | [![][execute-fib-tailrec]][execute-fib-tailrec] | [![][execute-argon2]][execute-argon2] |
 | [![][execute-primes]][execute-primes] | [![][execute-matmul]][execute-matmul] |
 
-The Coremark benchmark also shows a clear positive progression.
+The Coremark benchmark also shows a clear positive progression. [^7]
 
 [![][bench-coremark]][bench-coremark]
 
@@ -208,3 +208,5 @@ Wasmi 2.0 and its new executor.
 [^5]: Where Wasmi v0.32 required ~10 seconds to compile, we are now down to just ~4.5s. Tested on Macbook M2 Pro.
 
 [^6]: That's why Rust's standard library does not provide `HashMap` in its `alloc` crate. Note that the `hashbrown` crate has `no_std` support but kinda cheats as its random initialization is not applicable to some systems and thus a potential attack vector for safety critical `no_std` systems.
+
+[^7]: Note that the Coremark score of Wasmi v0.32 is significantly worse than in the [last blog post](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/#coremark). The reason for this is likely the different Rust compiler version. It is not uncommon for new compiler versions to drastically change performance metrics, especially if the underlying LLVM version changes.
