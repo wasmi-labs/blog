@@ -136,7 +136,7 @@ Some of the most relevant are:
 
 ## Looking Ahead
 
-The look ahead is even more exciting than the look back!
+The look ahead is even more exciting than the look behind!
 
 ### The Next-Gen Engine
 
