@@ -127,11 +127,11 @@ This is exactly what is possible with Wasmi today and it comes in very handy whe
 Wasmi has received more usability improvments than could fit on a single list.
 Some of the most relevant are:
 
-- 🔋: WAT is now supported in `Module::new` and `Module::new_unchecked`.
-- 🪞: Wasmtime API mirror has been further improved. The ultimate goal is for Wasmi to be a drop-in replacement for most users.
-- ⚡: The `Instance::new` API has been added which is more low-level and efficient than the `Linker` API in some cases.
+- 🔋: WAT is now supported in [`Module::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new) and [`Module::new_unchecked`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new_unchecked) if its [`wat` crate feature](https://github.com/wasmi-labs/wasmi/blob/v0.51.2/Cargo.toml#L44) is enabled. [^8]
+- 🪞: [Wasmtime API](https://docs.rs/wasmtime/latest/wasmtime/) mirror has been further improved. The ultimate goal is for Wasmi to be a drop-in replacement for most users.
+- ⚡: The [`Instance::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Instance.html#method.new) API has been added which is more low-level and efficient than the `Linker` API in some cases.
 - 📚: An extensive [Usage Guide](https://github.com/wasmi-labs/wasmi/blob/main/docs/usage.md) has been written to provide Wasmi users with the most important knowledge to get the most out of their Wasmi installment.
-- 🌳: Via `hash-collections` and `prefer-btree-collections` users can decide if Wasmi uses hash-tables or btree-tables. Why is this important? In some `no_std` environments it is not generally safe to use hash-tables since they require random initialization which environment such as `wasm32` cannot provide. [^6]
+- 🌳: Via [`hash-collections` and `prefer-btree-collections`](https://docs.rs/wasmi/0.51.2/wasmi/#crate-features) users can decide if Wasmi uses hash-tables or btree-tables. Why is this important? In some `no_std` environments it is not generally safe to use hash-tables since they require random initialization which environment such as `wasm32` cannot provide. [^6]
 - 🔓: Users can compile Wasm modules within called host functions which previously caused a dead-lock.
 
 ## Looking Ahead
@@ -194,3 +194,5 @@ It is possible to try out and use Wasmi today via various different ways:
 [^6]: That's why Rust's standard library does not provide `HashMap` in its `alloc` crate. Note that the `hashbrown` crate has `no_std` support but kinda cheats as its random initialization is not applicable to some systems and thus a potential attack vector for safety critical `no_std` systems.
 
 [^7]: Note that the Coremark score of Wasmi v0.32 is significantly worse than in the [last blog post](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/#coremark). The reason for this is likely the different Rust compiler version. It is not uncommon for new compiler versions to drastically change performance metrics, especially if the underlying LLVM version changes.
+
+[^8]: Note that Wasmi's `wat` crate feature is enabled by default.
