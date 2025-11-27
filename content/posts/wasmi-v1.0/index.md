@@ -6,7 +6,7 @@ authorURL: 'https://github.com/robbepop'
 draft: false
 ---
 
-> ⚠️ Due to growing hostility towards A.I. generated or improved content, this article has been written entirely without the help of Artificial Intelligence. [^9]
+> ⚠️ Due to growing hostility towards A.I. generated or improved content the author refrained from using A.I. to write or refine this article. [^9]
 
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/) in March 2024.
 Since that time a lot of has happened on the Wasmi project, both technically and non-technically, which culminated in Wasmi 1.0.
@@ -198,4 +198,4 @@ It is possible to try out and use Wasmi today via various different ways:
 
 [^8]: Note that Wasmi's `wat` crate feature is enabled by default.
 
-[^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his.
+[^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his. In case of severe mistakes feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
