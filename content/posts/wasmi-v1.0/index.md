@@ -177,7 +177,7 @@ Supporting those 3 missing Wasm proposals and thus making Wasmi WebAssembly 3.0 
 
 ## Try It Out!
 
-It is possible to try out and use Wasmi today via various different ways:
+Try out and use Wasmi today via various different ways:
 
 - 📚 As library dependency via the [`wasmi` crate](https://crates.io/crates/wasmi).
 - 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli`.
