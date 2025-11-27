@@ -6,6 +6,8 @@ authorURL: 'https://github.com/robbepop'
 draft: false
 ---
 
+> ⚠️ Due to growing hostility towards A.I. generated or improved content, this article has been written entirely without the help of Artificial Intelligence. [^9]
+
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/) in March 2024.
 Since that time a lot of has happened on the Wasmi project, both technically and non-technically, which culminated in Wasmi 1.0.
 
@@ -195,3 +197,5 @@ It is possible to try out and use Wasmi today via various different ways:
 [^7]: Note that the Coremark score of Wasmi v0.32 is significantly worse than in the [last blog post](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/#coremark). The reason for this is likely the different Rust compiler version. It is not uncommon for new compiler versions to drastically change performance metrics, especially if the underlying LLVM version changes.
 
 [^8]: Note that Wasmi's `wat` crate feature is enabled by default.
+
+[^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his.
