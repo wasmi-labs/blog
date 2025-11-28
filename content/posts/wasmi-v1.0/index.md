@@ -201,7 +201,7 @@ Try out and use Wasmi today via various different ways:
 - Again, a huge thank you to [Stellar Development Foundation (SDF)](https://stellar.org/foundation) for their generous sponsoring and support of the Wasmi project and its development. All this work would have not been possible without the SDF.
 - I would like to express my gratitude to [Parity Technologies](https://www.parity.io/) for allowing me to turn Wasmi into a stand-alone [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software) project.
 - Next, I would like to thank [E.J.P. Bruel](https://github.com/eddybruel). He is the author of [Stitch](https://github.com/makepad/stitch), an extremely well engineered high-performance Wasm interpreter. We randomly met at [RustWeek2025](https://2025.rustweek.org/) and are having the best nerd talks about Wasm interpreters for which I am really grateful. His marvellous work on Stitch inspired a lot of the techniques that are going to be introduced with Wasmi 2.0.
-- Finally, I am very thankful for the regular chats with [Graydon Hoare](https://github.com/graydon), his persistent support of the Wasmi project, his technical insights and copius knowledge about programming languages and virtual machines.
+- Finally, I am very thankful for the regular, pleasant chats with [Graydon Hoare](https://github.com/graydon), his persistent support of the Wasmi project, his technical insights and copius knowledge about programming languages and virtual machines.
 
 [^1]: I verified this using `cargo show-asm` on a Macbook M2 Pro ARM machine at least for many of the `simd` operators.
 
