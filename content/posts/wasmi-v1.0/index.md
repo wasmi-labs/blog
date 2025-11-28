@@ -102,7 +102,7 @@ A minified graph of external dependencies usually implies a smaller attack surfa
 - [`spin`](https://crates.io/crates/spin): Low-level primitives for locks and mutexes for [`no_std` environments](https://docs.rust-embedded.org/book/intro/no-std.html) which Wasmi supports. Note that this is a trivial dependency when compiling Wasmi with `std` feature enabled.
 - [`wasmparser`](https://crates.io/crates/wasmparser): A [Bytecode Alliance](https://bytecodealliance.org/) maintained highly efficient Wasm parser and validator.
 
-There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-labs/wasmi/issues/1514) to replace the external `wasmparser` crate.
+There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-labs/wasmi/issues/1514) to replace the external `wasmparser` crate. [^10]
 
 The removal of external dependencies has also had significant positive impact on Wasmi's compile times. [^5]
 
@@ -208,3 +208,5 @@ Try out and use Wasmi today via various different ways:
 [^8]: Note that Wasmi's `wat` crate feature is enabled by default.
 
 [^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
+
+[^10]: The `wasmparser` crate itself is of high quality and has served Wasmi well so far. However, over time it accumulated a ton of other stakeholders with various different focuses and Wasmi got a bit isolated with its focus on high-performance parsing and validation.
