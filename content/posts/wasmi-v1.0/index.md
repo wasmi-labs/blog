@@ -104,16 +104,18 @@ A minified graph of external dependencies usually implies a smaller attack surfa
 
 There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-labs/wasmi/issues/1514) to replace the external `wasmparser` crate. [^10]
 
-The removal of external dependencies has also had positive impact on Wasmi's compile times. [^5]
+#### Cargo Timing Reports
 
-Below you can see the `cargo` timing reports of: `cargo build -p wasmi --no-default-features`
+Below you can see the `cargo` timing reports of:  
+`cargo build -p wasmi --no-default-features` [^5]
 
-| Wasmi v0.32 | Wasmi 1.0 |
+| Wasmi 0.32 | Wasmi 1.0 |
 |--|--|
-| [![][timings-before]][timings-before] | [![][timings-after]][timings-after] |
+| [![][timings-0.32]][timings-0.32] | [![][timings-1.0]][timings-1.0] |
 
-[timings-before]: ./benches/timings/timings-wasmi-v0.32.png
-[timings-after]: ./benches/timings/timings-wasmi-1.0.png
+[timings-0.32]: ./benches/timings/timings-wasmi-0.32.png
+[timings-1.0]: ./benches/timings/timings-wasmi-1.0.png
+[timings-2.0]: ./benches/timings/timings-wasmi-2.0.png
 
 ## New Features
 
@@ -208,7 +210,7 @@ Try out and use Wasmi today via various different ways:
 
 [^4]: Before that, Wasmi's tests were tightly integrated with its translation engine. This necessitated updates to them whenever Wasmi's translation engine was changed. While those tightly integrated tests helped with early development, it is needless to say, that this process wasn't sustainable.
 
-[^5]: Where Wasmi v0.32 required ~6 seconds to compile, we are now down to just ~4.5s despite providing way more features. Tested on Macbook M2 Pro.
+[^5]: Both Wasmi v0.32 and Wasmi 1.0 require ~6 seconds to compile. With the preliminary Wasmi 2.0 we got this down to ~4.5s: [![][timings-2.0]][timings-2.0]
 
 [^6]: That's why Rust's standard library does not provide `HashMap` in its `alloc` crate. Note that the `hashbrown` crate has `no_std` support but kinda cheats as its random initialization is not applicable to some systems and thus a potential attack vector for safety critical `no_std` systems.
 
