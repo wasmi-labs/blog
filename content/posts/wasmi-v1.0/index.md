@@ -153,20 +153,20 @@ The look ahead is even more exciting than the look behind!
 
 ### The Next-Gen Engine
 
-Wasmi 2.0 and its new executor.
+Wasmi 2.0 will shift its focus again onto performance.
+Work on Wasmi 2.0 has already been well underway and preliminary benchmarks look great. [^11]
 
-- Make use of Rust's [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407) once stable.
-- Make use of Rust's [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once stable.
-- 4 modes of execution:
-    - direct-threaded code: fastest option
-    - indirect-threaded code: fast option with lower memory consumption
-    - loop-call dispatch: portable, direct-dispatch
-    - loop-match dispatch: portable, indirect-dispatch
-- Direct threaded code, inspired by Stitch for even faster execution performance.
-- Encodings all immediates in bytecode inline - removing the need for function local constants bloating up the stack.
-- Wasm module preprocessing for even faster Wasm module instantiations.
-- Instance related bytecode to speed-up code with interacts heavily with instance data.
-- Accumulator based interpreter architecture for maximum execution performance.
+It will feature different modes of interpreter dispatch with various different advantages represented by 2 new crate features:
+
+| | ❌ `portable-dispatch` | ✅ `portable-dispatch` |
+|--|--|--|
+| ❌ **`indirect-dispatch`** | Direct threaded instruction dispatch. This is the fastest option at the expense of portability and memory consumption. Similar to Stitch or Wasm3. | Portable call-based instruction dispatch within a loop. |
+| ✅ **`indirect-dispatch`** | Indirect threaded instruction dispatch. Slightly slower than its direct counterpart but has a slightly better memory footprint. | Simple but efficient loop-match based instruction dispatch similar to how Wasmi 1.0 dispatch works. |
+
+Ideally, it will make use of both [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407)
+and [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once those features are stabilized.
+
+This is just the pinnacle of what is about to come with Wasmi 2.0 and a blog post is more than likely to appear once it is ready for prime time.
 
 ### Full Wasm 3.0 Support
 
@@ -222,3 +222,5 @@ Try out and use Wasmi today via various different ways:
 [^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 
 [^10]: The `wasmparser` crate itself is of high quality and has served Wasmi well so far. However, over time it accumulated a ton of other stakeholders with various different requirements and Wasmi got a bit isolated with its focus on high-performance parsing and validation.
+
+[^11]: For the curious, here is a [link to the PR](https://github.com/wasmi-labs/wasmi/pull/1655) that implements Wasmi 2.0 in a preliminary state.
