@@ -1,5 +1,5 @@
 ---
-date: 2025-08-14T13:16:51+02:00
+date: 2025-11-27T12:16:51+02:00
 title: "Wasmi 1.0"
 author: 'Robin Freyler'
 authorURL: 'https://github.com/robbepop'
