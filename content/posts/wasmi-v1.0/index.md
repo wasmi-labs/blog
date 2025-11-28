@@ -209,4 +209,4 @@ Try out and use Wasmi today via various different ways:
 
 [^9]: The author of this article is not a native english speaker. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 
-[^10]: The `wasmparser` crate itself is of high quality and has served Wasmi well so far. However, over time it accumulated a ton of other stakeholders with various different focuses and Wasmi got a bit isolated with its focus on high-performance parsing and validation.
+[^10]: The `wasmparser` crate itself is of high quality and has served Wasmi well so far. However, over time it accumulated a ton of other stakeholders with various different requirements and Wasmi got a bit isolated with its focus on high-performance parsing and validation.
