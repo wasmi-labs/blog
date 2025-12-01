@@ -164,7 +164,7 @@ It will feature different modes of interpreter dispatch with various different a
 | ✅ **`indirect-dispatch`** | Indirect threaded instruction dispatch. Slightly slower than its direct counterpart but has a slightly better memory footprint. | Simple but efficient loop-match based instruction dispatch similar to how Wasmi 1.0 dispatch works. |
 
 Ideally, it will make use of both [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407)
-and [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once those features are stabilized.
+and [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once those features are stabilized. [^12]
 
 This is just the pinnacle of what is about to come with Wasmi 2.0 and a blog post is more than likely to appear once it is ready for prime time.
 
@@ -224,3 +224,5 @@ Try out and use Wasmi today via various different ways:
 [^10]: The `wasmparser` crate itself is of high quality and has served Wasmi well so far. However, over time it accumulated a ton of other stakeholders with various different requirements and Wasmi got a bit isolated with its focus on high-performance parsing and validation.
 
 [^11]: For the curious, here is a [link to the PR](https://github.com/wasmi-labs/wasmi/pull/1655) that implements Wasmi 2.0 in a preliminary state.
+
+[^12]: For `#[loop_match]` there are ideas floating around to improve codegen quality of interpreters by trying to push LLVM into a better direction for a computed-goto like dispatch. It is unclear whether this will be implemented and included into the `#[loop_match]` design.
