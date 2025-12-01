@@ -159,7 +159,7 @@ Work on Wasmi 2.0 has already been well underway and preliminary benchmarks look
 It will feature different modes of interpreter dispatch with various different advantages represented by 2 new crate features:
 
 | | ❌ `portable-dispatch` | ✅ `portable-dispatch` |
-|--|--|--|
+|:--:|--|--|
 | ❌ **`indirect-dispatch`** | Direct threaded instruction dispatch. This is the fastest option at the expense of portability and memory consumption. Similar to Stitch or Wasm3. | Portable call-based instruction dispatch within a loop. |
 | ✅ **`indirect-dispatch`** | Indirect threaded instruction dispatch. Slightly slower than its direct counterpart but has a slightly better memory footprint. | Simple but efficient loop-match based instruction dispatch similar to how Wasmi 1.0 dispatch works. |
 
