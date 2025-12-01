@@ -44,7 +44,7 @@ Note though that performance was not the primary focus since the last blog post 
 
 ### Benchmarks
 
-All the benchmarks shown below were conducted on an Apple M2 Pro using nightly `rustc 1.93.0-nightly (1be6b13be 2025-11-26)`
+All the benchmarks shown below were conducted on an Apple M2 Pro using `rustc 1.91.1`
 via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at [this revision](https://github.com/wasmi-labs/wasmi-benchmarks/tree/b9385cae9bfb8cf84dbb13996d0b948ca5826b53).
 
 | | |
@@ -211,7 +211,7 @@ Try out and use Wasmi today via various different ways:
 
 [^4]: Before that, Wasmi's tests were tightly integrated with its translation engine. This necessitated updates to them whenever Wasmi's translation engine was changed. While those tightly integrated tests helped with early development, it is needless to say, that this process wasn't sustainable.
 
-[^5]: Both Wasmi v0.32 and Wasmi 1.0 require ~6 seconds to compile. With the preliminary Wasmi 2.0 we got this down to ~4.5s: [![][timings-2.0]][timings-2.0]
+[^5]: Wasmi v0.32 requires ~6s to compile whereas Wasmi 1.0 reduces this to ~4.7s. The preliminary Wasmi 2.0 behaves similarly to Wasmi 1.0: [![][timings-2.0]][timings-2.0]
 
 [^6]: That's why Rust's standard library does not provide `HashMap` in its `alloc` crate. Note that the `hashbrown` crate has `no_std` support but kinda cheats as its random initialization is not applicable to some systems and thus a potential attack vector for safety critical `no_std` systems.
 

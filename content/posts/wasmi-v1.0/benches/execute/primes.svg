@@ -15,7 +15,7 @@ Relative Time (lower is better, logarithmic scale)
 <line opacity="0.15" stroke="#000000" stroke-width="1" x1="1063" y1="224" x2="1063" y2="76"/>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="404,76 404,224 "/>
 <text x="395" y="199" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
-Wasmi 1.0
+Wasmi
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="399,199 404,199 "/>
 <text x="395" y="150" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="24.193548387096776" opacity="1" fill="#000000">
@@ -35,16 +35,16 @@ Wasmi v0.31
 10.0
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1063,225 1063,230 "/>
+<rect x="405" y="140" width="235" height="20" opacity="1" fill="#A0A03C" stroke="none"/>
 <rect x="405" y="190" width="152" height="19" opacity="1" fill="#C8C846" stroke="none"/>
-<rect x="405" y="140" width="223" height="20" opacity="1" fill="#A0A03C" stroke="none"/>
-<rect x="405" y="91" width="308" height="19" opacity="1" fill="#8C8232" stroke="none"/>
+<rect x="405" y="91" width="310" height="19" opacity="1" fill="#8C8232" stroke="none"/>
 <text x="568" y="199" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
 x1.00
 </text>
-<text x="639" y="150" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
-x1.38
+<text x="651" y="150" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x1.46
 </text>
-<text x="723" y="101" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
-x2.03
+<text x="725" y="101" dy="0.5ex" text-anchor="start" font-family="monospace" font-size="24.193548387096776" opacity="1" fill="#000000">
+x2.05
 </text>
 </svg>
