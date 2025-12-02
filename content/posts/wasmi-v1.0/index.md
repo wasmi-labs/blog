@@ -207,8 +207,8 @@ Try out and use Wasmi today in various ways:
 
 - 📚 As a library dependency via the [`wasmi` crate](https://crates.io/crates/wasmi).
 - 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli`.
-- ⚙️ In your C interfacing language using the [Wasmi C-API](https://github.com/wasmi-labs/wasmi/tree/main/crates/c_api#readme).
-- 🧩 As [Wasmer](https://wasmer.io/) backend, using its [`wasmi` crate feature](https://github.com/wasmerio/wasmer/blob/v6.1.0/Cargo.toml#L224).
+- ⚙️ In your C-interfacing language using the [Wasmi C-API](https://github.com/wasmi-labs/wasmi/tree/main/crates/c_api#readme).
+- 🧩 As a [Wasmer](https://wasmer.io/) backend, using its [`wasmi` crate feature](https://github.com/wasmerio/wasmer/blob/v6.1.0/Cargo.toml#L224).
 - 📦 Or enjoy Wasmi indirectly by using any of its [big users](https://github.com/wasmi-labs/wasmi#used-by).
 
 ## Special Thanks
