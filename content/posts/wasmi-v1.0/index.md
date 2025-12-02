@@ -156,7 +156,7 @@ Some of the most relevant are:
 
 - 🔋: WAT is now supported in [`Module::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new) and [`Module::new_unchecked`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new_unchecked) if its [`wat` crate feature](https://github.com/wasmi-labs/wasmi/blob/v0.51.2/Cargo.toml#L44) is enabled. [^8]
 - 🪞: [Wasmtime API](https://docs.rs/wasmtime/latest/wasmtime/) mirror has been further improved. The ultimate goal is for Wasmi to be a drop-in replacement for most users.
-- ⚡: The [`Instance::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Instance.html#method.new) API has been added which is more low-level and efficient than the `Linker` API in some cases.
+- ⚡: The [`Instance::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Instance.html#method.new) API has been added, which is more low-level and efficient than the `Linker` API in some cases.
 - 📚: An extensive [Usage Guide](https://github.com/wasmi-labs/wasmi/blob/main/docs/usage.md) has been written to provide Wasmi users with the most important knowledge to get the most out of their Wasmi installment.
 - 🌳: Via [`hash-collections` and `prefer-btree-collections`](https://docs.rs/wasmi/0.51.2/wasmi/#crate-features) users can decide if Wasmi uses hash-tables or btree-tables. Why is this important? In some `no_std` environments it is not generally safe to use hash-tables since they require random initialization which environment such as `wasm32` cannot provide. [^6]
 - 🔓: Users can compile Wasm modules within called host functions which previously caused a dead-lock.
