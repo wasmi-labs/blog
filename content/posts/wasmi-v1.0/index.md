@@ -61,10 +61,10 @@ via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at
 [this revision](https://github.com/wasmi-labs/wasmi-benchmarks/tree/b9385cae9bfb8cf84dbb13996d0b948ca5826b53).
 
 | | |
-|--|--|
+| --------------------------------------------------- | --------------------------------------------------- |
 | [![][execute-fib-iterative]][execute-fib-iterative] | [![][execute-fib-recursive]][execute-fib-recursive] |
-| [![][execute-fib-tailrec]][execute-fib-tailrec] | [![][execute-argon2]][execute-argon2] |
-| [![][execute-primes]][execute-primes] | [![][execute-matmul]][execute-matmul] |
+| [![][execute-fib-tailrec]][execute-fib-tailrec]     | [![][execute-argon2]][execute-argon2] |
+| [![][execute-primes]][execute-primes]               | [![][execute-matmul]][execute-matmul] |
 
 The Coremark benchmark also shows a clear positive progression. [^7]
 
