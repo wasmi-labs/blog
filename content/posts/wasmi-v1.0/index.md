@@ -119,7 +119,7 @@ There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-l
 
 #### Cargo Timing Reports
 
-Below you can see the `cargo` timing reports of:  
+Below you can see the `cargo` timing reports for:
 `cargo build -p wasmi --no-default-features` [^5]
 
 | Wasmi 0.32 | Wasmi 1.0 |
