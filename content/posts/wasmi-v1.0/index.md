@@ -180,7 +180,8 @@ It will feature different modes of interpreter dispatch with various advantages 
 Ideally, it will make use of both [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407),
 and [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720), once those features are stabilized. [^12]
 
-This is just the pinnacle of what is about to come with Wasmi 2.0 and a blog post is more than likely to appear once it is ready for prime time.
+This is just the pinnacle of what is about to come with Wasmi 2.0,
+and a blog post is more than likely to appear once it is ready for prime time.
 
 ### Full Wasm 3.0 Support
 
