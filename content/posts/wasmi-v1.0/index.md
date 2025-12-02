@@ -146,7 +146,7 @@ As with many other Wasm runtimes, Wasmi has [fuel metering built-in](https://doc
 
 > 💡 Wouldn't it be great if the host could then decide to resume the execution later?
 
-This is exactly what is possible with Wasmi today and it comes in very handy when using Wasmi as execution engine to schedule concurrent Wasm jobs similar to how operating systems do.
+This is exactly what is possible with Wasmi today, and it comes in very handy when using Wasmi as an execution engine to schedule concurrent Wasm jobs, similar to how operating systems do.
 
 ### Usability Improvements
 
