@@ -86,7 +86,7 @@ Given Wasmi's origins as an execution engine for smart contracts on the blockcha
 
 The [Stellar Development Foundation](https://stellar.org/foundation) sponsored an [extensive security audit for Wasmi](https://github.com/wasmi-labs/wasmi/blob/main/resources/audit-2024-11-27.pdf) conducted by [Runtime Verification Inc.](https://runtimeverification.com/).
 
-Over the course of several months a whole team of security professionals inspected the Wasmi codebase, analysed its architecture and wrote down their assessment in the document linked above. During that process they were able to find some issues and concerns which were quickly fixed.
+Over the course of several months, a whole team of security professionals inspected the Wasmi codebase, analysed its architecture, and wrote down their assessment in the document linked above. During that process, they were able to find some issues and concerns, which were quickly fixed.
 
 ### Fuzzing Infrastructure
 
