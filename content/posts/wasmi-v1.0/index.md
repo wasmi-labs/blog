@@ -122,8 +122,8 @@ There are [plans for an internal `wasmi_parse` crate](https://github.com/wasmi-l
 Below you can see the `cargo` timing reports for:
 `cargo build -p wasmi --no-default-features` [^5]
 
-| Wasmi 0.32 | Wasmi 1.0 |
-|--|--|
+| Wasmi 0.32                        | Wasmi 1.0                       |
+| --------------------------------- | ------------------------------- |
 | [![][timings-0.32]][timings-0.32] | [![][timings-1.0]][timings-1.0] |
 
 [timings-0.32]: ./benches/timings/timings-wasmi-0.32.png
