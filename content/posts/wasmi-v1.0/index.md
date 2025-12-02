@@ -168,7 +168,7 @@ The look ahead is even more exciting than the look behind!
 ### The Next-Gen Engine
 
 Wasmi 2.0 will shift its focus again onto performance.
-Work on Wasmi 2.0 has already been well underway and preliminary benchmarks look great. [^11]
+Work on Wasmi 2.0 has already been well underway, and preliminary benchmarks look great. [^11]
 
 It will feature different modes of interpreter dispatch with various different advantages represented by 2 new crate features:
 
