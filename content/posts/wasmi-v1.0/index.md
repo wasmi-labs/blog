@@ -106,7 +106,7 @@ On top of that, [Wasmi has been added to Google's OSS-Fuzz](https://github.com/g
 ### Wast Testsuite
 
 Wasmi now has its own external [Wasmi testsuite](https://github.com/wasmi-labs/wasmi-tests) alongside the official Wasm spec testsuite.
-This [WebAssembly Script (Wast)](https://github.com/WebAssembly/spec/tree/wg-3.0/interpreter#scripts) based testsuite features Wasmi specific testcases and is continuously extended to assert semantic behavior in even more cases. [^4]
+This [WebAssembly Script (Wast)](https://github.com/WebAssembly/spec/tree/wg-3.0/interpreter#scripts) based testsuite features Wasmi-specific test cases and is continuously extended to assert semantic behavior in even more cases. [^4]
 
 ### Minified Dependency Graph
 
