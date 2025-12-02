@@ -199,7 +199,7 @@ However, the following Wasm 3.0 proposals are still missing:
 - 🚧 [`exception-handling`](https://github.com/WebAssembly/exception-handling)
 - 🚧 [`gc` (Garbage Collection)](https://github.com/WebAssembly/gc)
 
-Supporting those 3 missing Wasm proposals and thus making Wasmi WebAssembly 3.0 compatible will be a high priority once the next-gen execution engine, described above, has been implemented.
+Supporting these three missing Wasm proposals and thus making Wasmi WebAssembly 3.0 compatible will be a high priority once the next-gen execution engine, described above, has been implemented.
 
 ## Try It Out!
 
