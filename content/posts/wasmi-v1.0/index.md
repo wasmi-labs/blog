@@ -170,7 +170,7 @@ The look ahead is even more exciting than the look behind!
 Wasmi 2.0 will shift its focus again onto performance.
 Work on Wasmi 2.0 has already been well underway, and preliminary benchmarks look great. [^11]
 
-It will feature different modes of interpreter dispatch with various different advantages represented by 2 new crate features:
+It will feature different modes of interpreter dispatch with various advantages represented by 2 new crate features:
 
 | | ❌ `portable-dispatch` | ✅ `portable-dispatch` |
 |:--:|--|--|
