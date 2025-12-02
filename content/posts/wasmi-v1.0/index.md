@@ -175,7 +175,7 @@ It will feature different modes of interpreter dispatch with various advantages 
 | | ❌ `portable-dispatch` | ✅ `portable-dispatch` |
 |:--:|--|--|
 | ❌ **`indirect-dispatch`** | Direct threaded instruction dispatch. This is the fastest option at the expense of portability and memory consumption. Similar to Stitch or Wasm3. | Portable call-based instruction dispatch within a loop. |
-| ✅ **`indirect-dispatch`** | Indirect threaded instruction dispatch. Slightly slower than its direct counterpart but has a slightly better memory footprint. | Simple but efficient loop-match based instruction dispatch similar to how Wasmi 1.0 dispatch works. |
+| ✅ **`indirect-dispatch`** | Indirect threaded instruction dispatch. Slightly slower than its direct counterpart, but has a slightly better memory footprint. | Simple but efficient loop-match based instruction dispatch similar to how Wasmi 1.0 dispatch works. |
 
 Ideally, it will make use of both [`become` keyword](https://github.com/rust-lang/rfcs/pull/3407)
 and [`#[loop_match]` attribute](https://github.com/rust-lang/rfcs/pull/3720) once those features are stabilized. [^12]
