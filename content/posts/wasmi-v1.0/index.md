@@ -97,7 +97,7 @@ Wasmi has received its own fuzzing infrastructure consisting of 3 different fuzz
 - ⚖️ `differential`: Compares the execution of Wasmi with other Wasm runtimes and tries to find examples of mismatching semantics. [^3]
 
 Especially the `differential` fuzzing target finds quite a lot of issues before they land in new releases.
-And conversely, on Wasmtime's own fuzzing infrastructure [Wasmi acts as an oracle](https://github.com/bytecodealliance/wasmtime/blob/v38.0.4/crates/fuzzing/src/oracles/diff_wasmi.rs) for its differential fuzzing.
+And conversely, on Wasmtime's own fuzzing infrastructure, [Wasmi acts as an oracle](https://github.com/bytecodealliance/wasmtime/blob/v38.0.4/crates/fuzzing/src/oracles/diff_wasmi.rs) for its differential fuzzing.
 
 ### OSS-Fuzz
 
