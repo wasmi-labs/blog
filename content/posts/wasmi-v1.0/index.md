@@ -101,7 +101,7 @@ And conversely, on Wasmtime's own fuzzing infrastructure, [Wasmi acts as an orac
 
 ### OSS-Fuzz
 
-On top of that [Wasmi has been added to Google's OSS-Fuzz](https://github.com/google/oss-fuzz/pull/12665) and is now continuously fuzzed. This has already found some intricate bugs and issues and is a valuable addition that helps to keep Wasmi safe and secure.
+On top of that, [Wasmi has been added to Google's OSS-Fuzz](https://github.com/google/oss-fuzz/pull/12665) and is now continuously fuzzed. This has already found some intricate bugs and issues and is a valuable addition that helps keep Wasmi safe and secure.
 
 ### Wast Testsuite
 
