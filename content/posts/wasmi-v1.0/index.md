@@ -150,7 +150,8 @@ This is exactly what is possible with Wasmi today, and it comes in very handy wh
 
 ### Usability Improvements
 
-Wasmi has received more usability improvments than could fit on a single list.
+Wasmi has received more usability improvements than could fit on a single list.
+
 Some of the most relevant are:
 
 - 🔋: WAT is now supported in [`Module::new`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new) and [`Module::new_unchecked`](https://docs.rs/wasmi/0.51.2/wasmi/struct.Module.html#method.new_unchecked) if its [`wat` crate feature](https://github.com/wasmi-labs/wasmi/blob/v0.51.2/Cargo.toml#L44) is enabled. [^8]
