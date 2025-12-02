@@ -132,7 +132,7 @@ Below you can see the `cargo` timing reports for:
 
 ## New Features
 
-Wasmi and its feature set is constantly evolving. In this section the most notable new features since the last post in March 2024 are listed.
+Wasmi and its feature set are constantly evolving. In this section, the most notable new features since the last post in March 2024 are listed.
 
 ### C-API Bindings
 
