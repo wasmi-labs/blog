@@ -142,7 +142,7 @@ There are also plans for Python bindings for Wasmi via the popular [PyO3](https:
 
 ### Refueled Resumable Calls
 
-As many other Wasm runtimes, Wasmi has [fuel metering built-in](https://docs.rs/wasmi/0.51.2/wasmi/struct.Config.html#method.consume_fuel). This is a solution to solve the problem of making sure that executions halt eventually. Executions are provided a quantity of fuel and yield back to the host when they run out of it before returning.
+As with many other Wasm runtimes, Wasmi has [fuel metering built-in](https://docs.rs/wasmi/0.51.2/wasmi/struct.Config.html#method.consume_fuel). This solves the problem of ensuring that executions halt eventually. Executions are provided a quantity of fuel and yield back to the host when they run out of it before returning.
 
 > 💡 Wouldn't it be great if the host could then decide to resume the execution later?
 
