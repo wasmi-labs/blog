@@ -23,7 +23,7 @@ Wasmi 1.0 represents years of careful evolution: new WebAssembly features, clean
 
 ## New Wasm Proposals
 
-Since March 2024 a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
+Since March 2024, a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
 
 - ✅ The [Wasm `multi-memory` proposal](https://github.com/WebAssembly/multi-memory) allows users to define multiple linear memories within a single Wasm module.
   With this, users can isolate and protect different memories with different purposes from each other.
