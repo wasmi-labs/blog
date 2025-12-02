@@ -25,9 +25,11 @@ Wasmi 1.0 represents years of careful evolution: new WebAssembly features, clean
 
 Since March 2024, a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
 
-- ✅ The [Wasm `multi-memory` proposal](https://github.com/WebAssembly/multi-memory) allows users to define multiple linear memories within a single Wasm module.
+- ✅ The [Wasm `multi-memory` proposal](https://github.com/WebAssembly/multi-memory)
+  allows users to define multiple linear memories within a single Wasm module.
   With this, users can isolate and protect different memories with different purposes from each other.
-- ✅ The [Wasm `memory64` proposal](https://github.com/WebAssembly/memory64) allows users to define 64-bit Wasm modules, thus being able to execute Wasm binaries
+- ✅ The [Wasm `memory64` proposal](https://github.com/WebAssembly/memory64)
+  allows users to define 64-bit Wasm modules, thus being able to execute Wasm binaries
   that require more than just 4GB of memory.
 - ✅ The [Wasm `custom-page-sizes` proposal](https://github.com/WebAssembly/custom-page-sizes) allows to define linear memories with page sizes of 1 byte. By default, linear memories has page sizes of 64KB, thus this allows to execute Wasm on tiny embedded devices with less than 64KB of memory.
 - ✅ The [Wasm `simd` proposal](https://github.com/webassembly/simd) defines over 200 new 128-bit SIMD operators. This allows users to optimize certain compute intense workloads. Honestly, a questionable use-case for an interpreter to say the least which is why Wasmi's `simd` support comes [opt-in](https://github.com/wasmi-labs/wasmi/blob/v0.51.2/crates/wasmi/Cargo.toml#L54) so users don't have to take the bloat. To add insult to injury, it was made sure that `simd` operators in Wasmi actually use SIMD machine instructions. [^1]
