@@ -8,8 +8,8 @@ draft: false
 
 > ⚠️ No A.I. was ~harmed~ used for the making of this article. [^9]
 
-It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/) in March 2024.
-Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
+It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/)
+in March 2024. Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
 both technically and non-technically, which culminated in Wasmi 1.0,
 [almost eight years after its initial version](https://crates.io/crates/wasmi/0.0.0).
 
