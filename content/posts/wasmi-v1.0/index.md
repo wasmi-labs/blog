@@ -50,7 +50,7 @@ With these additions, Wasmi supports all of [Wasm 2.0](https://webassembly.org/n
 
 ## Engine Optimizations
 
-Countless execution engine improvements, new optimizations, refinements on Wasmi's internal bytecode, code clean-ups and refactorings have significantly improved Wasmi's translation and especially execution performance all while lowering its memory footprint and supporting new features.
+Countless execution engine improvements, new optimizations, refinements on Wasmi's internal bytecode, code clean-ups, and refactorings have significantly improved Wasmi's translation and especially execution performance, all while lowering its memory footprint and supporting new features.
 
 Note though that performance was not the primary focus since the last blog post and Wasmi is still using the same interpreter architecture that has been introduced in March 2024.
 
