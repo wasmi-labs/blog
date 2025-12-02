@@ -57,7 +57,8 @@ Note, though, that performance was not the primary focus since the last blog pos
 ### Benchmarks
 
 All the benchmarks shown below were conducted on an Apple M2 Pro using `rustc 1.91.1`
-via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at [this revision](https://github.com/wasmi-labs/wasmi-benchmarks/tree/b9385cae9bfb8cf84dbb13996d0b948ca5826b53).
+via the [Wasmi benchmarks](https://github.com/wasmi-labs/wasmi-benchmarks) at
+[this revision](https://github.com/wasmi-labs/wasmi-benchmarks/tree/b9385cae9bfb8cf84dbb13996d0b948ca5826b53).
 
 | | |
 |--|--|
