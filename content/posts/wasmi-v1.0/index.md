@@ -1,6 +1,6 @@
 ---
 date: 2025-11-27T12:16:51+02:00
-title: "Wasmi 1.0"
+title: "Wasmi 1.0 — Engineering a Stable WebAssembly Interpreter"
 author: 'Robin Freyler'
 authorURL: 'https://github.com/robbepop'
 draft: false
