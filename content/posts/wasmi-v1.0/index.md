@@ -146,7 +146,7 @@ As with many other Wasm runtimes, Wasmi has [fuel metering built-in](https://doc
 
 > 💡 Wouldn't it be great if the host could then decide to resume the execution later?
 
-This is exactly what is possible with Wasmi today, and it comes in very handy when using Wasmi as an execution engine to schedule concurrent Wasm jobs, similar to how operating systems do.
+This is exactly what is possible with Wasmi today, and it comes in very handy when using Wasmi as an execution engine to schedule concurrent Wasm jobs, similar to how operating systems do. [^13]
 
 ### Usability Improvements
 
@@ -241,3 +241,5 @@ Try out and use Wasmi today in various ways:
 [^11]: For the curious, here is a [link to the PR](https://github.com/wasmi-labs/wasmi/pull/1655) that implements Wasmi 2.0 in a preliminary state.
 
 [^12]: For `#[loop_match]` there are ideas floating around to improve codegen quality of interpreters by trying to push LLVM into a better direction for a computed-goto like dispatch. It is unclear whether this will be implemented and included into the `#[loop_match]` design.
+
+[^13]: An example use case of how refueled resumable functions are used is [shown in Wasmi's own testsuite](https://github.com/wasmi-labs/wasmi/blob/525654db426f42d1056e680ec31eb197b66153b8/crates/wast/src/lib.rs#L588-L607) where tests are given just enough fuel to continue execution and are refueled iteratively.
