@@ -7,7 +7,7 @@ draft: false
 ---
 
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/)
-in March 2024. Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
+in May 2024. Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
 both technically and non-technically, which culminated in Wasmi 1.0,
 [*only* eight years after its initial version](https://crates.io/crates/wasmi/0.0.0). [^9]
 
@@ -23,7 +23,7 @@ Wasmi 1.0 represents years of careful evolution: new WebAssembly features, clean
 
 ## New Wasm Proposals
 
-Since March 2024, a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
+Since May 2024, a lot of [Wasm proposals](https://github.com/WebAssembly/proposals) have been implemented in Wasmi.
 
 - ✅ The [Wasm `multi-memory` proposal](https://github.com/WebAssembly/multi-memory)
   allows users to define multiple linear memories within a single Wasm module.
@@ -52,7 +52,7 @@ With these additions, Wasmi supports all of [Wasm 2.0](https://webassembly.org/n
 
 Countless execution engine improvements, new optimizations, refinements on Wasmi's internal bytecode, code clean-ups, and refactorings have significantly improved Wasmi's translation and especially execution performance, all while lowering its memory footprint and supporting new features.
 
-Note, though, that performance was not the primary focus since the last blog post, and Wasmi is still using the same interpreter architecture that was introduced in March 2024.
+Note, though, that performance was not the primary focus since the last blog post, and Wasmi is still using the same interpreter architecture that was introduced in May 2024.
 
 ### Benchmarks
 
@@ -110,7 +110,7 @@ This [WebAssembly Script (Wast)](https://github.com/WebAssembly/spec/tree/wg-3.0
 
 ### Minified Dependency Graph
 
-A minified graph of external dependencies usually implies a smaller attack surface. In March 2024, Wasmi still had [7 external dependencies](https://crates.io/crates/wasmi/0.32.3/dependencies). Wasmi 1.0 reduced this to just 2:
+A minified graph of external dependencies usually implies a smaller attack surface. In May 2024, Wasmi still had [7 external dependencies](https://crates.io/crates/wasmi/0.32.3/dependencies). Wasmi 1.0 reduced this to just 2:
 
 - [`spin`](https://crates.io/crates/spin): Low-level primitives for locks and mutexes for [`no_std` environments](https://docs.rust-embedded.org/book/intro/no-std.html) which Wasmi supports. Note that this is a trivial dependency when compiling Wasmi with the `std` feature enabled.
 - [`wasmparser`](https://crates.io/crates/wasmparser): A [Bytecode Alliance](https://bytecodealliance.org/) maintained highly efficient Wasm parser and validator.
@@ -132,7 +132,7 @@ Below you can see the `cargo` timing reports for:
 
 ## New Features
 
-Wasmi and its feature set are constantly evolving. In this section, the most notable new features since the last post in March 2024 are listed.
+Wasmi and its feature set are constantly evolving. In this section, the most notable new features since the last post in May 2024 are listed.
 
 ### C-API Bindings
 
