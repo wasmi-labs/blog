@@ -6,8 +6,6 @@ authorURL: 'https://github.com/robbepop'
 draft: false
 ---
 
-> ⚠️ No A.I. was ~harmed~ used for the making of this article. [^9]
-
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/)
 in March 2024. Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
 both technically and non-technically, which culminated in Wasmi 1.0,
@@ -16,6 +14,8 @@ both technically and non-technically, which culminated in Wasmi 1.0,
 Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org/) interpreter with a focus on embedded environments. It is an excellent choice for IoT devices, [plugin systems](https://typst.app/docs/reference/foundations/plugin/), cloud hosts, as [smart contract execution engine](https://stellar.org/soroban) and even for your lightweight [game console](https://fireflyzero.com/).
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation (SDF)](https://stellar.org/foundation) which sponsors development of the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn't be where it is today.
+
+> ⚠️ No A.I. was ~harmed~ used for the making of this article. [^9]
 
 ## What does 1.0 mean?
 
