@@ -2,6 +2,7 @@ baseURL: 'https://wasmi-labs.github.io/blog/'
 languageCode: 'en-us'
 title: Wasmi Labs
 theme: PaperMod
+googleAnalytics = "" # leave empty if you don't use GA
 
 params:
   author: 'Robin Freyler'
