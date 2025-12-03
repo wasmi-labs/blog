@@ -8,8 +8,8 @@ draft: false
 
 It has been a long time since the last [article about Wasmi](https://wasmi-labs.github.io/blog/posts/wasmi-v0.32/)
 in May 2024. Since then, a lot has happened on the [Wasmi project](https://github.com/wasmi-labs/wasmi),
-both technically and non-technically, which culminated in Wasmi 1.0,
-[*only* eight years after its initial version](https://crates.io/crates/wasmi/0.0.0). [^9]
+both technically and non-technically, which culminated in the release of [Wasmi 1.0](https://crates.io/crates/wasmi/1.0.0),
+*only* eight years after [its initial version](https://crates.io/crates/wasmi/0.0.0). [^9]
 
 Wasmi is an efficient and versatile [WebAssembly (Wasm)](https://webassembly.org/) interpreter with a focus on embedded environments. It is an excellent choice for IoT devices, [plugin systems](https://typst.app/docs/reference/foundations/plugin/), cloud hosts, as [smart contract execution engine](https://stellar.org/soroban) and even for your lightweight [game console](https://fireflyzero.com/).
 
