@@ -278,8 +278,11 @@ There are some effective ways to reduce their number and for the remaining copie
 
 Wasmi 2.0 introduced some optimized versions for common situations:
 
-- `u64_copy_sNr`: copies `ireg` to a fixed `(local N)` where `N = 0..10`.
-- `u64_copy_sNsM`: copies `(local M)` to `(local N)` where `N,M = 0..5`.
+- `u64_copy_sNr`: copies `ireg` to a fixed `(local N)` where `N = 0..10`
+- `f32_copy_sNr`: copies `freg32` to a fixed `(local N)` where `N = 0..10`
+- `f64_copy_sNr`: copies `freg64` to a fixed `(local N)` where `N = 0..10`
+- `u64_copy_sNsM`: copies `(local M)` to `(local N)` where `N,M = 0..5` and `N != M`
+    - Variants for `freg32` and `freg64` are not required since stack slots are always treated as generic 64-bit patterns.
 
 The same instruction variants have also been added for `freg32` and `freg64`.
 
