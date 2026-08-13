@@ -54,3 +54,42 @@ by the [`wasmi-benchmarks`] project but it provides a good overview.
 It is fair to say that Wasmi 2.0 clearly belongs to the category of the fastest portable Wasm interpreters.
 But there is even more to uncover in an upcoming blog post - stay tuned!
 
+## What made Wasmi 2.0 so fast?
+
+### New Modes of Instruction Dispatch
+
+As promised in the original Wasmi 1.0 blog post Wasmi 2.0 now has 4 different modes of dispatching instructions:
+
+| Mode | Description | Crate Features |
+|:----:|:------------|:-----:|
+| Direct-Threaded Code | The fastest configuration that is used by both, Wasm3 and Stitch. It embeds the function pointers directly into the internal IR of the interpreter and uses tail-calls to jump from instruction handler to the next. | - |
+| Indirect-Threaded Code | Very similar to Direct-threaded Code but embeds op-codes into the internal IR and a jump table that maps those to function pointers upon jumping to the next instruction handler. Roughly 10-15% slower than Direct-Threaded Code but uses way less memory for its IR. | `indirect-dispatch` |
+| Switch-Loop | This is the technique that Wasmi 1.0 used so far. It is the naive way to build interpreters using a loop and a switch (or match). Unfortunately, it leaves a lot of performance on the table, especially on Apple Silicon. | `portable-dispatch` + `indirect-dispatch` |
+| Call-Loop | This calls the next instruction handler within a loop without tail-calls. Unforunately it is very slow and not memory efficient, therefore I cannot recommend using it. It just fell out of the configuration matrix. | `portable-dispatch` |
+
+Wasmi users should use
+
+- **Direct-Threaded Code:** if they want to maximize interpreter performance.
+- **Indirect-Threaded-Code"** for a good balance between interpreter performance and memory usage.
+- **Switch-Loop:** for running on platforms that do not support tail-calls.
+
+Wasmi 2.0 ships the `auto-dispatch` that automatically uses tail-call based configurations where possible.
+
+#### How Do Instruction Dispatch Modes Perform?
+
+![][configs-apple-m2-pro]
+
+[configs-apple-m2-pro]: ./resources/coremark/configs/apple-m2-pro.svg
+
+> **Note:** CoreMark results for Direct-Threaded Code do not perfectly
+>           match the ones from above since it was a different run and
+>           we used the [`wasmi-coremark`] project instead.
+
+Despite these extreme differences in performance all of these instruction dispatching
+modes share the same interpreter execution logic and architecture under the hood.
+
+If you are interested in how the instruction dispatch selection in Wasmi works in detail,
+you can find the code here: [Wasmi Dispatch Selection]
+
+[Wasmi Dispatch Selection]: https://github.com/wasmi-labs/wasmi/tree/v2.0.0-beta.10/crates/wasmi/src/engine/executor/handler/dispatch
+
