@@ -132,3 +132,21 @@ fn(
 - The `Done` result is just a bit pattern that tells the executor why execution halted.
   More detailed information is communicated via the `store` for later retrieval.
 
+#### Problem: Calling Conventions
+
+7 out of the 9 arguments in Wasmi's instruction handlers require integer registers (GPRs),
+namely `store`, `ip`, `sp`, `mem0`, `mem0_len`, `instance` and `ireg`.
+
+However, common calling conventions such as `sysv64` only provide up to 6.
+A 7th integer argument would trash performance due to having to spill to the stack on every dispatch.
+Both, Stitch and Wasm3 circumvent this issue by using only 6 and 4 GPRs respectively.
+
+The simple solution is to turn one of Wasmi's GPR arguments into a floating point value.
+The `instance` argument was chosen since it is used only for relatively expensive operations anyway.
+
+Benchmarks show that the integer to float register domain move isn't a big deal.
+
+> **Note:** the currently unstable [`preserve_none`] ABI might be able to improve this situation in the future once it becomes stable and available on more platforms.
+
+[`preserve_none`]: https://github.com/rust-lang/rust/issues/151401
+
