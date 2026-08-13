@@ -271,7 +271,7 @@ i32_mul_rsi 1 20 ;; ireg = (local 1) * 20
 The `u64_copy_sr A` is required because we overwrite `ireg` in the next instruction
 without actually using it, thus we need to preserve whatever was stored in `ireg` prior.
 
-#### Solution: More Efficient Copies
+#### Solution 1: More Efficient Copies
 
 As demonstrated Wasmi 2.0 requires many more copy instructions due to this design.
 There are some effective ways to reduce their number and for the remaining copies some patterns emerged.
@@ -284,5 +284,12 @@ Wasmi 2.0 introduced some optimized versions for common situations:
 - `u64_copy_sNsM`: copies `(local M)` to `(local N)` where `N,M = 0..5` and `N != M`
     - Variants for `freg32` and `freg64` are not required since stack slots are always treated as generic 64-bit patterns.
 
-The same instruction variants have also been added for `freg32` and `freg64`.
+#### Solution 2: Op-Code Fusion
+
+For some reason Wasm produces lots of `add` and `load` instructions that are immediately followed by `local.set` or `local.tee`.
+
+This is so common that it was worth introducing special
+fused variants which store their results not only in the
+accumulator register but also into a stack slot so that
+Wasmi 2.0 can represent those use-cases with a single IR instruction.
 
