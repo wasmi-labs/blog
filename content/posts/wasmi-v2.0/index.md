@@ -152,3 +152,71 @@ Benchmarks show that the integer to float register domain move isn't a big deal.
 
 [`preserve_none`]: https://github.com/rust-lang/rust/issues/151401
 
+### Accumulator Registers
+
+#### How The Old Wasmi 1.0 Works
+
+Wasmi 1.0 pervasively uses stack offsets (stack slots) for operands and results of IR instructions.
+
+A simplified `i64.add` instruction handler that computes `res = lhs + rhs` where
+`res` and `lhs` are stack slots, and `rhs` is an immediate `i64` value:
+
+```rust
+fn i64_add(ip: Ip, sp: Sp, ..) -> Done {
+    let res: Slot = decode_slot(ip);
+    let lhs: Slot = decode_slot(ip);
+    let rhs:  i64 = decode_i64(ip);
+    let lhs:  i64 = lhs.load(sp);
+    let sum:  i64 = lhs + rhs;
+    res.store(sp, sum);
+    ip.offset(encode_size::<i64_add>);
+    next!(ip, sp, ..)
+}
+```
+
+1. Decode the result `Slot` from `ip`.
+2. Decode the left-hand side `lhs` operand `Slot` from `ip`.
+3. Decode the right-hand side `rhs: i64` operand from `ip`.
+4. Load the value from `lhs`. (`sp[lhs]`)
+5. Compute the sum `sp[lhs] + rhs`.
+6. Store the sum into `sp[result]`.
+7. Offset `ip` to point to the next instruction handler.
+8. Execute the next instruction handler.
+
+#### How Wasmi 2.0 Works
+
+Wasmi 2.0 introduced the 3 new accumulator registers: `ireg`, `freg32` and `freg64`.
+This allows Wasmi 2.0 to load and store instruction operands and results from and to actual hardware registers.
+
+A simplified `i64.add` example that computes `res = lhs + rhs` where `rhs` and `lhs` refer to the `ireg` accumulator
+and `rhs` is a `i64` immediate value would look like this:
+
+```rust
+fn i64_add(ip: Ip, sp: Sp, ireg: i64, ..) -> Done {
+    let rhs: i64 = decode_i64(ip);
+    ireg = ireg + rhs;
+    ip.offset(encode_size::<i64_add>);
+    next!(ip, ireg, ..)
+}
+```
+
+1. Decode the right-hand side `rhs: i64` operand from `ip`.
+2. Compute the sum `ireg + rhs`.
+3. Store the sum into `ireg`.
+4. Offset `ip` to point to the next instruction handler.
+5. Execute the next instruction handler.
+
+This is notably simpler and more efficient since the accumulator registers are always
+implicit and need no costly decoding or loading and storing of values.
+
+This is what it looks like compiled to `aarch64` assembly with `x1 = ip` and `x6 = ireg`:
+
+```asm
+i64_add_rri:
+    .cfi_startproc
+    ldr x7, [x1, #16]!
+    ldur x8, [x1, #-8]
+    add x6, x8, x6
+    br x7
+```
+
