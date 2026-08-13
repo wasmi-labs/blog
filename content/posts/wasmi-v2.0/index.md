@@ -143,7 +143,7 @@ However, common calling conventions such as `sysv64` only provide up to 6.
 A 7th integer argument would trash performance due to having to spill to the stack on every dispatch.
 Both, Stitch and Wasm3 circumvent this issue by using only 6 and 4 GPRs respectively.
 
-The simple solution is to turn one of Wasmi's GPR arguments into a floating point value.
+The simple solution is to turn one of Wasmi's GPR arguments into a floating point value where necessary.
 The `instance` argument was chosen since it is used only for relatively expensive operations anyway.
 
 Benchmarks show that the integer to float register domain move isn't a big deal.
