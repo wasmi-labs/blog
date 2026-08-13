@@ -220,3 +220,66 @@ i64_add_rri:
     br x7
 ```
 
+### Copy Instructions
+
+Instructions in Wasmi 2.0 usually store their result into the implicit accumulator register.
+
+The drawback is that this design requires copy instructions that the old design could avoid.
+
+#### Example: `local.set` & `local.tee`
+
+```lisp
+local.get 0
+i32.const 10
+i32.add
+local.set 0
+```
+
+This Wasm sequence adds `(local 0) + 10` and stores the result back into `(local 0)`.
+Wasmi 1.0 could do all of this in a single Wasmi 1.0 IR instruction:
+
+```lisp
+i32_add_ssi 0 0 10
+```
+
+Wasmi 2.0 requires 2 instructions for the same job:
+
+```lisp
+i32_add_rsi 0 10 ;; ireg = (local 0) + 10
+u64_copy_sr 0    ;; (local 0) = ireg
+```
+
+#### Example: Register Preservation
+
+```lisp
+local.get 0
+i32.const 10
+i32.add
+local.get 1
+i32.const 20
+i32.mul
+```
+
+Wasmi 2.0 has to translate this to roughly the following Wasmi 2.0 IR:
+
+```lisp
+i32_add_rsi 0 10 ;; ireg = (local 0) + 10
+u64_copy_sr A    ;; (local A) = ireg
+i32_mul_rsi 1 20 ;; ireg = (local 1) * 20
+```
+
+The `u64_copy_sr A` is required because we overwrite `ireg` in the next instruction
+without actually using it, thus we need to preserve whatever was stored in `ireg` prior.
+
+#### Solution: More Efficient Copies
+
+As demonstrated Wasmi 2.0 requires many more copy instructions due to this design.
+There are some effective ways to reduce their number but some patterns emerged.
+
+For this reason Wasmi introduced the following set of special common copy instructions:
+
+- `u64_copy_sNr`: copies `ireg` to a fixed `(local N)` where `N = 0..10`.
+- `u64_copy_sNsM`: copies `(local M)` to `(local N)` where `N,M = 0..5`.
+
+The same instruction variants have also been added for `freg32` and `freg64`.
+
