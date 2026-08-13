@@ -93,3 +93,42 @@ you can find the code here: [Wasmi Dispatch Selection]
 
 [Wasmi Dispatch Selection]: https://github.com/wasmi-labs/wasmi/tree/v2.0.0-beta.10/crates/wasmi/src/engine/executor/handler/dispatch
 
+### Execution Handler Signature
+
+Before execution Wasmi translates the Wasm bytecode to Wasmi IR.
+
+Each Wasmi IR instruction has its own unique instruction handler (or execution handler)
+which defines how this particular instruction is executed when run.
+
+In Wasmi 2.0 all instruction handlers share the same signature:
+
+```rust
+fn(
+    store: &mut PrunedStore, // A reference to the `Store<T>` that is associated to the execution.
+    ip: Ip,                  // The instruction pointer.
+    sp: Sp,                  // The stack pointer.
+    mem0: Mem0Ptr,           // The pointer to the data of the default linear memory: `(memory 0)`
+    mem0_len: Mem0Len,       // The number of bytes of the default linear memory.
+    instance: Inst,          // A pointer to the Wasm instance that is used by the function that is currently being executed.
+    ireg: Ireg,              // Accumulator register for integer and reference values.
+    freg32: Freg32,          // Accumulator register for `f32` values.
+    freg64: Freg64,          // Accumulator register for `f64` values.
+) -> Done;                   // State used to signal traps or successful halts.
+```
+
+- The `store` argument is basically a `Store<T>` that was pruned by its `T` type.
+  This is important since instruction handlers are not allowed to be generic.
+  The `store` is used for fuel metering, host calls, `memory.grow` and `table.grow` operations.
+- The `ip` argument is the instruction pointer which tells the executor where in the stream
+  of encoded instructions it is and which instruction it has to decode and execute.
+- The `sp` argument is the position of the currently executed function within the value stack.
+- The `mem0` and `mem0_len` arguments are used for optimized access to the default memory
+  `(memory 0)`. This is very common in Wasm even when using the Wasm `multi-memory` proposal.
+- The `instance` argument is used to load Wasm instance related objects such as globals, functions,
+  tables, memories, data- and element segments. We will go into greater details later in the post.
+- The `ireg`, `freg32` and `freg64` arguments are so-called accumulator registers which are
+  used to store intermediate results in between instructions very efficiently.
+  We will go into greater details later in the post.
+- The `Done` result is just a bit pattern that tells the executor why execution halted.
+  More detailed information is communicated via the `store` for later retrieval.
+
