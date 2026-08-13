@@ -224,7 +224,7 @@ i64_add_rri:
 
 Instructions in Wasmi 2.0 usually store their result into the implicit accumulator register.
 
-The drawback is that this design requires copy instructions that the old design could avoid.
+The drawback is that this design requires copy instructions that the old design did not need.
 
 #### Example: `local.set` & `local.tee`
 
@@ -264,7 +264,7 @@ Wasmi 2.0 has to translate this to roughly the following Wasmi 2.0 IR:
 
 ```lisp
 i32_add_rsi 0 10 ;; ireg = (local 0) + 10
-u64_copy_sr A    ;; (local A) = ireg
+u64_copy_sr A    ;; (slot A) = ireg
 i32_mul_rsi 1 20 ;; ireg = (local 1) * 20
 ```
 
@@ -274,9 +274,9 @@ without actually using it, thus we need to preserve whatever was stored in `ireg
 #### Solution: More Efficient Copies
 
 As demonstrated Wasmi 2.0 requires many more copy instructions due to this design.
-There are some effective ways to reduce their number but some patterns emerged.
+There are some effective ways to reduce their number and for the remaining copies some patterns emerged.
 
-For this reason Wasmi introduced the following set of special common copy instructions:
+Wasmi 2.0 introduced some optimized versions for common situations:
 
 - `u64_copy_sNr`: copies `ireg` to a fixed `(local N)` where `N = 0..10`.
 - `u64_copy_sNsM`: copies `(local M)` to `(local N)` where `N,M = 0..5`.
