@@ -232,14 +232,14 @@ The drawback is that this design requires copy instructions that the old design 
 local.get 0
 i32.const 10
 i32.add
-local.set 0
+local.set 1
 ```
 
-This Wasm sequence adds `(local 0) + 10` and stores the result back into `(local 0)`.
+This Wasm sequence adds `(local 0) + 10` and stores the result into `(local 1)`.
 Wasmi 1.0 could do all of this in a single Wasmi 1.0 IR instruction:
 
 ```lisp
-i32_add_ssi 0 0 10
+i32_add_ssi 1 0 10
 ```
 
 Wasmi 2.0 requires 2 instructions for the same job:
