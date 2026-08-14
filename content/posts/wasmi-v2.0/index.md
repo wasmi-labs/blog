@@ -242,6 +242,8 @@ Wasmi 1.0 could do all of this in a single Wasmi 1.0 IR instruction:
 i32_add_ssi 1 0 10
 ```
 
+> **Note:** we use `s` suffix for stack slots, `r` suffix for accumulator registers and `i` for immediates.
+
 Wasmi 2.0 requires 2 instructions for the same job:
 
 ```lisp
