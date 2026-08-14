@@ -295,3 +295,33 @@ fused variants which store their results not only in the
 accumulator register but also into a stack slot so that
 Wasmi 2.0 can represent those use-cases with a single IR instruction.
 
+### Accumulators Across Control Flow Boundaries
+
+For control flow, WebAssembly uses `block`, `loop` and `if` frames.
+
+A `br` (branch), `br_if` (conditional branch), or `br_table` (branch table) instruction
+can be used to either jump to the end of a `block` or `if` or to continue a `loop`.
+
+Control flow in WebAssembly is organized as a stack,
+so branches use a stack depth to which they jump where a depth of 0
+jumps to the label of their direct parent.
+
+Additionally, control flow can have parameters and results and Wasmi 2.0
+carries accumulator registers across those boundaries if possible.
+
+- If a `block` for example has the result types `(i32 f32)` Wasmi 2.0
+  uses both `ireg` and `freg32` to return its results.
+- If a `block` has `(i32, i32, i32)` result types, Wasmi 2.0 only puts the
+  last result in `ireg` and returns the other results in stack slots.
+- For technical reasons accumulator registers are only used for the tail of results.
+  For example, a `block` with results `(f32 i32 i32)` only puts the
+  last `i32` into `ireg` and all other results into stack slots.
+
+The same rules apply to `if` results and `loop` parameters.
+
+For `loop` this may allow induction variables to stay in accumulator registers.
+An example for this can be seen in the `execute/count/param` test case of [`wasmi-benchmarks`].
+
+> **Note:** Experiments were conducted to apply the same rules to calls but
+unfortunately this led to performance regressions and was not merged.
+
