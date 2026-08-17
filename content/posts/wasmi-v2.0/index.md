@@ -382,7 +382,7 @@ With all this, Wasmi 2.0 IR now uses instance addresses instead of Wasm indices 
 instance objects and accessing an instance object is just one pointer offset from `instance` away
 and thus extremely fast.
 
-#### Comparison With Wasm3 & Stitch
+#### Instance Access: Comparison With Wasm3 & Stitch
 
 Both Wasm3 and Stitch use instance-related bytecode.
 This allows each instance to embed pointers to instance objects into its bytecode
