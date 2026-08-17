@@ -7,7 +7,7 @@ authorURL: 'https://github.com/robbepop'
 draft: true
 ---
 
-In my last post about [Wasmi v1.0](/blog/posts/wasmi-v1.0/) I promised a [fundamental engine overhaul](/blog/posts/wasmi-v1.0/#the-next-gen-engine) for the future Wasmi version. The future is now! [^1]
+In my last post about [Wasmi v1.0](/blog/posts/wasmi-v1.0/) I promised a [fundamental engine overhaul](/blog/posts/wasmi-v1.0/#the-next-gen-engine) for the future Wasmi version. The future is now! [^intro]
 
 Wasmi is an efficient and feature-rich [WebAssembly (Wasm)](https://webassembly.org/) interpreter.
 It is an excellent choice for IoT devices, plugin systems ([Typst], [Zellij], [Josh]), cloud hosts, smart contracts ([Soroban], [Ripple]) and even for your lightweight game consoles ([Firefly Zero]).
@@ -18,7 +18,7 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 
 But was all the work in the last 8 months worth the immense effort?
 
-For this, I have benchmarked some of the fastest portable Wasm interpreters: [^2]
+For this, I have benchmarked some of the fastest portable Wasm interpreters: [^benches-runtimes]
 
 - [Wasm3](https://github.com/wasm3/wasm3)
 - [WAMR's fast-interpreter](https://github.com/wasm-micro-runtime/wasm-micro-runtime)
@@ -367,12 +367,12 @@ The ordering is `memories`, `globals`, `tables`, `funcs`, `elems`, `datas`.
 - `datas` must be last since the `data count` section is not guaranteed to be available at Wasm module
   creation time and thus it isn't known how many data segments exist.
 - `InstanceEntityHeader` contains a `table0` field to allow for fast accesses for the commonly
-  used default table `(table 0)`, e.g. for `call_indirect`. [^3]
+  used default table `(table 0)`, e.g. for `call_indirect`. [^explain-table0]
 - The order of the remaining `globals`, `tables`, `funcs` and `elems` regions was chosen in relation
   to how common those object accesses are in Wasm executions.
 
 The `handles` buffer contains the `handle` alongside an `entity` cache which
-is a pointer to the actual instance object owned by the store. [^4] These `entity` pointers
+is a pointer to the actual instance object owned by the store. [^why-handles] These `entity` pointers
 are initialized during Wasm instantiation so that the execution can rely on them.
 
 For this the store also had to be slightly re-designed in that its containers, previously `Arena`,
@@ -396,7 +396,7 @@ performance for instance object access despite its inability to embed instance o
 into its bytecode.
 
 The `counter-global` benchmark from [`wasmi-benchmarks`] counts a large number down to zero using
-only a global variable. This strains the instance object access of Wasm interpreters quite a bit. [^5]
+only a global variable. This strains the instance object access of Wasm interpreters quite a bit. [^why-not-faster]
 
 ![][counter-global-0]
 
@@ -413,10 +413,9 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 
 ## Footnotes
 
-[^1]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
-[^2]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
+[^intro]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
+[^benches-runtimes]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
 respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
-[^3]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
-[^4]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
-[^5]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
-
+[^explain-table0]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
+[^why-handles]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
+[^why-not-faster]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
