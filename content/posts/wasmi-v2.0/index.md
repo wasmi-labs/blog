@@ -337,10 +337,10 @@ such as a global's value and type.
 
 ![][instance-entity-wasmi-1.0]
 
-In order for the instruction handler of `global.get` to access the value of the global at Wasm index `g`
-the `instance.globals[g]` is accessed which returns a handle `h` to the global which then has to be fetched from
-the `store`'s globals table. All these dependent-load accesses are very costly.
-A simplified schematic for this is shown in the diagram above.
+The `global.get g` instruction in Wasmi 1.0 does three things:
+read `instance.globals` to get the boxed slice,
+load the handle `h` at index `g`, then resolve `h` in the `store`'s globals table.
+Each load depends on the previous one and is very costly.
 
 This procedure is so slow that Wasmi 1.0 ships special handling for `(global 0)` to speed up
 the common case of accessing the global at Wasm index 0 which is commonly used as the pointer to
