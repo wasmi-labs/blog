@@ -349,7 +349,7 @@ the shadow stack in C code that was compiled to Wasm.
 #### How Wasmi 2.0 Works
 
 Wasmi 2.0 acknowledges the fact that all Wasm instances of the same Wasm module
-share the same object layout.
+share the same object layout. An instance object's address is a property of the Wasm module.
 
 ![][instance-entity-wasmi-2.0]
 
