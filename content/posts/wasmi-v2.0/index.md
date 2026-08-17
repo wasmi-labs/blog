@@ -7,7 +7,7 @@ authorURL: 'https://github.com/robbepop'
 draft: true
 ---
 
-In my last post about [Wasmi v1.0](/blog/posts/wasmi-v1.0/) I promised a [fundamental engine overhaul](/blog/posts/wasmi-v1.0/#the-next-gen-engine) for the future Wasmi version. The future is now!
+In my last post about [Wasmi v1.0](/blog/posts/wasmi-v1.0/) I promised a [fundamental engine overhaul](/blog/posts/wasmi-v1.0/#the-next-gen-engine) for the future Wasmi version. The future is now! [^1]
 
 Wasmi is an efficient and feature-rich [WebAssembly (Wasm)](https://webassembly.org/) interpreter.
 It is an excellent choice for IoT devices, plugin systems ([Typst], [Zellij], [Josh]), cloud hosts, smart contracts ([Soroban], [Ripple]) and even for your lightweight game consoles ([Firefly Zero]).
@@ -18,7 +18,7 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 
 But was all the work in the last 8 months worth the immense effort?
 
-For this, I have benchmarked some of the fastest portable Wasm interpreters:
+For this, I have benchmarked some of the fastest portable Wasm interpreters: [^2]
 
 - [Wasm3](https://github.com/wasm3/wasm3)
 - [WAMR's fast-interpreter](https://github.com/wasm-micro-runtime/wasm-micro-runtime)
@@ -325,3 +325,9 @@ An example for this can be seen in the `execute/count/param` test case of [`wasm
 > **Note:** Experiments were conducted to apply the same rules to calls but
 unfortunately this led to performance regressions and was not merged.
 
+
+## Footnotes
+
+[^1]: The author of this article is not a native english speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
+[^2]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
+respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
