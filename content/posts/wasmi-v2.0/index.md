@@ -396,11 +396,12 @@ performance for instance object access despite its inability to embed instance o
 into its bytecode.
 
 The `counter-global` benchmark from [`wasmi-benchmarks`] counts a large number down to zero using
-only a global variable. This strains the instance object access of Wasm interpreters quite a bit.
-The difference between `(global 0)` and `(global 1)` for Wasmi 1.0 stems from its `(global 0)` cache.
-The new Wasmi 2.0 design dissolves the need for a `(global 0)` cache. [^5]
+only a global variable. This strains the instance object access of Wasm interpreters quite a bit. [^5]
 
 ![][counter-global-0]
+
+The new Wasmi 2.0 design dissolves the need for a `(global 0)` cache as it performs great in both cases.
+Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache is no longer used.
 
 ![][counter-global-1]
 
