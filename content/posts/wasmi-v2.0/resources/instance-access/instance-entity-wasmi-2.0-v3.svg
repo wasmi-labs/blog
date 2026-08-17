@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="416" viewBox="0 0 960 416" version="1.1">
+  <title>Wasmi 2.0: structure of the InstanceEntity type</title>
+  <defs>
+    <style type="text/css"><![CDATA[
+      .bg    { fill: #ffffff; }
+      .sans  { font-family: system-ui, -apple-system, "Segoe UI", "DejaVu Sans", sans-serif; }
+      .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, "DejaVu Sans Mono", monospace; }
+      .title { font-size: 19px; font-weight: 700; fill: #22262b; }
+      .cls   { fill: #ffffff; stroke: #454b52; stroke-width: 1.4; }
+      .cls-hd{ fill: #eceff1; stroke: #454b52; stroke-width: 1.4; }
+      .cls-key { fill: #ffffff; stroke: #2f7d55; stroke-width: 1.8; }
+      .cls-hd-key { fill: #dcefe4; stroke: #2f7d55; stroke-width: 1.8; }
+      .name  { font-size: 13px; font-weight: 700; fill: #22262b; }
+      .stereo{ font-size: 10.5px; fill: #6b747d; font-style: italic; }
+      .field { font-size: 11.5px; fill: #22262b; }
+      .field-key { font-size: 11.5px; font-weight: 700; fill: #2f7d55; }
+      .field-sm { font-size: 11px; fill: #22262b; }
+      .link  { stroke: #6b747d; stroke-width: 1.3; fill: none; }
+      .link-dash { stroke: #9aa3ad; stroke-width: 1.3; fill: none; stroke-dasharray: 5 4; }
+      .link-key { stroke: #2f7d55; stroke-width: 1.8; fill: none; }
+      .diamond { fill: #454b52; stroke: #454b52; stroke-width: 1.2; }
+    ]]></style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#6b747d" stroke-width="1.4"/>
+    </marker>
+    <marker id="ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#9aa3ad" stroke-width="1.4"/>
+    </marker>
+    <marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#2f7d55" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="960" height="416"/>
+
+  <text class="sans title" x="30" y="32">Wasmi 2.0 &#8212; structure of <tspan class="mono" font-size="17">InstanceEntity</tspan></text>
+
+  <!-- InstanceEntity -->
+  <rect class="cls-key" x="40" y="56" width="300" height="84"/>
+  <rect class="cls-hd-key" x="40" y="56" width="300" height="44"/>
+  <text class="mono name" x="190" y="75" text-anchor="middle">InstanceEntity</text>
+  <text class="sans stereo" x="190" y="91" text-anchor="middle">&#171;repr(C), dynamically sized&#187;</text>
+  <text class="mono field" x="52" y="115">header: InstanceEntityHeader</text>
+  <text class="mono field-key" x="52" y="135">handles: [AnyHandleAndEntity]</text>
+
+  <!-- composition: header -->
+  <path class="diamond" d="M 340 82 L 348 77 L 356 82 L 348 87 z"/>
+  <path class="link" d="M 356 82 L 386 82" marker-end="url(#a)"/>
+
+  <!-- InstanceEntityHeader -->
+  <rect class="cls" x="390" y="56" width="250" height="130"/>
+  <rect class="cls-hd" x="390" y="56" width="250" height="30"/>
+  <text class="mono name" x="515" y="76" text-anchor="middle">InstanceEntityHeader</text>
+  <text class="mono field" x="402" y="101">len_handles: u32</text>
+  <text class="mono field" x="402" y="121">state: InstanceState</text>
+  <text class="mono field" x="402" y="141">exports: Map&lt;Box&lt;str&gt;, Extern&gt;</text>
+  <text class="mono field-key" x="402" y="161">layout: InstanceLayout</text>
+  <text class="mono field" x="402" y="181">table0: Option&lt;Table0Ptr&gt;</text>
+
+  <!-- header.layout -> InstanceLayout -->
+  <path class="link" d="M 640 161 L 676 161" marker-end="url(#a)"/>
+
+  <!-- InstanceLayout -->
+  <rect class="cls" x="680" y="56" width="270" height="150"/>
+  <rect class="cls-hd" x="680" y="56" width="270" height="30"/>
+  <text class="mono name" x="815" y="76" text-anchor="middle">InstanceLayout</text>
+  <text class="mono field" x="692" y="101">end_memories: u32</text>
+  <text class="mono field" x="692" y="121">end_globals: u32</text>
+  <text class="mono field" x="692" y="141">end_tables: u32</text>
+  <text class="mono field" x="692" y="161">end_funcs: u32</text>
+  <text class="mono field" x="692" y="181">end_elems: u32</text>
+  <text class="mono field" x="692" y="201">end_datas: u32</text>
+
+  <!-- composition: handles buffer -->
+  <path class="diamond" d="M 190 140 L 195 148 L 190 156 L 185 148 z"/>
+  <path class="link-key" d="M 190 156 L 190 206" marker-end="url(#ak)"/>
+
+  <!-- AnyHandleAndEntity -->
+  <rect class="cls-key" x="40" y="210" width="300" height="70"/>
+  <rect class="cls-hd-key" x="40" y="210" width="300" height="30"/>
+  <text class="mono name" x="190" y="230" text-anchor="middle">AnyHandleAndEntity</text>
+  <text class="mono field-key" x="52" y="255">entity: NonNull&lt;AnyEntity&gt;</text>
+  <text class="mono field" x="52" y="275">handle: AnyHandle</text>
+
+  <!-- handle -> store, warm-up only -->
+  <path class="link-dash" d="M 344 275 L 386 275" marker-end="url(#ad)"/>
+
+  <!-- StoreInner -->
+  <rect class="cls" x="390" y="210" width="250" height="180"/>
+  <rect class="cls-hd" x="390" y="210" width="250" height="30"/>
+  <text class="mono name" x="515" y="230" text-anchor="middle">StoreInner</text>
+  <text class="mono field-sm" x="402" y="255">funcs:    StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="275">memories: StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="295">tables:   StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="315">globals:  StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="335">elems:    StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="355">datas:    StableArena&lt;_, ..&gt;</text>
+  <text class="mono field-sm" x="402" y="375">..</text>
+
+  <!-- entity -> GlobalEntity -->
+  <path class="link-key" d="M 190 280 L 190 316" marker-end="url(#ak)"/>
+
+  <!-- GlobalEntity -->
+  <rect class="cls-key" x="40" y="320" width="300" height="70"/>
+  <rect class="cls-hd-key" x="40" y="320" width="300" height="30"/>
+  <text class="mono name" x="190" y="340" text-anchor="middle">GlobalEntity</text>
+  <text class="mono field-key" x="52" y="365">value: UntypedVal</text>
+  <text class="mono field" x="52" y="385">ty: GlobalType</text>
+
+  <!-- store owns the entity -->
+  <path class="link-dash" d="M 386 355 L 344 355" marker-end="url(#ad)"/>
+</svg>
