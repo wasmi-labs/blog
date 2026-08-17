@@ -325,9 +325,97 @@ An example for this can be seen in the `execute/count/param` test case of [`wasm
 > **Note:** Experiments were conducted to apply the same rules to calls but
 unfortunately this led to performance regressions and was not merged.
 
+### Instance Object Access
+
+#### How The Old Wasmi 1.0 Works
+
+Wasmi 1.0 uses a naive way to model the internal object representation of Wasm module instances.
+An instance (or `InstanceEntity`) uses one heap allocation per type of instance object, e.g. for
+memories, tables, functions, globals, data- or element segments. An `InstanceEntity` only holds
+handles which need to be fetched from the store to retrieve the underlying object internals,
+such as a global's value and type.
+
+![][instance-entity-wasmi-1.0]
+
+In order for the instruction handler of `global.get` to access the value of the global at Wasm index `g`
+the `instance.globals[g]` is accessed which returns a handle `h` to the global which then has to be fetched from
+the `store`'s globals table. All these dependent-load accesses are very costly.
+A simplified schematic for this is shown in the diagram above.
+
+This procedure is so slow that Wasmi 1.0 ships special handling for `(global 0)` to speed up
+the common case of accessing the global at Wasm index 0 which is commonly used as the pointer to
+the shadow stack in C code that was compiled to Wasm.
+
+#### How Wasmi 2.0 Works
+
+Wasmi 2.0 acknowledges the fact that all Wasm instances of the same Wasm module
+share the same object layout.
+
+![][instance-entity-wasmi-2.0]
+
+The aforementioned `instance: Inst` parameter of all Wasmi 2.0 instruction handlers
+is a thin-pointer to the `InstanceEntity` which now is a dynamically sized type.
+
+`InstanceEntity` consists of the fixed-size `InstanceEntityHeader` with common information
+as well as the dynamically sized `handles` buffer.
+The `handles` buffer contains all instance objects in a single contiguous allocation.
+
+The ordering is `memories`, `globals`, `tables`, `funcs`, `elems`, `datas`.
+
+- `memories` are first so that the commonly used default memory `(memory 0)` remains at address 0.
+  Additionally, this allows Wasmi to define its memory addresses as 16-bit values.
+- `datas` must be last since the `data count` section is not guaranteed to be available at Wasm module
+  creation time and thus it isn't known how many data segments exist.
+- `InstanceEntityHeader` contains a `table0` field to allow for fast accesses for the commonly
+  used default table `(table 0)`, e.g. for `call_indirect`. [^3]
+- The order of the remaining `globals`, `tables`, `funcs` and `elems` regions was chosen in relation
+  to how common those object accesses are in Wasm executions.
+
+The `handles` buffer contains the `handle` alongside an `entity` cache which
+is a pointer to the actual instance object owned by the store. [^4] These `entity` pointers
+are initialized during Wasm instantiation so that the execution can rely on them.
+
+For this the store also had to be slightly re-designed in that its containers, previously `Arena`,
+now guarantee stable addresses for their owned objects, for which the `StableArena` type was created.
+
+With all this, Wasmi 2.0 IR now uses instance addresses instead of Wasm indices for accessing
+instance objects and accessing an instance object is just one pointer offset from `instance` away
+and thus extremely fast.
+
+#### Comparison With Wasm3 & Stitch
+
+Both Wasm3 and Stitch use instance-related bytecode.
+This allows each instance to embed pointers to instance objects into its bytecode
+but requires each instance of the same Wasm module to store its own unique bytecode.
+
+Wasmi uses module-related bytecode which means that all Wasm instances of the same Wasm module
+share the same underlying Wasmi IR bytecode which improves memory consumption significantly.
+
+Thanks to the re-design of the `InstanceEntity` Wasmi 2.0 achieves Wasm3 and Stitch level
+performance for instance object access despite its inability to embed instance object pointers
+into its bytecode.
+
+The `counter-global` benchmark from [`wasmi-benchmarks`] counts a large number down to zero using
+only a global variable. This strains the instance object access of Wasm interpreters quite a bit.
+The difference between `(global 0)` and `(global 1)` for Wasmi 1.0 stems from its `(global 0)` cache.
+The new Wasmi 2.0 design dissolves the need for a `(global 0)` cache. [^5]
+
+![][counter-global-0]
+
+![][counter-global-1]
+
+[instance-entity-wasmi-1.0]: ./resources/instance-access/instance-entity-wasmi-1.0-v6.svg
+[instance-entity-wasmi-2.0]: ./resources/instance-access/instance-entity-wasmi-2.0-v3.svg
+[counter-global-0]: ./resources/bench/counter-global/counter-global-0.svg
+[counter-global-1]: ./resources/bench/counter-global/counter-global-1.svg
+
 
 ## Footnotes
 
 [^1]: The author of this article is not a native english speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 [^2]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
 respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
+[^3]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
+[^4]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
+[^5]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
+
