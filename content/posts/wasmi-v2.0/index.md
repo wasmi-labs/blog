@@ -320,7 +320,7 @@ carries accumulator registers across those boundaries if possible.
 The same rules apply to `if` results and `loop` parameters.
 
 For `loop` this may allow induction variables to stay in accumulator registers.
-An example for this can be seen in the `execute/count/param` test case of [`wasmi-benchmarks`].
+An example for this can be seen in the `execute/counter-param` test case of [`wasmi-benchmarks`].
 
 > **Note:** Experiments were conducted to apply the same rules to calls but
 unfortunately this led to performance regressions and was not merged.
