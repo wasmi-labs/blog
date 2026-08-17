@@ -412,7 +412,7 @@ The new Wasmi 2.0 design dissolves the need for a `(global 0)` cache. [^5]
 
 ## Footnotes
 
-[^1]: The author of this article is not a native english speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
+[^1]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 [^2]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
 respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
 [^3]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
