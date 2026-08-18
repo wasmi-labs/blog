@@ -471,7 +471,7 @@ whereas Wasmi uses two different stacks to avoid exactly that.
 - Furthermore, Wasm3 uses a constant pool per function to avoid the need for immediate operands which
 results in even more copy overhead per function call.
 
-[code-map]: ./resources/code-map/code-map-wasmi-2.0-v1.svg
+[code-map]: ./resources/code-map/code-map-wasmi-2.0-v2.svg
 [fibonacci-rec]: ./resources/bench/fibonacci-rec.svg
 
 
