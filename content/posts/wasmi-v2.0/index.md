@@ -412,23 +412,58 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 
 ### Lock-Free `CodeMap`
 
+Wasmi's `CodeMap` is part of Wasmi's `Engine` and stores all the Wasmi IR function bodies.
+The aforementioned `FuncEntity` on the other hand live in the Wasmi instance.
+
 Due to their instance-related bytecode, both Wasm3 and Stitch can treat Wasm functions as
 just another type of instance object and thus embed pointers to Wasm functions directly into
 the encoded stream of IR instructions - and it is exactly what they do to make calls fast.
 
-Though, Wasmi's module-related bytecode requires all instances to share all Wasm function internals.
-Wasm function entities live in the instance whereas their function bodies (Wasmi IR) live in the so-called
-Wasmi engine which is shared across all Wasm modules.
+#### How The Old Wasmi 1.0 Works
 
-This allows Wasmi to apply a similar optimization for Wasm to Wasm calls within the same Wasm module.
-For these Wasm module internal calls Wasmi can and will embed their pointers into their encoded bytecode
-just like Wasm3 and Stitch do, however, since an engine is a shared object, things are way more complicated
-on a technical level as everything needs to be lock-free and using stable addressing.
+The whole `CodeMap` was one mutex-guarded `vec`-like arena data structure.
+So every internal Wasm call had to take the mutex and then index into the `vec`-like arena.
+Needless to say, this was a very costly and inefficient procedure.
+
+```rust
+pub struct CodeMap {
+    funcs: Mutex<Arena<EngineFunc, FuncEntity>>,
+    features: WasmFeatures,
+}
+```
+
+#### How Wasmi 2.0 Works
+
+Because all instances share one Wasmi IR translation a single engine-level address for a function
+is valid for every instance of the same Wasm module.
+
+Similar to Stitch and Wasm3, Wasmi can therefore bake pointers to the Wasmi IR function bodies
+into its bytecode.
+Since the engine is shared across stores and modules addresses to functions need to be stable.
+Wasmi 2.0 therefore stores functions in append-only buckets which never reallocate or move for
+the lifetime of the engine.
+The whole `CodeMap` is designed as a lock-free data structure with minimal synchronization overhead.
+
+![][code-map]
+
+Each `FuncEntry` carries its own atomic state so the hot path of a call just checks if a
+`FuncEntry` has already been compiled and returns its function body internals.
+
+This allows for the lazy compilation of `FuncEntry` which is considered the cold path as
+it only ever happens at most once per `FuncEntry`.
+
+A `call_internal` instruction handler in Wasmi 2.0 performs zero look-ups as its `FuncEntry`
+address (pointer) is encoded directly into its bytecode as one of its operands, similar to
+Stitch and Wasm3.
+
+#### Calls: Comparison With Wasm3 & Stitch
+
+The `fibonacci-rec` benchmark stresses Wasm-to-Wasm calls:
 
 ![][fibonacci-rec]
 
-This way Wasmi achieve Stitch and Wasm3 level performance despite its module-related bytecode
-and the need to use synchronized loads (via atomics).
+Thanks to the new `CodeMap` design Wasmi achieves Stitch and Wasm3 level performance despite its
+module-related bytecode and the need to for shared atomic loads.
 The reason why Wasmi even outperforms Stitch and Wasm3 is due to other technical differences:
 
 - Both, Stitch and Wasm3, use merged call and value stacks which necessitates more copy overhead
@@ -436,6 +471,7 @@ whereas Wasmi uses two different stacks to avoid exactly that.
 - Furthermore, Wasm3 uses a constant pool per function to avoid the need for immediate operands which
 results in even more copy overhead per function call.
 
+[code-map]: ./resources/code-map/code-map-wasmi-2.0-v1.svg
 [fibonacci-rec]: ./resources/bench/fibonacci-rec.svg
 
 
