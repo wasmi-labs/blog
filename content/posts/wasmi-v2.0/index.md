@@ -458,7 +458,7 @@ Stitch and Wasm3.
 
 #### Calls: Comparison With Wasm3 & Stitch
 
-The `fibonacci-rec` benchmark stresses Wasm-to-Wasm calls:
+The `fibonacci-rec` benchmark from [`wasmi-benchmarks`] stresses Wasm-to-Wasm calls:
 
 ![][fibonacci-rec]
 
