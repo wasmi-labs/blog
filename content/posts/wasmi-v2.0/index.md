@@ -410,6 +410,34 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 [counter-global-0]: ./resources/bench/counter-global/counter-global-0.svg
 [counter-global-1]: ./resources/bench/counter-global/counter-global-1.svg
 
+### Lock-Free `CodeMap`
+
+Due to their instance-related bytecode, both Wasm3 and Stitch can treat Wasm functions as
+just another type of instance object and thus embed pointers to Wasm functions directly into
+the encoded stream of IR instructions - and it is exactly what they do to make calls fast.
+
+Though, Wasmi's module-related bytecode requires all instances to share all Wasm function internals.
+Wasm function entities live in the instance whereas their function bodies (Wasmi IR) live in the so-called
+Wasmi engine which is shared across all Wasm modules.
+
+This allows Wasmi to apply a similar optimization for Wasm to Wasm calls within the same Wasm module.
+For these Wasm module internal calls Wasmi can and will embed their pointers into their encoded bytecode
+just like Wasm3 and Stitch do, however, since an engine is a shared object, things are way more complicated
+on a technical level as everything needs to be lock-free and using stable addressing.
+
+![][fibonacci-rec]
+
+This way Wasmi achieve Stitch and Wasm3 level performance despite its module-related bytecode
+and the need to use synchronized loads (via atomics).
+The reason why Wasmi even outperforms Stitch and Wasm3 is due to other technical differences:
+
+- Both, Stitch and Wasm3, use merged call and value stacks which necessitates more copy overhead
+whereas Wasmi uses two different stacks to avoid exactly that.
+- Furthermore, Wasm3 uses a constant pool per function to avoid the need for immediate operands which
+results in even more copy overhead per function call.
+
+[fibonacci-rec]: ./resources/bench/fibonacci-rec.svg
+
 
 ## Footnotes
 
