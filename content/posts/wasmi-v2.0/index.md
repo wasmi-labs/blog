@@ -413,7 +413,7 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 ### Lock-Free `CodeMap`
 
 Wasmi's `CodeMap` is part of Wasmi's `Engine` and stores all the Wasmi IR function bodies.
-The aforementioned `FuncEntity` on the other hand live in the Wasmi instance.
+The aforementioned `FuncEntity` on the other hand live in the Wasmi store.
 
 Due to their instance-related bytecode, both Wasm3 and Stitch can treat Wasm functions as
 just another type of instance object and thus embed pointers to Wasm functions directly into
