@@ -521,13 +521,16 @@ Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled wit
 While working on [`wasmi-benchmarks`] and benchmarking other Wasm runtimes
 I noticed that [Stitch](https://github.com/makepad/stitch) performed significantly worse than in past measurements.
 
-Its CoreMark score dropped by roughly 30% from over 3000 points to just ~2200.
+Its CoreMark score dropped by roughly 30% from over 3000 points to just ~2200 on my Apple M2 Pro.
 The regression happened between Rust 1.91 and 1.92.
 
-Further investigations found out that the culprit was a newly introduced MIR optimization
-in the Rust compiler, called `DestinationPropagation` that merged multiple branch sites into a single one.
-This merged branch site then made it way harder for the CPU's branch predictor to do its job
-since it sees only one entry with mixed history.
+Further investigation found the culprit: `DestinationPropagation`, a MIR optimization that
+[Rust 1.92 enabled by default][rust-#142915]. This pass merges MIR locals holding the same value.
+The effect is that the two dispatch paths of a conditional branch handler collapse into just one:
+a `csel` feeding a single branch site.
+A CPU's branch predictor now only sees one entry with mixed history which complicates its job.
+
+[rust-#142915]: https://github.com/rust-lang/rust/pull/142915
 
 With [the fix applied to Stitch](https://github.com/Robbepop/stitch/commit/3280ff672c861a1e73107c9b1d393b06127e27ad)
 its CoreMark score went back up to over 3000 points again. Success!
@@ -564,9 +567,9 @@ LBB1321_2:
     br x7               ; branch site if branch is not taken
 ```
 
-> **Note:** Wasmi 1.0 is (likely) not affected by this issue since the regression only affects
->           the tail-call based instruction dispatch techniques of Wasmi 2.0 and not the loop-based
->           ones as used by Wasmi 1.0.
+> **Note:** Interestingly only the tail-call based instruction dispatch configurations
+>           of Wasmi 2.0 see performance improvements due to the fix above.
+
 
 
 ## What's Next
