@@ -536,6 +536,18 @@ Try out and use Wasmi today in various ways:
 - 😈 Play [Doom in your browser](https://wasmi-labs.github.io/wasmi-doom/) powered by Wasmi 2.0.
 - 📦 Or enjoy Wasmi indirectly by using any of its [major known users](https://github.com/wasmi-labs/wasmi#used-by).
 
+## Personal Note
+
+Without the sponsorship of the [Stellar Development Foundation][SDF] Wasmi 2.0 would not exist today.
+This funding allowed me to work on this open source project full-time for 2 years which is a very rare opportunity
+for which I am grateful.
+
+That sponsorship ends in October 2026. I intend to keep working on Wasmi past that point
+and am looking for ways to make that possible: another sponsorship, or a role that leaves room for
+further Wasmi development at least part-time.
+
+If that is something you or your company could be interested in, contact me at <robin.freyler@gmail.com>.
+
 ## Footnotes
 
 [^intro]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
