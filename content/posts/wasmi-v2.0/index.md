@@ -516,6 +516,58 @@ with their `simd` features enabled (+simd) and disabled.
 As can be seen Wasmi 1.0 regresses by roughly 8% whereas
 Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled within noise levels.
 
+## Accidental Rust Deoptimization
+
+While working on [`wasmi-benchmarks`] and benchmarking other Wasm runtimes
+I noticed that [Stitch](https://github.com/makepad/stitch) performed significantly worse than in past measurements.
+
+Its CoreMark score dropped by roughly 30% from over 3000 points to just ~2200.
+The regression happened between Rust 1.91 and 1.92.
+
+Further investigations found out that the culprit was a newly introduced MIR optimization
+in the Rust compiler, called `DestinationPropagation` that merged multiple branch sites into a single one.
+This merged branch site then made it way harder for the CPU's branch predictor to do its job
+since it sees only one entry with mixed history.
+
+With [the fix applied to Stitch](https://github.com/Robbepop/stitch/commit/3280ff672c861a1e73107c9b1d393b06127e27ad)
+its CoreMark score went back up to over 3000 points again. Success!
+
+Using [`cargo-show-asm`](https://crates.io/crates/cargo-show-asm) I looked at Wasmi 2.0's
+own `i32.lt` instruction handler and .. oh boy! It suffered from the same underlying issue: [^wasmi-not-deoptimized]
+
+```asm
+branch_i32_lt_ri:
+    ldr x8, [x1, #8]
+    ldr w9, [x1, #16]
+    add x10, x1, #24
+    cmp w9, w6
+    csel x1, x8, x10, gt ; csel picks the target
+    ldr x7, [x1]
+    br x7                ; just one indirect branch
+```
+
+After [applying the fix to Wasmi 2.0][#2027] its CoreMark score rose from ~2800 to over 4200.
+That's a ~50% improvement with this singular fix which made it the single most important "optimization" for Wasmi 2.0.
+
+The considerably faster assembly of `i32.lt` now looks like this:
+
+```asm
+branch_i32_lt_ri:
+    ldr w8, [x1, #16]
+    cmp w8, w6
+    b.le LBB1321_2
+    ldr x1, [x1, #8]
+    ldr x7, [x1]
+    br x7               ; branch site if branch is taken
+LBB1321_2:
+    ldr x7, [x1, #24]!
+    br x7               ; branch site if branch is not taken
+```
+
+> **Note:** Wasmi 1.0 is (likely) not affected by this issue since the regression only affects
+>           the tail-call based instruction dispatch techniques of Wasmi 2.0 and not the loop-based
+>           ones as used by Wasmi 1.0.
+
 
 ## What's Next
 
