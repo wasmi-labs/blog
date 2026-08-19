@@ -459,7 +459,7 @@ Each `FuncEntry` carries its own atomic state so the hot path of a call just che
 `FuncEntry` has already been compiled and returns its function body internals.
 
 This allows for the lazy compilation of `FuncEntry` which is considered the cold path as
-it only ever happens at most once per `FuncEntry`.
+it only ever happens at most once successfully per `FuncEntry`.
 
 A `call_internal` instruction handler in Wasmi 2.0 performs zero look-ups as its `FuncEntry`
 address (pointer) is encoded directly into its bytecode as one of its operands, similar to
