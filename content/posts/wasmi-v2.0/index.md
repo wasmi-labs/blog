@@ -483,6 +483,39 @@ results in even more copy overhead per function call.
 [code-map]: ./resources/code-map/code-map-wasmi-2.0-v2.svg
 [fibonacci-rec]: ./resources/bench/fibonacci-rec.svg
 
+### Fixed 64-Bit Cells
+
+The Wasmi executor organizes values on the stack into so-called stack slots or cells.
+In Wasmi 1.0 cells are either 64-bit wide, or 128-bit wide if the `simd` crate feature is enabled.
+By default the `simd` feature is disabled but users who require Wasm `simd` proposal support enable it.
+
+This widening of cells from 64-bit to 128-bit not only causes increased memory consumption
+but also regresses performance by roughly 5-10% due to more memory traffic,
+worse cache utilization and wider copies at call boundaries.
+
+Wasmi 2.0 on the other hand fixes cell width to 64 bits always.
+For `simd` values it simply uses 2 adjacent cells instead.
+Work to determine which values are assigned which cells is performed in the translator
+so there is nothing to do in the executor.
+
+Wasm `simd` instructions themselves are not slower:
+
+- Wasmi 1.0 already stored its 128-bit cells as two 64-bit halves,
+  so the same number of 64-bit words is moved either way.
+- Wasmi 2.0 simply stops imposing that width on all non-`v128` values on the stack.
+
+Enabling `simd` in Wasmi 2.0 no longer increases memory consumption or regresses performance.
+
+![][coremark-simd]
+
+[coremark-simd]: ./resources/coremark/simd/apple-m2-pro.svg
+
+The above diagram shows the effect on CoreMark results from Wasmi 1.0 and Wasmi 2.0
+with their `simd` features enabled (+simd) and disabled.
+
+As can be seen Wasmi 1.0 regresses by roughly 8% whereas
+Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled within noise levels.
+
 
 ## Footnotes
 
