@@ -517,6 +517,16 @@ As can be seen Wasmi 1.0 regresses by roughly 8% whereas
 Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled within noise levels.
 
 
+## Try It Out!
+
+Try out and use Wasmi today in various ways:
+
+- 📚 As a library dependency via the [`wasmi` crate](https://crates.io/crates/wasmi).
+- 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli` or any of its pre-build release artifacts.
+- ⚙️ In your C-interfacing language using the [Wasmi C-API](https://github.com/wasmi-labs/wasmi/tree/main/crates/c_api#readme).
+- 😈 Play [Doom in your browser](https://wasmi-labs.github.io/wasmi-doom/) powered by Wasmi 2.0.
+- 📦 Or enjoy Wasmi indirectly by using any of its [major known users](https://github.com/wasmi-labs/wasmi#used-by).
+
 ## Footnotes
 
 [^intro]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
