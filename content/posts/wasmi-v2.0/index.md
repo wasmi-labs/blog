@@ -413,7 +413,7 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 ### Lock-Free `CodeMap`
 
 Wasmi's `CodeMap` is part of Wasmi's `Engine` and stores all the Wasmi IR function bodies.
-The aforementioned `FuncEntity` on the other hand live in the Wasmi store.
+The remaining function information (`FuncEntity`) on the other hand lives in the Wasmi store.
 
 Due to their instance-related bytecode, both Wasm3 and Stitch can treat Wasm functions as
 just another type of instance object and thus embed pointers to Wasm functions directly into
@@ -421,8 +421,8 @@ the encoded stream of IR instructions - and it is exactly what they do to make c
 
 #### How The Old Wasmi 1.0 Works
 
-The whole `CodeMap` was one mutex-guarded `vec`-like arena data structure.
-So every internal Wasm call had to take the mutex and then index into the `vec`-like arena.
+The whole `CodeMap` was one mutex-guarded `Vec`-like arena data structure.
+So every internal Wasm call had to take the mutex and then index into the `Vec`-like arena.
 Needless to say, this was a very costly and inefficient procedure.
 
 ```rust
@@ -434,15 +434,18 @@ pub struct CodeMap {
 
 #### How Wasmi 2.0 Works
 
-Because all instances share one Wasmi IR translation a single engine-level address for a function
+Because all instances share one Wasmi IR translation, a single engine-level address for a function
 is valid for every instance of the same Wasm module.
 
 Similar to Stitch and Wasm3, Wasmi can therefore bake pointers to the Wasmi IR function bodies
 into its bytecode.
-Since the engine is shared across stores and modules addresses to functions need to be stable.
+Since the engine is shared across stores and modules, it could be concurrently read and written.
+Therefore functions allocated to it must have stable addresses for the entire lifetime of the engine.
+
 Wasmi 2.0 therefore stores functions in append-only buckets which never reallocate or move for
 the lifetime of the engine.
-The whole `CodeMap` is designed as a lock-free data structure with minimal synchronization overhead.
+Allocating new functions to the `CodeMap` (e.g. via `Module::new`) is serial whereas
+accessing allocated functions is lock-free and concurrent with minimal synchronization overhead.
 
 ![][code-map]
 
@@ -462,8 +465,8 @@ The `fibonacci-rec` benchmark from [`wasmi-benchmarks`] stresses Wasm-to-Wasm ca
 
 ![][fibonacci-rec]
 
-Thanks to the new `CodeMap` design Wasmi achieves Stitch and Wasm3 level performance despite its
-module-related bytecode and the need to for shared atomic loads.
+Thanks to the new `CodeMap` design, Wasmi achieves Stitch and Wasm3 level performance despite its
+module-related bytecode and the need for shared atomic loads.
 The reason why Wasmi even outperforms Stitch and Wasm3 is due to other technical differences:
 
 - Both, Stitch and Wasm3, use merged call and value stacks which necessitates more copy overhead
