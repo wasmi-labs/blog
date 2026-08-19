@@ -439,8 +439,14 @@ is valid for every instance of the same Wasm module.
 
 Similar to Stitch and Wasm3, Wasmi can therefore bake pointers to the Wasmi IR function bodies
 into its bytecode.
-Since the engine is shared across stores and modules, it could be concurrently read and written.
-Therefore functions allocated to it must have stable addresses for the entire lifetime of the engine.
+
+A baked pointer is only useful as long as the function it points to never moves.
+The `CodeMap` however keeps growing, since every newly translated Wasm module appends
+its functions to it.
+A `Vec`-like arena as used by Wasmi 1.0 reallocates as it grows and moves all of its entries,
+invalidating every pointer baked into the bytecode so far.
+On top of that, the engine is shared across stores and modules, so this growth can
+happen while other threads are already executing.
 
 Wasmi 2.0 therefore stores functions in append-only buckets which never reallocate or move for
 the lifetime of the engine.
