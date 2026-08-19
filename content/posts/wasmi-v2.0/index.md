@@ -517,6 +517,15 @@ As can be seen Wasmi 1.0 regresses by roughly 8% whereas
 Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled within noise levels.
 
 
+## What's Next
+
+With the next major version Wasmi 3.0 we aim to support all of WebAssembly 3.0
+which implies implementation for the following Wasm proposals still missing from Wasmi 2.0:
+
+- 🚧 [`function-references`]
+- 🚧 [`exception-handling`]
+- 🚧 [`gc`]
+
 ## Try It Out!
 
 Try out and use Wasmi today in various ways:
