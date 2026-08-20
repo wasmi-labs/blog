@@ -16,7 +16,12 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 
 ## Wasmi 2.0 Release
 
-It is with great pleasure to announce that after 8 months of focused work Wasmi 2.0 is finally done and ready for use.
+Today, I am happy to announce that after 8 months of focused work, Wasmi 2.0 is finally done and ready for use.
+
+The focus of this release is execution performance: Wasmi 2.0 runs ~2.2x faster than Wasmi 1.0 in geomean across the [`wasmi-benchmarks`] suite.
+
+Wasmi 2.0 ships new knobs, such as the `validate` crate feature, that significantly reduce its binary artifact size.
+Some user-requested features, such as stable fuel metering, support for WebAssembly's deterministic profile and an improved Wasmi CLI tool, also made it into this release.
 
 - [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
 - [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/tree/v2.0.0/docs/migration-v1-to-v2.md)
