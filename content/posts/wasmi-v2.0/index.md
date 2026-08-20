@@ -596,11 +596,11 @@ The table below acts as a quick summary and overview of the similarities and dif
 | Bytecode Association | Module | Instance | Instance |
 | Branch Targets | 32-bit Offsets | Absolute Pointers | Absolute Pointers |
 | Immediates | Inline Operands | Per-Function Const-Pool | Inline Operands |
-| Stack Slot Canonicalization | Widens `i32` and `u32` to 64-bit on write. | None | None |
+| Stack Slot Canonicalization | Widens `i32` and `u32` to 64-bit on write | None | None |
 | Stack Layout | Separate value and call stacks | Only Value Stack, call frames on the native C stack | Unified Stack |
 | Operator Alignment | Aligned or <br> unaligned if `indirect-dispatch` | Aligned | Aligned |
 | Supported Dispatch Modes | direct-threading<br>indirect-threading<br>loop-switch<br>loop-call | direct-threading | direct-threading |
-| Loop Execution | Backward Branch | Native `do/while` around a loop body. | Backward Branch |
+| Loop Execution | Backward Branch | Native `do/while` around a loop body | Backward Branch |
 
 ### Explanation
 
@@ -610,7 +610,7 @@ The table below acts as a quick summary and overview of the similarities and dif
   so each instance derived from the same Wasm module still compiles and holds its
   own bytecode. This allows those runtimes to embed pointers to instance objects
   directly into their bytecode and apply instance specific optimizations.
-  On the contrary Wasmi's bytecode consumes considerably less space if multiple
+  In contrast Wasmi's bytecode consumes considerably less space if multiple
   instances are at play and compilation also only has to be conducted once per
   Wasm module.
   This is also what allows Wasm3 and Stitch to patch bytecode during execution.
@@ -626,33 +626,33 @@ The table below acts as a quick summary and overview of the similarities and dif
   to make sure that invalid bit patterns of the upper 32-bits of cells are not
   invalidly read and misinterpreted. The design chosen by Wasm3 and Stitch may have
   positive effects on MCUs and if that's the case, Wasmi 2.0 wants to adopt this.
-- **Handler Signatures:** Wasm3 is optimizes for embedded MCUs and thus tries to use the least
+- **Handler Signatures:** Wasm3 is optimized for embedded MCUs and thus tries to use the least
   amount of registers for its signatures whereas Wasmi 2.0 combats this by providing multiple
   dispatch modes to support all kinds of platforms. The additional memory registers of Wasmi 2.0
   and Stitch improve performance for memory-heavy workloads. Wasmi 2.0 requires the `instance`
   parameter due to its module related bytecode whereas Wasm3 and Stitch can simply encode
   instance object pointers into their bytecodes. Wasmi 2.0 has a `store` parameter for `Store`
   associated objects such as fuel and host data which Wasm3 and Stitch simply lack.
-- **Immediates:** Wasm3 uses a pool of known constant values used per function. This constant
+- **Immediates:** Wasm3 uses a pool of known constant values per function. This constant
   pool is required to be prepended to the function's frame on each call which significantly
   worsens Wasm3's performance for call heavy workloads. The huge benefit is that Wasm3 needs
   far fewer instruction handlers as it does not have to encode immediates at all.
 - **Accumulator Registers:** Wasmi 2.0 and Stitch each use 3 accumulator registers whereas Wasm3
   only uses 2. The difference boils down to Wasmi 2.0 and Stitch being able to use different
-  accumulator registers for their `f32` and `f64` values. In practise I haven't been able to
+  accumulator registers for their `f32` and `f64` values. In practice I haven't been able to
   observe major performance differences due to this but maybe the benchmark set wasn't good enough.
 - **Stack Layout:**
     - Wasmi 2.0 uses separate value and call stacks. This allows Wasmi to minimize the work required
       for call frame setup and teardown. The trade-off is that Wasmi has to manage 2 large heap allocations.
     - Wasm3 only manages a value stack and uses the native C stack for its calls.
-      The rational for this can be found in its [design document][wasm3-loops].
+      The rationale for this can be found in its [design document][wasm3-loops].
     - Stitch uses a unified value and call stack where call frame information is encoded in the value
       stack similar to how native CPUs store frame information on their stacks. The consequence is that
       calls with parameters require moving cells around per call which slightly regresses performance.
       The benefit is a very elegant design and superb cache efficiency.
 - **Loop Execution:** Wasmi 2.0 and Stitch both use simple backwards branches to execute loops.
   Wasm3 on the other hand has special instruction handlers that consume a native C stack frame and
-  perform something similar to a `do/while` loop. The rational for this can be found in its
+  perform something similar to a `do/while` loop. The rationale for this can be found in its
   [design document][wasm3-loops].
 
 [wasm3-loops]: https://github.com/wasm3/wasm3/blob/main/docs/Interpreter.md#stack-usage
