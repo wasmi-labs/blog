@@ -708,3 +708,15 @@ respectable performance despite their differences in interpreter architecture co
 of its collapsed branch sites was different, but it still suffered from the same consequences and it was possible to fix it using
 the same trivial fix.
 [^🤖]: Be aware that Wasmi Doom was created using AI.
+
+[#2027]: https://github.com/wasmi-labs/wasmi/pull/2027
+[Typst]: https://typst.app/docs/reference/foundations/plugin/
+[Zellij]: https://github.com/zellij-org/zellij
+[Josh]: https://github.com/josh-project/josh
+[Soroban]: https://stellar.org/soroban
+[Firefly Zero]: https://fireflyzero.com/
+[SDF]: https://stellar.org/foundation
+[Ripple]: https://ripple.com/
+[`function-references`]: https://github.com/WebAssembly/function-references
+[`exception-handling`]: https://github.com/WebAssembly/exception-handling
+[`gc`]: https://github.com/WebAssembly/gc
