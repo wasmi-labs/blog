@@ -674,7 +674,7 @@ Try out and use Wasmi today in various ways:
 - 📚 As a library dependency via the [`wasmi` crate](https://crates.io/crates/wasmi).
 - 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli` or any of its pre-build release artifacts.
 - ⚙️ In your C-interfacing language using the [Wasmi C-API](https://github.com/wasmi-labs/wasmi/tree/main/crates/c_api#readme).
-- 😈 Play [Doom in your browser](https://wasmi-labs.github.io/wasmi-doom/) powered by Wasmi 2.0.
+- 😈 Play [Doom in your browser](https://wasmi-labs.github.io/wasmi-doom/) powered by Wasmi 2.0. [^🤖]
 - 📦 Or enjoy Wasmi indirectly by using any of its [major known users](https://github.com/wasmi-labs/wasmi#used-by).
 
 ## Personal Note
@@ -697,3 +697,7 @@ respectable performance despite their differences in interpreter architecture co
 [^explain-table0]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
 [^why-handles]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
 [^why-not-faster]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
+[^wasmi-not-deoptimized]: In contrast to Stitch, Wasmi 2.0's performance did not regress between Rust 1.91 and 1.92 so the source
+of its collapsed branch sites was different, but it still suffered from the same consequences and it was possible to fix it using
+the same trivial fix.
+[^🤖]: Be aware that Wasmi Doom was created using AI.
