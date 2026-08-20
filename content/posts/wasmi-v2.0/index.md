@@ -665,7 +665,7 @@ which implies implementation for the following Wasm proposals still missing from
 
 - 🚧 [`function-references`]
 - 🚧 [`exception-handling`]
-- 🚧 [`gc`]
+- 🚧 [`gc`] (Garbage Collection)
 
 ## Try It Out!
 
