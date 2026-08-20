@@ -410,6 +410,18 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 [counter-global-0]: ./resources/bench/counter-global/counter-global-0.svg
 [counter-global-1]: ./resources/bench/counter-global/counter-global-1.svg
 
+With the above optimizations to instance layout Wasmi 2.0's `global_get_u64_r` instruciton handler looks like this:
+
+```asm
+global_get_u64_r:
+    ldr x7, [x1, #16]!     ; bump ip by 16 bytes and store next handler
+    ldur w8, [x1, #-8]     ; fetch global address operand from ip
+    add x8, x5, x8, lsl #4 ; compute instance[address]
+    ldr x8, [x8, #64]      ; offset instance[address] by constant handles offset
+    ldr x6, [x8]           ; load raw global value into ireg
+    br x7                  ; tail-call next handler
+```
+
 ### Lock-Free `CodeMap`
 
 Wasmi's `CodeMap` is part of Wasmi's `Engine` and stores all the Wasmi IR function bodies.
