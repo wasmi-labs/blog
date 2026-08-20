@@ -19,7 +19,7 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 It is with great pleasure to announce that after 8 months of focused work Wasmi 2.0 is finally done and ready for use.
 
 - [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
-- [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/tag/v2.0.0/docs/migration-v1-to-v2.md)
+- [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/tree/v2.0.0/docs/migration-v1-to-v2.md)
 
 ## Where Wasmi 2.0 Landed
 
@@ -100,7 +100,7 @@ modes share the same interpreter execution logic and architecture under the hood
 If you are interested in how the instruction dispatch selection in Wasmi works in detail,
 you can find the code here: [Wasmi Dispatch Selection]
 
-[Wasmi Dispatch Selection]: https://github.com/wasmi-labs/wasmi/tree/v2.0.0-beta.10/crates/wasmi/src/engine/executor/handler/dispatch
+[Wasmi Dispatch Selection]: https://github.com/wasmi-labs/wasmi/tree/v2.0.0/crates/wasmi/src/engine/executor/handler/dispatch
 
 ### Execution Handler Signature
 
