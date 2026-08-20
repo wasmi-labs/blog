@@ -14,6 +14,13 @@ It is an excellent choice for IoT devices, plugin systems ([Typst], [Zellij], [J
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation (SDF)](https://stellar.org/foundation) that sponsors the development of the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn’t be where it is today.
 
+## Wasmi 2.0 Release
+
+It is with great pleasure to announce that after 8 months of focused work Wasmi 2.0 is finally done and ready for use.
+
+- [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
+- [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/blob/rf-prepare-wasmi-v2.0.0-release/docs/migration-v1-to-v2.md)
+
 ## Where Wasmi 2.0 Landed
 
 But was all the work in the last 8 months worth the immense effort?
