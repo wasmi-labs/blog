@@ -28,7 +28,7 @@ Some user-requested features, such as stable fuel metering, support for WebAssem
 
 ## Where Wasmi 2.0 Landed
 
-But was all the work in the last 8 months worth the immense effort?
+2.2x faster than Wasmi 1.0 is great, but how does Wasmi 2.0 fare against its competition?
 
 For this, I have benchmarked some of the fastest portable Wasm interpreters: [^benches-runtimes]
 
