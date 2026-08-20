@@ -19,7 +19,7 @@ Before going into all the details, a huge thank you to the [Stellar Development 
 It is with great pleasure to announce that after 8 months of focused work Wasmi 2.0 is finally done and ready for use.
 
 - [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
-- [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/blob/rf-prepare-wasmi-v2.0.0-release/docs/migration-v1-to-v2.md)
+- [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/tag/v2.0.0/docs/migration-v1-to-v2.md)
 
 ## Where Wasmi 2.0 Landed
 
