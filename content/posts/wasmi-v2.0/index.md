@@ -21,7 +21,7 @@ Today, I am happy to announce that after 8 months of focused work, Wasmi 2.0 is 
 The focus of this release is execution performance: Wasmi 2.0 runs ~2.2x faster than Wasmi 1.0 in geomean across the [`wasmi-benchmarks`] suite.
 
 Wasmi 2.0 ships new knobs, such as the `validate` crate feature, that significantly reduce its binary artifact size. [^cargo-bloat-show]
-Some user-requested features, such as stable fuel metering, support for [WebAssembly's deterministic profile][wasm-deterministic-profile] and an improved [Wasmi CLI] tool, also made it into this release.
+Some user-requested features, such as stable fuel metering [^explain-stable-metering], support for [WebAssembly's deterministic profile][wasm-deterministic-profile] and an improved [Wasmi CLI] tool, also made it into this release.
 
 - [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
 - [**View Migration Guide**](https://github.com/wasmi-labs/wasmi/tree/v2.0.0/docs/migration-v1-to-v2.md)
@@ -641,6 +641,7 @@ of its collapsed branch sites was different, but it still suffered from the same
 the same trivial fix.
 [^🤖]: Be aware that Wasmi Doom was created using AI.
 [^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool it was quite easy to explore the parts that caused the most bloat and eliminate them.
+[^explain-stable-metering]: Stable fuel metering does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
 
 [#2027]: https://github.com/wasmi-labs/wasmi/pull/2027
 [Typst]: https://typst.app/docs/reference/foundations/plugin/
