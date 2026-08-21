@@ -205,7 +205,7 @@ fn i64_add(ip: Ip, sp: Sp, ..) -> Done {
 Wasmi 2.0 introduced the 3 new accumulator registers: `ireg`, `freg32` and `freg64`.
 This allows Wasmi 2.0 to load and store instruction operands and results from and to actual hardware registers.
 
-A simplified `i64.add` example that computes `res = lhs + rhs` where `rhs` and `lhs` refer to the `ireg` accumulator
+A simplified `i64.add` example that computes `res = lhs + rhs` where `res` and `lhs` refer to the `ireg` accumulator
 and `rhs` is a `i64` immediate value would look like this:
 
 ```rust
