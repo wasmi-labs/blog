@@ -616,8 +616,8 @@ Try out and use Wasmi today in various ways:
 ## Personal Note
 
 Without the sponsorship of the [Stellar Development Foundation][SDF] Wasmi 2.0 would not exist today.
-This funding allowed me to work on this open source project full-time for 2 years which is a very rare opportunity
-for which I am grateful.
+This funding allowed me to work on this open source project full-time for 2 years which is a rare opportunity
+for which I am very grateful.
 
 That sponsorship ends in October 2026. I intend to keep working on Wasmi past that point
 and am looking for ways to make that possible: another sponsorship, or a role that leaves room for
