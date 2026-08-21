@@ -100,9 +100,9 @@ Wasmi 2.0 ships the `auto-dispatch` that automatically uses tail-call based conf
 
 > **Note:** CoreMark results for Direct-Threaded Code do not perfectly
 >           match the ones from above since it was a different run and
->           we used the [`wasmi-coremark`] project instead.
+>           we used the [`wasm-coremark-rs`] project instead.
 
-[`wasmi-coremark`]: https://github.com/wasmi-labs/wasm-coremark-rs
+[`wasm-coremark-rs`]: https://github.com/wasmi-labs/wasm-coremark-rs
 
 Despite these extreme differences in performance all of these instruction dispatching
 modes share the same interpreter execution logic and architecture under the hood.
