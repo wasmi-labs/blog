@@ -196,7 +196,7 @@ fn i64_add(ip: Ip, sp: Sp, ..) -> Done {
 5. Compute the sum `sp[lhs] + rhs`.
 6. Store the sum into `sp[result]`.
 7. Offset `ip` to point to the next instruction handler.
-8. Execute the next instruction handler.
+8. Execute the next instruction handler. [^why-next-macro]
 
 #### How Wasmi 2.0 Works
 
@@ -642,6 +642,7 @@ the same trivial fix.
 [^🤖]: Be aware that Wasmi Doom was created using AI.
 [^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool it was quite easy to explore the parts that caused the most bloat and eliminate them.
 [^explain-stable-metering]: Stable fuel metering does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
+[^why-next-macro]: We use a `next!` macro instead of a function call, `become` or `return` since that allows Wasmi to use different instruction dispatch modes using the same underlying code. The `next!` macro simply expands to slightly different code depending on the chosen configuration.
 
 [#2027]: https://github.com/wasmi-labs/wasmi/pull/2027
 [Typst]: https://typst.app/docs/reference/foundations/plugin/
