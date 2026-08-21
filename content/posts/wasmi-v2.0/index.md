@@ -71,6 +71,8 @@ But there is even more to uncover in an upcoming blog post - stay tuned!
 
 ## What made Wasmi 2.0 so fast?
 
+> **Note:** This section assumes a basic understanding of Wasm and interpreters.
+
 ### New Modes of Instruction Dispatch
 
 As promised in the original Wasmi 1.0 blog post Wasmi 2.0 now has 4 different modes of dispatching instructions:
