@@ -230,11 +230,10 @@ This is what it looks like compiled to `aarch64` assembly with `x1 = ip` and `x6
 
 ```asm
 i64_add_rri:
-    .cfi_startproc
-    ldr x7, [x1, #16]!
-    ldur x8, [x1, #-8]
-    add x6, x8, x6
-    br x7
+    ldr x7, [x1, #16]!   ; bump ip by 16 bytes and load next handler
+    ldur x8, [x1, #-8]   ; fetch rhs immediate operand from ip
+    add x6, x8, x6       ; ireg = ireg + rhs
+    br x7                ; tail-call next handler
 ```
 
 ### Copy Instructions
