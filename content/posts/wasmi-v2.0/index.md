@@ -264,7 +264,7 @@ Wasmi 2.0 requires 2 instructions for the same job:
 
 ```lisp
 i32_add_rsi 0 10 ;; ireg = (local 0) + 10
-u64_copy_sr 0    ;; (local 0) = ireg
+u64_copy_sr 1    ;; (local 1) = ireg
 ```
 
 #### Example: Register Preservation
