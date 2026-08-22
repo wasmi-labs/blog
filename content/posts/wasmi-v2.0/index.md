@@ -90,7 +90,9 @@ Wasmi users should use
 - **Indirect-Threaded-Code"** for a good balance between interpreter performance and memory usage.
 - **Switch-Loop:** for running on platforms that do not support tail-calls.
 
-Wasmi 2.0 ships the `auto-dispatch` that automatically uses tail-call based configurations where possible.
+Wasmi 2.0 ships the `auto-dispatch` that automatically uses [threaded-code] based configurations where possible.
+
+[threaded-code]: https://en.wikipedia.org/wiki/Threaded_code
 
 #### How Do Instruction Dispatch Modes Perform?
 
