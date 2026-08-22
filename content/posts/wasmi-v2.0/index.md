@@ -600,12 +600,14 @@ LBB1321_2:
 
 ## What's Next
 
-With the next major version Wasmi 3.0 we aim to support all of WebAssembly 3.0
+With the next major version Wasmi 3.0 we aim to support all of [WebAssembly 3.0]
 which implies implementation for the following Wasm proposals still missing from Wasmi 2.0:
 
 - 🚧 [`function-references`]
 - 🚧 [`exception-handling`]
 - 🚧 [`gc`] (Garbage Collection)
+
+[WebAssembly 3.0]: https://webassembly.org/news/2025-09-17-wasm-3.0/
 
 ## Try It Out!
 
