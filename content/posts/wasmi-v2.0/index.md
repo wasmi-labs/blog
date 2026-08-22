@@ -90,7 +90,7 @@ Wasmi users should use
 - **Indirect-Threaded-Code"** for a good balance between interpreter performance and memory usage.
 - **Switch-Loop:** for running on platforms that do not support tail-calls.
 
-Wasmi 2.0 ships the `auto-dispatch` that automatically uses [threaded-code] based configurations where possible.
+Wasmi 2.0 ships the `auto-dispatch` that automatically uses [threaded-code] based configurations where possible. [^nightly-become]
 
 [threaded-code]: https://en.wikipedia.org/wiki/Threaded_code
 
@@ -650,6 +650,9 @@ the same trivial fix.
 [^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool it was quite easy to explore the parts that caused the most bloat and eliminate them.
 [^explain-stable-metering]: Stable fuel metering does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
 [^why-next-macro]: We use a `next!` macro instead of a function call, `become` or `return` since that allows Wasmi to use different instruction dispatch modes using the same underlying code. The `next!` macro simply expands to slightly different code depending on the chosen configuration.
+[^nightly-become]: When disabling Wasmi's default `stable` crate feature and enabling its `unstable` crate feature, Wasmi will make use of Rust's unstable [`become` keyword] for its threaded-code dispatch.
+
+[`become` keyword]: https://doc.rust-lang.org/std/keyword.become.html
 
 [#2027]: https://github.com/wasmi-labs/wasmi/pull/2027
 [Typst]: https://typst.app/docs/reference/foundations/plugin/
