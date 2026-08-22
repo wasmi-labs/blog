@@ -568,14 +568,14 @@ own `i32.lt` instruction handler and .. oh boy! It suffered from the same underl
 
 ```asm
 branch_i32_lt_ri:
-    ldp w8, w9, [x1, #8]
-    sxtw x8, w8
-    add x10, x1, #16
-    add x8, x1, x8
-    cmp w9, w6
+    ldp w8, w9, [x1, #8] ; fetch branch offset and rhs immediate from ip
+    sxtw x8, w8          ; sign-extend the branch offset
+    add x10, x1, #16     ; compute the fall-through ip
+    add x8, x1, x8       ; compute the branch target ip
+    cmp w9, w6           ; branch is taken if ireg < rhs
     csel x1, x8, x10, gt ; csel picks the target
-    ldr x7, [x1]
-    br x7                ; just one indirect branch
+    ldr x7, [x1]         ; load the handler at the chosen ip
+    br x7                ; unified branch site to the chosen target
 ```
 
 After [applying the fix to Wasmi 2.0][#2027] its CoreMark score rose from ~2800 to over 4200.
@@ -585,15 +585,15 @@ The considerably faster assembly of `i32.lt` now looks like this:
 
 ```asm
 branch_i32_lt_ri:
-    ldr w8, [x1, #12]
-    cmp w8, w6
-    b.le LBB1242_2
-    ldrsw x8, [x1, #8]
-    add x1, x1, x8
-    ldr x7, [x1]
+    ldr w8, [x1, #12]  ; fetch rhs immediate operand from ip
+    cmp w8, w6         ; branch is taken if ireg < rhs
+    b.le LBB1242_2     ; not taken: continue with the next instruction
+    ldrsw x8, [x1, #8] ; fetch the sign-extended branch offset from ip
+    add x1, x1, x8     ; ip = branch target
+    ldr x7, [x1]       ; load the handler at the branch target
     br x7              ; branch site if branch is taken
 LBB1242_2:
-    ldr x7, [x1, #16]!
+    ldr x7, [x1, #16]! ; bump ip by 16 bytes and load next handler
     br x7              ; branch site if branch is not taken
 ```
 
