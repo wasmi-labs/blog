@@ -568,9 +568,10 @@ own `i32.lt` instruction handler and .. oh boy! It suffered from the same underl
 
 ```asm
 branch_i32_lt_ri:
-    ldr x8, [x1, #8]
-    ldr w9, [x1, #16]
-    add x10, x1, #24
+    ldp w8, w9, [x1, #8]
+    sxtw x8, w8
+    add x10, x1, #16
+    add x8, x1, x8
     cmp w9, w6
     csel x1, x8, x10, gt ; csel picks the target
     ldr x7, [x1]
@@ -584,15 +585,16 @@ The considerably faster assembly of `i32.lt` now looks like this:
 
 ```asm
 branch_i32_lt_ri:
-    ldr w8, [x1, #16]
+    ldr w8, [x1, #12]
     cmp w8, w6
-    b.le LBB1321_2
-    ldr x1, [x1, #8]
+    b.le LBB1242_2
+    ldrsw x8, [x1, #8]
+    add x1, x1, x8
     ldr x7, [x1]
-    br x7               ; branch site if branch is taken
-LBB1321_2:
-    ldr x7, [x1, #24]!
-    br x7               ; branch site if branch is not taken
+    br x7              ; branch site if branch is taken
+LBB1242_2:
+    ldr x7, [x1, #16]!
+    br x7              ; branch site if branch is not taken
 ```
 
 > **Note:** Interestingly only the tail-call based instruction dispatch configurations
