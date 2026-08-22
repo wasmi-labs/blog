@@ -650,7 +650,7 @@ the same trivial fix.
 [^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool it was quite easy to explore the parts that caused the most bloat and eliminate them.
 [^explain-stable-metering]: Stable fuel metering does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
 [^why-next-macro]: We use a `next!` macro instead of a function call, `become` or `return` since that allows Wasmi to use different instruction dispatch modes using the same underlying code. The `next!` macro simply expands to slightly different code depending on the chosen configuration.
-[^nightly-become]: When disabling Wasmi's default `stable` crate feature and enabling its `unstable` crate feature, Wasmi will make use of Rust's unstable [`become` keyword] for its threaded-code dispatch.
+[^nightly-become]: When Wasmi's default `stable` crate feature is disabled and its `unstable` feature is enabled, Wasmi makes use of Rust's unstable [`become` keyword] for its threaded-code dispatch.
 
 [`become` keyword]: https://doc.rust-lang.org/std/keyword.become.html
 
