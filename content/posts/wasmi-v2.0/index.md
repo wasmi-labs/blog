@@ -245,10 +245,10 @@ The drawback is that this design requires copy instructions that the old design 
 #### Example: `local.set` & `local.tee`
 
 ```lisp
-local.get 0
-i32.const 10
-i32.add
-local.set 1
+local.get 0   ;; push (local 0)
+i32.const 10  ;; push 10
+i32.add       ;; pop 2 operands, push their sum
+local.set 1   ;; pop sum, store into (local 1)
 ```
 
 This Wasm sequence adds `(local 0) + 10` and stores the result into `(local 1)`.
@@ -270,12 +270,12 @@ u64_copy_sr 1    ;; (local 1) = ireg
 #### Example: Register Preservation
 
 ```lisp
-local.get 0
-i32.const 10
-i32.add
-local.get 1
-i32.const 20
-i32.mul
+local.get 0   ;; push (local 0)
+i32.const 10  ;; push 10
+i32.add       ;; pop 2 operands, push their sum
+local.get 1   ;; push (local 1) on top of the pending sum
+i32.const 20  ;; push 20
+i32.mul       ;; pop 2 operands, push their product
 ```
 
 Wasmi 2.0 has to translate this to roughly the following Wasmi 2.0 IR:
