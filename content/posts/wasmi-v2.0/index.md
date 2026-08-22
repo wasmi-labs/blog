@@ -69,7 +69,7 @@ by the [`wasmi-benchmarks`] project but it provides a good overview.
 It is fair to say that Wasmi 2.0 clearly belongs to the category of the fastest portable Wasm interpreters.
 
 In a follow-up article I will present all the results and findings of the [`wasmi-benchmarks`] suite
-and put each of its supported Wasm runtimes into the spotlight it deserves.
+and put each of its many supported Wasm runtimes into the spotlight it deserves.
 
 ## What made Wasmi 2.0 so fast?
 
