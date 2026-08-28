@@ -13,6 +13,7 @@ Wasmi is an efficient and feature-rich [WebAssembly (Wasm)](https://webassembly.
 It is an excellent choice for IoT devices, plugin systems ([Typst], [Zellij], [Josh]), cloud hosts, smart contracts ([Soroban], [Ripple]) and even for your lightweight game consoles ([Firefly Zero]).
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation (SDF)](https://stellar.org/foundation) that has been sponsoring the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn’t be where it is today.
+Also special thanks to [Felix Kutzner](https://github.com/fkutzner) for proofreading the article and suggesting many improvements.
 
 ## Wasmi 2.0 Release
 
