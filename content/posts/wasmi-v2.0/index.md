@@ -120,8 +120,8 @@ you can find the code here: [Wasmi Dispatch Selection]
 
 Before execution, Wasmi translates the Wasm bytecode to Wasmi IR.
 
-Each Wasmi IR instruction has its own unique instruction handler (or execution handler)
-which defines how this particular instruction is executed when run.
+Each Wasmi IR instruction has its own instruction handler (or execution handler)
+which defines how the instruction is executed.
 
 In Wasmi 2.0, all instruction handlers share the same signature:
 
@@ -132,7 +132,7 @@ fn(
     sp: Sp,                  // The stack pointer.
     mem0: Mem0Ptr,           // The pointer to the data of the default linear memory: `(memory 0)`
     mem0_len: Mem0Len,       // The number of bytes of the default linear memory.
-    instance: Inst,          // A pointer to the Wasm instance that is used by the function that is currently being executed.
+    instance: Inst,          // A pointer to the Wasm instance that is used by the currently executed function.
     ireg: Ireg,              // Accumulator register for integer and reference values.
     freg32: Freg32,          // Accumulator register for `f32` values.
     freg64: Freg64,          // Accumulator register for `f64` values.
@@ -148,26 +148,26 @@ fn(
 - The `mem0` and `mem0_len` arguments are used for optimized access to the default memory
   `(memory 0)`. This is very common in Wasm even when using the Wasm `multi-memory` proposal.
 - The `instance` argument is used to load Wasm instance related objects such as globals, functions,
-  tables, memories, data- and element segments. We will go into greater details later in the post.
+  tables, memories, data and element segments. We will go into greater details later in the post.
 - The `ireg`, `freg32` and `freg64` arguments are so-called accumulator registers which are
-  used to store intermediate results in between instructions very efficiently.
+  used to efficiently store intermediate results between instructions.
   We will go into greater details later in the post.
 - The `Done` result is just a bit pattern that tells the executor why execution halted.
   More detailed information is communicated via the `store` for later retrieval.
 
 #### Problem: Calling Conventions
 
-7 out of the 9 arguments in Wasmi's instruction handlers require integer registers (GPRs),
-namely `store`, `ip`, `sp`, `mem0`, `mem0_len`, `instance` and `ireg`.
+7 out of the 9 arguments in Wasmi's instruction handlers require passing their values in
+general-purpose registers (GPRs), namely `store`, `ip`, `sp`, `mem0`, `mem0_len`, `instance` and `ireg`.
 
-However, common calling conventions such as `sysv64` only provide up to 6.
-A 7th integer argument would trash performance due to having to spill to the stack on every dispatch.
+However, common calling conventions such as `sysv64` only provide up to 6 GPRs for integer arguments.
+A 7th integer argument would trash performance because it would have to be spilled to the stack on every dispatch.
 Both Stitch and Wasm3 circumvent this issue by using only 6 and 4 GPRs respectively.
 
-The simple solution is to turn one of Wasmi's GPR arguments into a floating point value where necessary.
+The simple solution is to turn one of Wasmi's GPR arguments into a floating-point value where necessary.
 The `instance` argument was chosen since it is used only for relatively expensive operations anyway.
 
-Benchmarks show that the integer to float register domain move isn't a big deal.
+Benchmarks show that the integer-to-float register domain move isn't a big deal.
 
 > **Note:** the currently unstable [`preserve_none`] ABI might be able to improve this situation in the future once it becomes stable and available on more platforms.
 
@@ -175,11 +175,11 @@ Benchmarks show that the integer to float register domain move isn't a big deal.
 
 ### Accumulator Registers
 
-#### How The Old Wasmi 1.0 Works
+#### How Wasmi 1.0 Worked
 
 Wasmi 1.0 pervasively uses stack offsets (stack slots) for operands and results of IR instructions.
 
-A simplified `i64.add` instruction handler that computes `res = lhs + rhs` where
+A simplified `i64.add` instruction handler computing `res = lhs + rhs` is shown below, where
 `res` and `lhs` are stack slots, and `rhs` is an immediate `i64` value:
 
 ```rust
@@ -228,7 +228,7 @@ fn i64_add(ip: Ip, sp: Sp, ireg: i64, ..) -> Done {
 5. Execute the next instruction handler.
 
 This is notably simpler and more efficient since the accumulator registers are always
-implicit and need no costly decoding or loading and storing of values.
+implicit and need no costly decoding, loading or storing of values.
 
 This is what it looks like compiled to `aarch64` assembly with `x1 = ip` and `x6 = ireg`:
 
@@ -262,7 +262,7 @@ Wasmi 1.0 could do all of this in a single Wasmi 1.0 IR instruction:
 i32_add_ssi 1 0 10
 ```
 
-> **Note:** we use `s` suffix for stack slots, `r` suffix for accumulator registers and `i` for immediates.
+> **Note:** we use the suffixes `s` for stack slots, `r` for accumulator registers and `i` for immediates.
 
 Wasmi 2.0 requires two instructions for the same job:
 
@@ -290,15 +290,15 @@ u64_copy_sr A    ;; (slot A) = ireg
 i32_mul_rsi 1 20 ;; ireg = (local 1) * 20
 ```
 
-The `u64_copy_sr A` is required because we overwrite `ireg` in the next instruction
-without actually using it, thus we need to preserve whatever was stored in `ireg` prior.
+The `u64_copy_sr A` instruction is required because we overwrite `ireg` in the next instruction
+without actually using it, thus we need to preserve the previous value of `ireg`.
 
 #### Solution 1: More Efficient Copies
 
-As demonstrated Wasmi 2.0 requires many more copy instructions due to this design.
-There are some effective ways to reduce their number and for the remaining copies some patterns emerged.
+As demonstrated, Wasmi 2.0 requires many more copy instructions due to this design.
+There are some effective ways to reduce their number, and for the remaining copies, some patterns emerged.
 
-Wasmi 2.0 introduced some optimized versions for common situations:
+Wasmi 2.0 introduced optimized IR instructions for common situations:
 
 - `u64_copy_sNr`: copies `ireg` to a fixed `(local N)` where `N = 0..10`
 - `f32_copy_sNr`: copies `freg32` to a fixed `(local N)` where `N = 0..10`
@@ -308,7 +308,7 @@ Wasmi 2.0 introduced some optimized versions for common situations:
 
 #### Solution 2: Op-Code Fusion
 
-For some reason Wasm produces lots of `add` and `load` instructions that are immediately followed by `local.set` or `local.tee`.
+For some reason, Wasm produces lots of `add` and `load` instructions that are immediately followed by `local.set` or `local.tee`.
 
 This is so common that it was worth introducing special
 fused variants which store their results not only in the
@@ -326,32 +326,32 @@ Control flow in WebAssembly is organized as a stack,
 so branches use a stack depth to which they jump where a depth of 0
 jumps to the label of their direct parent.
 
-Additionally, control flow can have parameters and results and Wasmi 2.0
+Additionally, control flow can have parameters and results, and Wasmi 2.0
 carries accumulator registers across those boundaries if possible.
 
-- If a `block` for example has the result types `(i32 f32)` Wasmi 2.0
+- If a `block` for example has the result types `(i32 f32)`, Wasmi 2.0
   uses both `ireg` and `freg32` to return its results.
 - If a `block` has `(i32, i32, i32)` result types, Wasmi 2.0 only puts the
   last result in `ireg` and returns the other results in stack slots.
-- For technical reasons accumulator registers are only used for the tail of results.
+- For technical reasons, accumulator registers are only used for the tail of results.
   For example, a `block` with results `(f32 i32 i32)` only puts the
   last `i32` into `ireg` and all other results into stack slots.
 
 The same rules apply to `if` results and `loop` parameters.
 
-For `loop` this may allow induction variables to stay in accumulator registers.
+For `loop`, this may allow induction variables to stay in accumulator registers.
 An example for this can be seen in the `execute/counter-param` test case of [`wasmi-benchmarks`].
 
-> **Note:** Experiments were conducted to apply the same rules to calls but
-unfortunately this led to performance regressions and was not merged.
+> **Note:** We experimented with applying the same rules to calls but
+unfortunately this led to performance regressions, so it was not merged.
 
 ### Instance Object Access
 
-#### How The Old Wasmi 1.0 Works
+#### How Wasmi 1.0 Worked
 
 Wasmi 1.0 uses a naive way to model the internal object representation of Wasm module instances.
 An instance (or `InstanceEntity`) uses one heap allocation per type of instance object, e.g. for
-memories, tables, functions, globals, data- or element segments. An `InstanceEntity` only holds
+memories, tables, functions, globals, data or element segments. An `InstanceEntity` only holds
 handles which need to be fetched from the store to retrieve the underlying object internals,
 such as a global's value and type.
 
@@ -363,7 +363,7 @@ load the handle `h` at index `g`, then resolve `h` in the `store`'s globals tabl
 Each load depends on the previous one and is very costly.
 
 This procedure is so slow that Wasmi 1.0 ships special handling for `(global 0)` to speed up
-the common case of accessing the global at Wasm index 0 which is commonly used as the pointer to
+the common case of accessing the global at Wasm index 0, which is commonly used as the pointer to
 the shadow stack in C code that was compiled to Wasm.
 
 #### How Wasmi 2.0 Works
@@ -374,7 +374,7 @@ share the same object layout. An instance object's address is a property of the 
 ![][instance-entity-wasmi-2.0]
 
 The aforementioned `instance: Inst` parameter of all Wasmi 2.0 instruction handlers
-is a thin-pointer to the `InstanceEntity` which now is a dynamically sized type.
+is a thin-pointer to the `InstanceEntity`, which now is a dynamically sized type.
 
 `InstanceEntity` consists of the fixed-size `InstanceEntityHeader` with common information
 as well as the dynamically sized `handles` buffer.
@@ -385,8 +385,8 @@ The ordering is `memories`, `globals`, `tables`, `funcs`, `elems`, `datas`.
 - `memories` are first so that the commonly used default memory `(memory 0)` remains at address 0.
   Additionally, this allows Wasmi to define its memory addresses as 16-bit values.
 - `datas` must be last since the `data count` section is not guaranteed to be available at Wasm module
-  creation time and thus it isn't known how many data segments exist.
-- `InstanceEntityHeader` contains a `table0` field to allow for fast accesses for the commonly
+  creation time, so it isn't known how many data segments exist.
+- `InstanceEntityHeader` contains a `table0` field to allow fast access to the commonly
   used default table `(table 0)`, e.g. for `call_indirect`. [^explain-table0]
 - The order of the remaining `globals`, `tables`, `funcs` and `elems` regions was chosen in relation
   to how common those object accesses are in Wasm executions.
@@ -395,23 +395,23 @@ The `handles` buffer contains the `handle` alongside an `entity` cache which
 is a pointer to the actual instance object owned by the store. [^why-handles] These `entity` pointers
 are initialized during Wasm instantiation so that the execution can rely on them.
 
-For this the store also had to be slightly re-designed in that its containers, previously `Arena`,
+To this end, the store also had to be slightly re-designed in that its containers, previously `Arena`,
 now guarantee stable addresses for their owned objects, for which the `StableArena` type was created.
 
 With all this, Wasmi 2.0 IR now uses instance addresses instead of Wasm indices for accessing
-instance objects and accessing an instance object is just one pointer offset from `instance` away
+instance objects, and accessing an instance object is just one pointer offset away from `instance`
 and thus extremely fast.
 
 #### Instance Access: Comparison With Wasm3 & Stitch
 
 Both Wasm3 and Stitch use instance-related bytecode.
-This allows each instance to embed pointers to instance objects into its bytecode
+This allows each instance to embed pointers to instance objects into its bytecode,
 but requires each instance of the same Wasm module to store its own unique bytecode.
 
-Wasmi uses module-related bytecode which means that all Wasm instances of the same Wasm module
-share the same underlying Wasmi IR bytecode which improves memory consumption significantly.
+Wasmi uses module-related bytecode, which means that all Wasm instances of the same Wasm module
+share the same underlying Wasmi IR bytecode, which improves memory consumption significantly.
 
-Thanks to the re-design of the `InstanceEntity` Wasmi 2.0 achieves Wasm3 and Stitch level
+Thanks to the re-design of the `InstanceEntity`, Wasmi 2.0 achieves Wasm3- and Stitch-level
 performance for instance object access despite its inability to embed instance object pointers
 into its bytecode.
 
@@ -430,7 +430,7 @@ Wasmi 1.0 regresses significantly with `(global 1)` since its `(global 0)` cache
 [counter-global-0]: ./resources/bench/counter-global/counter-global-0.svg
 [counter-global-1]: ./resources/bench/counter-global/counter-global-1.svg
 
-With the above optimizations to instance layout Wasmi 2.0's `global_get_u64_r` instruction handler looks like this:
+With the above instance-layout optimizations, Wasmi 2.0's `global_get_u64_r` instruction handler looks like this:
 
 ```asm
 global_get_u64_r:
@@ -449,9 +449,9 @@ The remaining function information (`FuncEntity`) on the other hand lives in the
 
 Due to their instance-related bytecode, both Wasm3 and Stitch can treat Wasm functions as
 just another type of instance object and thus embed pointers to Wasm functions directly into
-the encoded stream of IR instructions - and it is exactly what they do to make calls fast.
+the encoded stream of IR instructions - and that is exactly what they do to make calls fast.
 
-#### How The Old Wasmi 1.0 Works
+#### How Wasmi 1.0 Worked
 
 The whole `CodeMap` was one mutex-guarded `Vec`-like arena data structure.
 So every internal Wasm call had to take the mutex and then index into the `Vec`-like arena.
@@ -487,7 +487,7 @@ accessing allocated functions is lock-free and concurrent with minimal synchroni
 
 ![][code-map]
 
-Each `FuncEntry` carries its own atomic state so the hot path of a call just checks if a
+Each `FuncEntry` carries its own atomic state, so the hot path of a call just checks if a
 `FuncEntry` has already been compiled and returns its function body internals.
 
 This allows for the lazy compilation of `FuncEntry` which is considered the cold path as
@@ -503,13 +503,13 @@ The `fibonacci-rec` benchmark from [`wasmi-benchmarks`] stresses Wasm-to-Wasm ca
 
 ![][fibonacci-rec]
 
-Thanks to the new `CodeMap` design, Wasmi achieves Stitch and Wasm3 level performance despite its
-module-related bytecode and the need for shared atomic loads.
+The new `CodeMap` design closes the same gap for calls: Wasmi 2.0 keeps up with Stitch and Wasm3
+despite its module-related bytecode and the need for shared atomic loads.
 The reason why Wasmi even outperforms Stitch and Wasm3 is due to other technical differences:
 
-- Both Stitch and Wasm3 use merged call and value stacks which necessitates more copy overhead
+- Both Stitch and Wasm3 use merged call and value stacks, which causes more copy overhead,
 whereas Wasmi uses two different stacks to avoid exactly that.
-- Furthermore, Wasm3 uses a constant pool per function to avoid the need for immediate operands which
+- Furthermore, Wasm3 uses a constant pool per function to avoid the need for immediate operands, which
 results in even more copy overhead per function call.
 
 [code-map]: ./resources/code-map/code-map-wasmi-2.0-v2.svg
@@ -519,7 +519,7 @@ results in even more copy overhead per function call.
 
 The Wasmi executor organizes values on the stack into so-called stack slots or cells.
 In Wasmi 1.0 cells are either 64-bit wide, or 128-bit wide if the `simd` crate feature is enabled.
-By default the `simd` feature is disabled but users who require Wasm `simd` proposal support enable it.
+By default the `simd` feature is disabled, but users who require Wasm `simd` proposal support enable it.
 
 This widening of cells from 64-bit to 128-bit not only causes increased memory consumption
 but also regresses performance by roughly 5-10% due to more memory traffic,
@@ -536,7 +536,7 @@ Wasm `simd` instructions themselves are not slower:
   so the same number of 64-bit words is moved either way.
 - Wasmi 2.0 simply stops imposing that width on all non-`v128` values on the stack.
 
-Enabling `simd` in Wasmi 2.0 no longer increases memory consumption or regresses performance.
+Enabling `simd` in Wasmi 2.0 no longer increases memory consumption or regresses performance. [^why-simd-not-default]
 
 ![][coremark-simd]
 
@@ -550,7 +550,7 @@ Wasmi 2.0 with `simd` remains just as fast as Wasmi 2.0 with `simd` disabled wit
 
 ## Accidental Rust Deoptimization
 
-While working on [`wasmi-benchmarks`] and benchmarking other Wasm runtimes
+While working on [`wasmi-benchmarks`] and benchmarking other Wasm runtimes,
 I noticed that [Stitch](https://github.com/makepad/stitch) performed significantly worse than in past measurements.
 
 Its CoreMark score dropped by roughly 30% from over 3000 points to just ~2200 on my Apple M2 Pro.
@@ -560,15 +560,15 @@ Further investigation found the culprit: `DestinationPropagation`, a MIR optimiz
 [Rust 1.92 enabled by default][rust-#142915]. This pass merges MIR locals holding the same value.
 The effect is that the two dispatch paths of a conditional branch handler collapse into just one:
 a `csel` feeding a single branch site.
-A CPU's branch predictor now only sees one entry with mixed history which complicates its job.
+A CPU's branch predictor now only sees one entry with mixed history, which complicates its job.
 
 [rust-#142915]: https://github.com/rust-lang/rust/pull/142915
 
-With [the fix applied to Stitch](https://github.com/Robbepop/stitch/commit/3280ff672c861a1e73107c9b1d393b06127e27ad)
+With [the fix applied to Stitch](https://github.com/Robbepop/stitch/commit/3280ff672c861a1e73107c9b1d393b06127e27ad),
 its CoreMark score went back up to over 3000 points again. Success!
 
 Using [`cargo-show-asm`](https://crates.io/crates/cargo-show-asm) I looked at Wasmi 2.0's
-own `i32.lt` instruction handler and .. oh boy! It suffered from the same underlying issue: [^wasmi-not-deoptimized]
+own `i32.lt` instruction handler and ... oh boy! It suffered from the same underlying issue: [^wasmi-not-deoptimized]
 
 ```asm
 branch_i32_lt_ri:
@@ -606,8 +606,8 @@ LBB1242_2:
 
 ## What's Next
 
-With the next major version Wasmi 3.0 we aim to support all of [WebAssembly 3.0]
-which implies implementation for the following Wasm proposals still missing from Wasmi 2.0:
+With the next major version Wasmi 3.0, we aim to support all of [WebAssembly 3.0]
+which requires implementing the following Wasm proposals still missing from Wasmi 2.0:
 
 - 🚧 [`function-references`]
 - 🚧 [`exception-handling`]
@@ -627,7 +627,7 @@ Try out and use Wasmi today in various ways:
 
 ## Personal Note
 
-Without the sponsorship of the [Stellar Development Foundation][SDF] Wasmi 2.0 would not exist today.
+Without the sponsorship of the [Stellar Development Foundation][SDF], Wasmi 2.0 would not exist today.
 This funding allowed me to work on this open source project full-time for two years which is a rare opportunity
 for which I am very grateful.
 
@@ -639,19 +639,20 @@ If that is something you or your company could be interested in, contact me at <
 
 ## Footnotes
 
-[^intro]: The author of this article is not a native English speaker and the article is hand-written. All mistakes contained in the article are his. In case of severe issues feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
+[^intro]: I am not a native English speaker and this article is hand-written. All mistakes contained in the article are mine. In case of severe issues, feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 [^benches-runtimes]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
 respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
-[^explain-table0]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity` but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
+[^explain-table0]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity`, but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
 [^why-handles]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
 [^why-not-faster]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
 [^wasmi-not-deoptimized]: In contrast to Stitch, Wasmi 2.0's performance did not regress between Rust 1.91 and 1.92 so the source
 of its collapsed branch sites was different, but it still suffered from the same consequences and it was possible to fix it using
 the same trivial fix.
 [^🤖]: Be aware that Wasmi Doom was created using AI.
-[^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool it was quite easy to explore the parts that caused the most bloat and eliminate them.
-[^explain-stable-metering]: Stable fuel metering does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
+[^cargo-bloat-show]: Using the [`cargo-bloat-show`](https://crates.io/crates/cargo-bloat-show) tool, it was quite easy to explore the parts that caused the most bloat and eliminate them.
+[^explain-stable-metering]: "Stable fuel metering" does not mean that the feature has been stabilized (it already was) but that the metered fuel per unit of execution stays the same across Wasmi versions.
 [^why-next-macro]: We use a `next!` macro instead of a function call, `become` or `return` since that allows Wasmi to use different instruction dispatch modes using the same underlying code. The `next!` macro simply expands to slightly different code depending on the chosen configuration.
+[^why-simd-not-default]: Users of Wasm interpreters usually have no need for the Wasm `simd` proposal and it still adds bloat to binary artifact size, compilation time and, very minimally, to the translation of Wasm bytecode to Wasmi IR at runtime. Therefore `simd` is not part of Wasmi's default set of enabled crate features.
 [^nightly-become]: When Wasmi's default `stable` crate feature is disabled and its `unstable` feature is enabled, Wasmi makes use of Rust's unstable [`become` keyword] for its threaded-code dispatch.
 
 [`become` keyword]: https://doc.rust-lang.org/std/keyword.become.html
