@@ -69,6 +69,27 @@ I ran the benchmarks on three different hardware setups to make interpreter pref
 Note that this is just a peek of the total benchmarks and runtimes supported
 by the [`wasmi-benchmarks`] project but it provides a good overview.
 
+### Geometric Mean
+
+The following two plots show the [geometric mean] across all `execute` and all `startup`
+benchmarks of the [`wasmi-benchmarks`] suite.
+
+[geometric mean]: https://en.wikipedia.org/wiki/Geometric_mean
+
+![][execute-geomean-apple-m2-pro]
+
+![][startup-geomean-apple-m2-pro]
+
+> **Note:** I had to use logarithmic scaling for `startup` because Wasmtime Pulley is quite an outlier. [^why-pulley-outlier]
+
+Despite the focus on execution performance in Wasmi 2.0,
+its startup performance is still outstanding and mostly on par with its previous version. [^wasmi-configs]
+
+[execute-geomean-apple-m2-pro]: ./resources/geomean/execute.svg
+[startup-geomean-apple-m2-pro]: ./resources/geomean/startup.svg
+
+### Conclusion: Benchmarks
+
 It is fair to say that Wasmi 2.0 clearly belongs to the category of the fastest portable Wasm interpreters.
 
 In a follow-up article I will present all the results and findings of the [`wasmi-benchmarks`] suite
@@ -645,6 +666,11 @@ If that is something you or your company could be interested in, contact me at <
 [^intro]: I am not a native English speaker and this article is hand-written. All mistakes contained in the article are mine. In case of severe issues, feel free to open a [pull request](https://github.com/wasmi-labs/blog/pulls).
 [^benches-runtimes]: Wasmtime's Pulley and WAMR's fast-interpreter are shown in benchmarks throughout the article since they also provide
 respectable performance despite their differences in interpreter architecture compared to Wasm3, Stitch and Wasmi 2.0.
+[^wasmi-configs]: The configs such as `eager`, `lazy` and `lazy-translation` are explained
+    [here](https://github.com/wasmi-labs/wasmi-benchmarks#configuration-explanation).
+[^why-pulley-outlier]: Pulley sits behind Cranelift's expensive optimization pipeline,
+  which makes it an optimizing Wasm interpreter that would easily take the number one spot on unoptimized Wasm inputs.
+  In practice, however, Wasm is essentially always optimized before it ships.
 [^explain-table0]: We could also have a `global0` pointer for example for faster access to `(global 0)` in `InstanceEntity`, but we decided against it for now since global access is already quite speedy and accessing globals is usually not on the hot execution path anyway.
 [^why-handles]: We still keep the `handle` in the `AnyHandleAndEntity` type for non-performance critical usage outside the Wasmi executor.
 [^why-not-faster]: Wasmi 2.0 is even faster than both Wasm3 and Stitch in `execute/counter-global`. However, that is likely due to other technical differences between the interpreters. For example, Wasm3 puts `global.get` results into stack slots whereas Wasmi 2.0 uses accumulator registers which is beneficial for this benchmark test case.
