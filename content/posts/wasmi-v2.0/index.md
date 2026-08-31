@@ -97,6 +97,10 @@ and put each of its many supported Wasm runtimes into the spotlight it deserves.
 
 ## What made Wasmi 2.0 so fast?
 
+Wasm3 and Stitch share a lot of similarities with Wasmi 2.0 under the hood.
+While this section details what ideas made it into Wasmi 2.0 it also discusses, where relevant,
+the similarities and deliberate differences from them.
+
 > **Note:** This section assumes a basic understanding of Wasm and interpreters.
 
 ### New Modes of Instruction Dispatch
