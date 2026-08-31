@@ -37,10 +37,12 @@ Some user-requested features, such as stable fuel metering [^explain-stable-mete
 For this, I have benchmarked Wasmi 2.0 against some of the fastest portable Wasm interpreters: [^benches-runtimes]
 
 - [Wasm3](https://github.com/wasm3/wasm3)
-- [WAMR's fast-interpreter](https://github.com/wasm-micro-runtime/wasm-micro-runtime)
-- [Wasmtime's Pulley](https://github.com/bytecodealliance/wasmtime/blob/main/pulley/README.md)
-- [Makepad's Stitch](https://github.com/makepad/stitch)
+- [WAMR fast-interpreter](https://github.com/wasm-micro-runtime/wasm-micro-runtime)
+- [Wasmtime Pulley](https://github.com/bytecodealliance/wasmtime/blob/main/pulley/README.md)
+- [Makepad Stitch](https://github.com/makepad/stitch)
 - [Wasmi 1.0](https://crates.io/crates/wasmi/1.0.9)
+
+> **Note:** Wasmi 2.0 was inspired by all the interpreter above!
 
 The benchmarks were conducted using the [`wasmi-benchmarks`] project which should make it possible
 to easily reproduce them on your own machine.
