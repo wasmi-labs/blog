@@ -1,7 +1,7 @@
 ---
 title: 'Wasmi 2.0 - Engineering of the Fastest Wasm Interpreters'
 description: 'The optimizations behind Wasmi 2.0, and how they compare to Wasm3 and Stitch.'
-date: 2026-08-10T17:18:33+02:00
+date: 2026-09-01T00:00:01+02:00
 author: 'Robin Freyler'
 authorURL: 'https://github.com/robbepop'
 draft: true
