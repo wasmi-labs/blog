@@ -25,10 +25,11 @@ This release focuses on execution performance: Wasmi 2.0 runs ~2.2x faster than 
 Wasmi 2.0 also ships new knobs, such as the `validate` crate feature, that significantly reduce its binary artifact size. [^cargo-bloat-show]
 Some user-requested features, such as stable fuel metering [^explain-stable-metering], support for [WebAssembly's deterministic profile][wasm-deterministic-profile] and an improved [Wasmi CLI] tool, also made it into this release.
 
-- [**View Changelog**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
-- [**View Migration Guide: 1.0 → 2.0**](https://github.com/wasmi-labs/wasmi/tree/v2.0.0/docs/migration-v1-to-v2.md)
-- [**View Crate**](https://crates.io/crates/wasmi/2.0.0)
-- [**View Documentation**](https://docs.rs/wasmi/2.0.0/wasmi/)
+- [**Repository**](https://github.com/wasmi-labs/wasmi)
+- [**Release Notes**](https://github.com/wasmi-labs/wasmi/releases/tag/v2.0.0)
+- [**Migration Guide: 1.0 → 2.0**](https://github.com/wasmi-labs/wasmi/tree/v2.0.0/docs/migration-v1-to-v2.md)
+- [**Crate**](https://crates.io/crates/wasmi/2.0.0)
+- [**Documentation**](https://docs.rs/wasmi/2.0.0/wasmi/)
 
 [wasm-deterministic-profile]: https://github.com/WebAssembly/profiles/blob/main/proposals/profiles/Overview.md
 [Wasmi CLI]: https://crates.io/crates/wasmi_cli
