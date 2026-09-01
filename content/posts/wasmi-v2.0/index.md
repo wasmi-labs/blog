@@ -43,7 +43,7 @@ For this, I have benchmarked Wasmi 2.0 against some of the fastest portable Wasm
 - [Makepad Stitch](https://github.com/makepad/stitch)
 - [Wasmi 1.0](https://crates.io/crates/wasmi/1.0.9)
 
-> **Note:** Wasmi 2.0 was inspired by all the interpreter above!
+> **Note:** Wasmi 2.0 was inspired by all the interpreters above!
 
 The benchmarks were conducted using the [`wasmi-benchmarks`] project which should make it possible
 to easily reproduce them on your own machine.
@@ -463,7 +463,7 @@ With the above instance-layout optimizations, Wasmi 2.0's `global_get_u64_r` ins
 
 ```asm
 global_get_u64_r:
-    ldr x7, [x1, #16]!     ; bump ip by 16 bytes and store next handler
+    ldr x7, [x1, #16]!     ; bump ip by 16 bytes and load next handler
     ldur w8, [x1, #-8]     ; fetch global address operand from ip
     add x8, x5, x8, lsl #4 ; compute instance[address]
     ldr x8, [x8, #64]      ; offset instance[address] by constant handles offset
@@ -649,7 +649,7 @@ which requires implementing the following Wasm proposals still missing from Wasm
 Try out and use Wasmi today in various ways:
 
 - 📚 As a library dependency via the [`wasmi` crate](https://crates.io/crates/wasmi).
-- 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli` or any of its pre-build release artifacts.
+- 🖥 Using its CLI application by installing the [`wasmi_cli` crate](https://crates.io/crates/wasmi_cli) using `cargo install wasmi_cli` or any of its pre-built release artifacts.
 - ⚙️ In your C-interfacing language using the [Wasmi C-API](https://github.com/wasmi-labs/wasmi/tree/main/crates/c_api#readme).
 - 😈 Play [Doom in your browser](https://wasmi-labs.github.io/wasmi-doom/) powered by Wasmi 2.0. [^🤖]
 - 📦 Or enjoy Wasmi indirectly by using any of its [major known users](https://github.com/wasmi-labs/wasmi#used-by).
