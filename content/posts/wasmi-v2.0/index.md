@@ -33,6 +33,8 @@ Some user-requested features, such as stable fuel metering [^explain-stable-mete
 [wasm-deterministic-profile]: https://github.com/WebAssembly/profiles/blob/main/proposals/profiles/Overview.md
 [Wasmi CLI]: https://crates.io/crates/wasmi_cli
 
+> *You can always make me happy with [a star at GitHub](https://github.com/wasmi-labs/wasmi)!*
+
 ## Where Wasmi 2.0 Landed
 
 2.2x faster than Wasmi 1.0 is great, but how does Wasmi 2.0 fare against its competition?
