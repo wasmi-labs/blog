@@ -4,7 +4,6 @@ description: 'The optimizations behind Wasmi 2.0, and how they compare to Wasm3 
 date: 2026-09-01T00:00:01+02:00
 author: 'Robin Freyler'
 authorURL: 'https://github.com/robbepop'
-draft: true
 ---
 
 In my last post about [Wasmi 1.0](/blog/posts/wasmi-v1.0/) I promised a [fundamental engine overhaul](/blog/posts/wasmi-v1.0/#the-next-gen-engine) for the future Wasmi version. The future is now! [^intro]
