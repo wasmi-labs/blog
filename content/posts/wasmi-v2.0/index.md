@@ -12,7 +12,7 @@ In my last post about [Wasmi 1.0](/blog/posts/wasmi-v1.0/) I promised a [fundame
 It is an excellent choice for IoT devices, plugin systems ([Typst], [Zellij], [Josh]), cloud hosts, smart contracts ([Soroban], [Ripple]) and even for your lightweight game consoles ([Firefly Zero]).
 
 Before going into all the details, a huge thank you to the [Stellar Development Foundation (SDF)](https://stellar.org/foundation) that has been sponsoring the Wasmi project since October 2024. Without their sponsorship, the Wasmi project wouldn’t be where it is today.
-Also special thanks to [Felix Kutzner](https://github.com/fkutzner) for proofreading the article and suggesting many improvements.
+Also special thanks to [Felix Kutzner](http://codeberg.org/tfk) for proofreading the article and suggesting many improvements.
 
 [Wasmi]: https://github.com/wasmi-labs/wasmi
 
