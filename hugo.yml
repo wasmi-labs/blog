@@ -4,6 +4,12 @@ title: Wasmi Labs
 theme: PaperMod
 googleAnalytics: "" # leave empty if you don't use GA
 
+markup:
+  goldmark:
+    renderer:
+      # Allow raw HTML in markdown, e.g. `<br>` in table cells, as GitHub does.
+      unsafe: true
+
 params:
   author: 'Robin Freyler'
   # authorURL: 'https://github.com/robbepop' # We prefer to set this in the post

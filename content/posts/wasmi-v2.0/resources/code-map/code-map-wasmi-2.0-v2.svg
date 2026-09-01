@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="910" height="572" viewBox="0 0 910 572" version="1.1">
+  <title>Wasmi 2.0: lock-free CodeMap and baked call targets</title>
+  <defs>
+    <style type="text/css"><![CDATA[
+      .bg    { fill: #ffffff; }
+      .sans  { font-family: system-ui, -apple-system, "Segoe UI", "DejaVu Sans", sans-serif; }
+      .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, "DejaVu Sans Mono", monospace; }
+      .title { font-size: 19px; font-weight: 700; fill: #22262b; }
+      .cls   { fill: #ffffff; stroke: #454b52; stroke-width: 1.4; }
+      .cls-hd{ fill: #eceff1; stroke: #454b52; stroke-width: 1.4; }
+      .cls-key { fill: #ffffff; stroke: #2f7d55; stroke-width: 1.8; }
+      .cls-hd-key { fill: #dcefe4; stroke: #2f7d55; stroke-width: 1.8; }
+      .name  { font-size: 13px; font-weight: 700; fill: #22262b; }
+      .stereo{ font-size: 10.5px; fill: #6b747d; font-style: italic; }
+      .field { font-size: 11.5px; fill: #22262b; }
+      .field-key { font-size: 11.5px; font-weight: 700; fill: #2f7d55; }
+      .field-sm { font-size: 11px; fill: #22262b; }
+      .link  { stroke: #6b747d; stroke-width: 1.3; fill: none; }
+      .link-dash { stroke: #9aa3ad; stroke-width: 1.3; fill: none; stroke-dasharray: 5 4; }
+      .link-key { stroke: #2f7d55; stroke-width: 1.8; fill: none; }
+      .diamond { fill: #454b52; stroke: #454b52; stroke-width: 1.2; }
+      .cap   { font-size: 10.5px; fill: #6b747d; }
+      .cap-key { font-size: 10.5px; font-weight: 700; fill: #2f7d55; }
+      .slot  { fill: #ffffff; stroke: #9aa3ad; stroke-width: 1; }
+      .slot-used { fill: #eceff1; stroke: #6b747d; stroke-width: 1; }
+      .slot-key { fill: #dcefe4; stroke: #2f7d55; stroke-width: 1.8; }
+      .frame { fill: none; stroke: #c3c9cf; stroke-width: 1.2; stroke-dasharray: 4 4; }
+    ]]></style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#6b747d" stroke-width="1.4"/>
+    </marker>
+    <marker id="ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#9aa3ad" stroke-width="1.4"/>
+    </marker>
+    <marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#2f7d55" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="910" height="572"/>
+
+  <text class="sans title" x="30" y="32">Wasmi 2.0 &#8212; lock-free <tspan class="mono" font-size="17">CodeMap</tspan> and baked call targets</text>
+
+  <!-- cold path entry: EngineFunc index -->
+  <rect class="cls" x="40" y="58" width="200" height="42"/>
+  <text class="mono name" x="140" y="76" text-anchor="middle">EngineFunc(n)</text>
+  <text class="sans stereo" x="140" y="92" text-anchor="middle">&#171;index, non-baked callers&#187;</text>
+
+  <!-- hot path entry: encoded Wasmi IR; right edge aligns with the bucket frame at x=796 -->
+  <rect class="cls" x="376" y="58" width="420" height="42"/>
+  <path class="link" d="M 516 58 L 516 100"/>
+  <path class="link" d="M 656 58 L 656 100"/>
+  <text class="mono field" x="446" y="84" text-anchor="middle">call_internal</text>
+  <text class="mono field" x="586" y="84" text-anchor="middle">params</text>
+  <text class="mono field-key" x="726" y="84" text-anchor="middle">0x7f3a&#8230;</text>
+  <text class="sans cap" x="376" y="119">encoded Wasmi IR &#8212; one translation,</text>
+  <text class="sans cap" x="376" y="134">shared by every instance of the module</text>
+
+  <!-- cold path: EngineFunc -> Funcs -->
+  <path class="link-dash" d="M 140 100 L 140 152" marker-end="url(#ad)"/>
+
+  <!-- Funcs -->
+  <rect class="cls" x="40" y="156" width="330" height="126"/>
+  <rect class="cls-hd" x="40" y="156" width="330" height="44"/>
+  <text class="mono name" x="205" y="175" text-anchor="middle">Funcs</text>
+  <text class="sans stereo" x="205" y="191" text-anchor="middle">&#171;append-only, readers take no lock&#187;</text>
+  <text class="mono field" x="52" y="220">len_funcs: AtomicUsize</text>
+  <text class="mono field" x="52" y="240">buckets: [Option&lt;..&gt;; 22]</text>
+  <rect class="slot-used" x="52" y="250" width="20" height="16"/>
+  <rect class="slot-used" x="74" y="250" width="20" height="16"/>
+  <rect class="slot-used" x="96" y="250" width="20" height="16"/>
+  <rect class="slot-used" x="118" y="250" width="20" height="16"/>
+  <rect class="slot" x="140" y="250" width="20" height="16"/>
+  <rect class="slot" x="162" y="250" width="20" height="16"/>
+  <text class="sans cap" x="194" y="263">inline array &#8212; never reallocates</text>
+
+  <!-- Funcs -> buckets -->
+  <path class="diamond" d="M 140 282 L 145 290 L 140 298 L 135 290 z"/>
+  <path class="link" d="M 140 282 L 140 326" marker-end="url(#a)"/>
+  <text class="sans cap" x="168" y="304">locate(n) &#8594; bucket, slot</text>
+
+  <!-- bucket group frame: left edge aligns with EngineFunc/Funcs (x=40),
+       right edge with the encoded-IR strip (x=796); 18px inner padding both sides -->
+  <rect class="frame" x="40" y="326" width="756" height="110"/>
+  <text class="sans cap" x="778" y="429" text-anchor="end">heap allocations &#8212; only appended; never moved, reallocated or freed</text>
+
+  <!-- bucket 0 -->
+  <rect class="cls" x="58" y="338" width="44" height="54"/>
+  <text class="mono field-sm" x="80" y="408" text-anchor="middle">32</text>
+  <!-- bucket 1 -->
+  <rect class="cls" x="122" y="338" width="88" height="54"/>
+  <text class="mono field-sm" x="166" y="408" text-anchor="middle">64</text>
+  <!-- bucket 2, with slots -->
+  <rect class="cls" x="230" y="338" width="176" height="54"/>
+  <path class="link" d="M 252 338 L 252 392 M 274 338 L 274 392 M 296 338 L 296 392 M 318 338 L 318 392 M 340 338 L 340 392 M 362 338 L 362 392 M 384 338 L 384 392" stroke="#c3c9cf" stroke-width="1"/>
+  <rect class="slot-key" x="252" y="338" width="22" height="54"/>
+  <text class="mono field-sm" x="318" y="408" text-anchor="middle">128</text>
+  <!-- bucket 3 -->
+  <rect class="cls" x="426" y="338" width="352" height="54"/>
+  <text class="mono field-sm" x="602" y="408" text-anchor="middle">256</text>
+
+  <text class="sans cap" x="812" y="358">each bucket</text>
+  <text class="sans cap" x="812" y="373">twice the size</text>
+  <text class="sans cap" x="812" y="388">of the last</text>
+
+  <!-- hot path: baked address straight into the FuncEntry, bypassing Funcs -->
+  <path class="link-key" d="M 726 100 L 726 315 L 263 315 L 263 334" marker-end="url(#ak)"/>
+  <text class="sans cap-key" x="740" y="180">baked address:</text>
+  <text class="sans cap-key" x="740" y="195">the operand is</text>
+  <text class="sans cap-key" x="740" y="210">the entry, so the</text>
+  <text class="sans cap-key" x="740" y="225">index is skipped</text>
+
+  <!-- selected slot -> FuncEntry detail -->
+  <path class="link-key" d="M 263 392 L 263 452" marker-end="url(#ak)"/>
+
+  <!-- FuncEntry -->
+  <rect class="cls-key" x="150" y="456" width="380" height="92"/>
+  <rect class="cls-hd-key" x="150" y="456" width="380" height="30"/>
+  <text class="mono name" x="340" y="476" text-anchor="middle">FuncEntry</text>
+  <text class="mono field-key" x="162" y="501">state: AtomicU8</text>
+  <text class="sans cap" x="290" y="501">one atomic load: compiled?</text>
+  <text class="mono field" x="162" y="521">data: ops, len_local_slots, len_stack_slots</text>
+  <text class="sans cap" x="162" y="539">stable address for the lifetime of the engine</text>
+</svg>
