@@ -72,7 +72,7 @@ by the [`wasmi-benchmarks`] project but it provides a good overview.
 ### Geometric Mean
 
 The following two plots show the [geometric mean] across all `execute` and all `startup`
-benchmarks of the [`wasmi-benchmarks`] suite.
+benchmarks of the [`wasmi-benchmarks`] suite from the above Wasm runtimes.
 
 [geometric mean]: https://en.wikipedia.org/wiki/Geometric_mean
 
